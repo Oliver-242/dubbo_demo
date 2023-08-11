@@ -1,13 +1,13 @@
-package org.apache.dubbo.springboot.demo.consumer;
+package org.apache.dubbo.springboot.demo.test;
 
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @EnableDubbo
-public class ConsumerApplication {
+public class TestApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ConsumerApplication.class, args);
+        SpringApplication.run(TestApplication.class, args);
     }
 }
