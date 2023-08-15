@@ -1,12 +1,11 @@
 package org.apache.dubbo.springboot.demo;
 
 public interface DemoService {
-    void sayHello();
-    Boolean deposit(String cardId, int money) throws Exception;
+    String deposit(String cardId, long money) throws Exception;
 
-    Boolean withdraw(String cardId, int money);
+    String withdraw(String cardId, long money) throws Exception;
 
-    Boolean transfer(String sender, String receiver, int money);
+    String transfer(String sender, String receiver, long money) throws Exception;
 
-    Boolean inquire(String cardId);
+    String inquire(String cardId) throws Exception;
 }

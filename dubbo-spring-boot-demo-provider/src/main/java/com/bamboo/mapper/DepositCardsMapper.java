@@ -1,8 +1,11 @@
 package com.bamboo.mapper;
 
-import com.bamboo.pojo.DepositCards;
-import java.util.List;
-
 public interface DepositCardsMapper {
-    List<DepositCards> selectAll();
+    Long selectMoneyByCardId(String cardId);
+
+    void depositMoneyByCardId(String cardId, long money);
+
+    void withdrawMoneyByCardId(String cardId, long money);
+
+    void transferMoney(String sender, String receiver, long money);
 }

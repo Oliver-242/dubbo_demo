@@ -4,7 +4,7 @@ public class DepositCards {
     private String userName;
     private int userId;
     private String cardId;
-    private int money;
+    private long money;
 
 //    public String getUserId() {
 //        return userId;
@@ -23,18 +23,18 @@ public class DepositCards {
     }
 
     public String getCardId() {
-        return userName;
+        return cardId;
     }
 
     public void setCardId(String cardId) {
         this.cardId = cardId;
     }
 
-    public int getMoney() {
+    public long getMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(long money) {
         this.money = money;
     }
 
