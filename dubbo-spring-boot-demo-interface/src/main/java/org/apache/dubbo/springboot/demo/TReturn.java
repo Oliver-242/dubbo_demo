@@ -1,6 +1,8 @@
 package org.apache.dubbo.springboot.demo;
 
-public class TReturn {
+import java.io.Serializable;
+
+public class TReturn implements Serializable {
     // 0 正常；1 用户不存在；2 余额不足
     public int status;
 

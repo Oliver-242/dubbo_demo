@@ -1,6 +1,8 @@
 package org.apache.dubbo.springboot.demo;
 
-public class TParam {
+import java.io.Serializable;
+
+public class TParam implements Serializable {
     public String firstAccount;
 
     public String secondAccount;

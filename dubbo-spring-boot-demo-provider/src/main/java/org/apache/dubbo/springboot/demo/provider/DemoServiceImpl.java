@@ -30,7 +30,7 @@ public class DemoServiceImpl implements DemoService{
             res.status = 1;
             res.returnString = "查询结果为空！";
         } else {
-            res.returnString = "成功存入" + tParam.money + "元！";
+            res.returnString = "成功向" + tParam.firstAccount + "存入" + tParam.money + "元！";
         }
         sqlSession.close();
         return res;
@@ -82,7 +82,8 @@ public class DemoServiceImpl implements DemoService{
                 res.returnString = "转账失败！";
                 throw new Exception();
             } else {
-                res.returnString = "转账成功！";
+                res.returnString = "由" + tParam.firstAccount + "向" + tParam.secondAccount + "转账"
+                    + tParam.money + "元！";
             }
         }
         sqlSession.close();
