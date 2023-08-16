@@ -12,12 +12,7 @@
     </update>
 
     <update id="withdrawMoneyByCardId">
-        update depositcards set money=money-#{arg1} where cardid=#{arg0}
-    </update>
-
-    <update id="transferMoney">
-        update depositcards set money=money+#{arg2} where cardid=#{arg1};
-        update depositcards set money=money-#{arg2} where cardid=#{arg0};
+        update depositcards set money=money-#{arg1} where cardid=#{arg0} and money>=#{arg1}
     </update>
 
 </mapper>

@@ -1,11 +1,9 @@
 package org.apache.dubbo.springboot.demo.test;
 
-import java.sql.*;
-
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.apache.dubbo.springboot.demo.DemoService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.apache.dubbo.springboot.demo.*;
 
 @Component
 public class consumerTest implements CommandLineRunner {
@@ -14,37 +12,21 @@ public class consumerTest implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("Inquire test:");
-        String res = demoService.inquire("1231231231231");
-        System.out.println(res);
+        TReturn ret;
+        TParam t1 = new TParam("131231231231");
+        ret = demoService.inquire(t1);
+        System.out.println(ret.returnString);
 
-        System.out.println("Deposit test:");
-        res = demoService.deposit("123123123123", 10);
-        System.out.println(res);
+        t1 = new TParam("1231231231231", 1000);
+        ret = demoService.deposit(t1);
+        System.out.println(ret.returnString);
 
-        res = demoService.inquire("1231231231231");
-        System.out.println(res);
+        t1 = new TParam("1231231231232", 30);
+        ret = demoService.withdraw(t1);
+        System.out.println(ret.returnString);
 
-        System.out.println("Withdraw test:");
-        res = demoService.withdraw("1231231231231", 10);
-        System.out.println(res);
-
-        res = demoService.inquire("1231231231231");
-        System.out.println(res);
-
-        System.out.println("Transfer test:");
-        res = demoService.transfer("1231231231232", "1231231231231", 10);
-        System.out.println(res);
-
-        res = demoService.inquire("1231231231231");
-        System.out.println(res);
-
-        res = demoService.transfer("1231231231232", "1231231231231", 1001);
-        System.out.println(res);
-
-        res = demoService.inquire("1231231231231");
-        System.out.println(res);
-        res = demoService.inquire("1231231231232");
-        System.out.println(res);
+        t1 = new TParam("1231231231231", "1231231231233", 2000);
+        ret = demoService.transfer(t1);
+        System.out.println(ret.returnString);
     }
 }
