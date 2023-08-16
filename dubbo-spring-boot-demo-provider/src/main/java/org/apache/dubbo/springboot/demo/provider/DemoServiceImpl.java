@@ -32,6 +32,7 @@ public class DemoServiceImpl implements DemoService{
         } else {
             res.returnString = "成功向" + tParam.firstAccount + "存入" + tParam.money + "元！";
         }
+        sqlSession.commit();
         sqlSession.close();
         return res;
     }
@@ -58,6 +59,7 @@ public class DemoServiceImpl implements DemoService{
                 res.returnString = "成功从" + tParam.firstAccount + "提现" + tParam.money + "元";
             }
         }
+        sqlSession.commit();
         sqlSession.close();
         return res;
     }
@@ -80,10 +82,12 @@ public class DemoServiceImpl implements DemoService{
             if (rem_2 == 0){
                 res.status = 1;
                 res.returnString = "转账失败！";
-                throw new Exception();
+                sqlSession.rollback();
+//                throw new Exception();
             } else {
                 res.returnString = "由" + tParam.firstAccount + "向" + tParam.secondAccount + "转账"
                     + tParam.money + "元！";
+                sqlSession.commit();
             }
         }
         sqlSession.close();

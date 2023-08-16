@@ -29,12 +29,12 @@ public class consumerTest implements CommandLineRunner {
         t1 = new TParam("1231231231232", 30);
         ret = demoService.withdraw(t1);
         System.out.println(ret.returnString);
-        t1 = new TParam("1231231231231");
+        t1 = new TParam("1231231231232");
         ret = demoService.inquire(t1);
         System.out.println(ret.returnString);
         System.out.println();
 
-        t1 = new TParam("1231231231231", "1231231231233", 2000);
+        t1 = new TParam("1231231231231", "1231231231234", 1000);
         ret = demoService.transfer(t1);
         System.out.println(ret.returnString);
         t1 = new TParam("1231231231231");
