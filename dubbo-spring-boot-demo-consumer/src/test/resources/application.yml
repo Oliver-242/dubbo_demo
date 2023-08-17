@@ -6,3 +6,13 @@ dubbo:
     port: -1
   registry:
     address: zookeeper://${zookeeper.address:127.0.0.1}:2181
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/myfirst?allowMultiQueries=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+server:
+  port: 8989
