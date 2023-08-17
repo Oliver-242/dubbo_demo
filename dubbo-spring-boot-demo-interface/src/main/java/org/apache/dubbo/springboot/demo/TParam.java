@@ -1,8 +1,12 @@
 package org.apache.dubbo.springboot.demo;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class TParam implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 7833252070488339211L;
     public String firstAccount;
 
     public String secondAccount;
