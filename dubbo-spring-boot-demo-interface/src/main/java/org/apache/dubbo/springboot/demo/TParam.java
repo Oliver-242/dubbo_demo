@@ -2,7 +2,6 @@ package org.apache.dubbo.springboot.demo;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Objects;
 
 public class TParam implements Serializable {
     @Serial

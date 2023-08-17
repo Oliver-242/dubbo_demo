@@ -3,7 +3,7 @@ package org.apache.dubbo.springboot.demo.provider;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.springboot.demo.*;
 
-import com.bamboo.mapper.DepositCardsMapper;
+import com.bamboo.mapper.DepositCardsDao;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -24,8 +24,8 @@ public class DemoServiceImpl implements DemoService{
 
         TReturn res = new TReturn();
 
-        DepositCardsMapper depositCardsMapper = sqlSession.getMapper(DepositCardsMapper.class);
-        int rem = depositCardsMapper.depositMoneyByCardId(tParam.firstAccount, tParam.money);
+        DepositCardsDao depositCardsDao = sqlSession.getMapper(DepositCardsDao.class);
+        int rem = depositCardsDao.depositMoneyByCardId(tParam.firstAccount, tParam.money);
         if (rem == 0) {
             res.status = 1;
             res.returnString = "查询结果为空！";
@@ -45,13 +45,13 @@ public class DemoServiceImpl implements DemoService{
 
         TReturn res = new TReturn();
 
-        DepositCardsMapper depositCardsMapper = sqlSession.getMapper(DepositCardsMapper.class);
-        Long rem_1 = depositCardsMapper.selectMoneyByCardId(tParam.firstAccount);
+        DepositCardsDao depositCardsDao = sqlSession.getMapper(DepositCardsDao.class);
+        Long rem_1 = depositCardsDao.selectMoneyByCardId(tParam.firstAccount);
         if (rem_1 == null) {
             res.status = 1;
             res.returnString = "查询结果为空！";
         } else {
-            int rem_2 = depositCardsMapper.withdrawMoneyByCardId(tParam.firstAccount, tParam.money);
+            int rem_2 = depositCardsDao.withdrawMoneyByCardId(tParam.firstAccount, tParam.money);
             if (rem_2 == 0){
                 res.status = 2;
                 res.returnString = "余额不足！";
@@ -72,13 +72,13 @@ public class DemoServiceImpl implements DemoService{
 
         TReturn res = new TReturn();
 
-        DepositCardsMapper depositCardsMapper = sqlSession.getMapper(DepositCardsMapper.class);
-        int rem_1 = depositCardsMapper.withdrawMoneyByCardId(tParam.firstAccount, tParam.money);
+        DepositCardsDao depositCardsDao = sqlSession.getMapper(DepositCardsDao.class);
+        int rem_1 = depositCardsDao.withdrawMoneyByCardId(tParam.firstAccount, tParam.money);
         if (rem_1 == 0) {
             res.status = 1;
             res.returnString = "转账失败！";
         } else {
-            int rem_2 = depositCardsMapper.depositMoneyByCardId(tParam.secondAccount, tParam.money);
+            int rem_2 = depositCardsDao.depositMoneyByCardId(tParam.secondAccount, tParam.money);
             if (rem_2 == 0){
                 res.status = 1;
                 res.returnString = "转账失败！";
@@ -102,8 +102,8 @@ public class DemoServiceImpl implements DemoService{
         SqlSession sqlSession = sqlSessionFactory.openSession(TransactionIsolationLevel.REPEATABLE_READ);
 
         TReturn res = new TReturn();
-        DepositCardsMapper depositCardsMapper = sqlSession.getMapper(DepositCardsMapper.class);
-        Long money = depositCardsMapper.selectMoneyByCardId(tParam.firstAccount);
+        DepositCardsDao depositCardsDao = sqlSession.getMapper(DepositCardsDao.class);
+        Long money = depositCardsDao.selectMoneyByCardId(tParam.firstAccount);
         if (money == null) {
             res.status = 1;
             res.returnString = "查询结果为空！";
