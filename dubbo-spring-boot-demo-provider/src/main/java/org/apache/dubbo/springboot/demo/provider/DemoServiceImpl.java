@@ -9,6 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
+/**
+ * @author oliver
+ * @date 2023/08/17 16:00
+ */
 @DubboService
 @Transactional(rollbackFor = Exception.class)
 @Service

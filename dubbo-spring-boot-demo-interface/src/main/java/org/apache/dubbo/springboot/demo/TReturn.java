@@ -1,8 +1,15 @@
 package org.apache.dubbo.springboot.demo;
 
+import lombok.Data;
+
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * @author oliver
+ * @date 2023/08/17 10:30
+ */
+@Data
 public class TReturn implements Serializable {
     @Serial
     private static final long serialVersionUID = -810721767445082952L;

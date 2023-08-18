@@ -6,6 +6,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * @author oliver
+ * @date 2023/08/18 15:50
+ */
 @SpringBootApplication
 @EnableDubbo
 @EnableTransactionManagement

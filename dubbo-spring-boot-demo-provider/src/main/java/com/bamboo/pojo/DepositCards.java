@@ -1,8 +1,6 @@
 package com.bamboo.pojo;
 
 import lombok.Data;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Component;
 
 @Data
 public class DepositCards {
