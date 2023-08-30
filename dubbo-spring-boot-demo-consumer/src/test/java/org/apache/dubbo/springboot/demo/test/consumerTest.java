@@ -34,7 +34,7 @@ public class consumerTest implements CommandLineRunner {
         System.out.println(ret.returnString);
         System.out.println();
 
-        t1 = new TParam("1231231231231", "1231231231234", 1000);
+        t1 = new TParam("1231231231231", "1231231231233", 1000);
         ret = demoService.transfer(t1);
         System.out.println(ret.returnString);
         t1 = new TParam("1231231231231");

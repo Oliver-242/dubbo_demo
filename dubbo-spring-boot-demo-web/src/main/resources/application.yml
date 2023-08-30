@@ -1,6 +1,6 @@
 dubbo:
   application:
-    name: dubbo-springboot-demo-provider
+    name: dubbo-springboot-demo-web
   protocol:
     name: dubbo
     port: -1
@@ -12,11 +12,11 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
     cache: false
-#  datasource:
-#    url: jdbc:mysql://localhost:3306/myfirst?allowMultiQueries=true
-#    username: root
-#    password: root
-#    driver-class-name: com.mysql.cj.jdbc.Driver
+  #  datasource:
+  #    url: jdbc:mysql://localhost:3306/myfirst?allowMultiQueries=true
+  #    username: root
+  #    password: root
+  #    driver-class-name: com.mysql.cj.jdbc.Driver
   datasource:
     url: jdbc:mysql://8.147.4.249:3306/myfirst
     username: root
