@@ -1,4 +1,4 @@
-package org.apache.duboo.springboot.demo;
+package org.apache.dubbo.springboot.demo;
 
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
