@@ -132,4 +132,12 @@
         </pluginManagement>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub OWNER Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/oliver-242/dubbo_demo</url>
+        </repository>
+    </distributionManagement>
+
 </project>
