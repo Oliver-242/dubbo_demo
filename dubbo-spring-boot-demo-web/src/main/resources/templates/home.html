@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>功能选择</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #functionSelect {
+            margin-bottom: 20px;
+        }
+
+        form {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        .result-message {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <label for="functionSelect">选择功能：</label>
+    <select id="functionSelect">
+        <option value="transfer" th:selected="${function == 'transfer'}">转账</option>
+        <option value="query" th:selected="${function == 'query'}">查询</option>
+        <option value="withdraw" th:selected="${function == 'withdraw'}">提款</option>
+        <option value="deposit" th:selected="${function == 'deposit'}">存款</option>
+    </select>
+</div>
+
+<div id="content">
+    <!-- 这里用来显示不同功能对应的界面 -->
+    <h2 th:switch="${function}">
+        <span th:case="'transfer'">转账</span>
+        <span th:case="'query'">查询</span>
+        <span th:case="'withdraw'">提款</span>
+        <span th:case="'deposit'">存款</span>
+    </h2>
+    <!-- 根据所选功能显示表单 -->
+    <form th:switch="${function}" th:case="'transfer'" action="/transfer" method="post">
+        <input type="text" name="sender" placeholder="转账人" required="">
+        <input type="text" name="receiver" placeholder="收款人" required="">
+        <input type="text" name="money" placeholder="金额" required="">
+        <button type="submit">确认转账</button>
+    </form>
+    <form th:switch="${function}" th:case="'query'" action="/query" method="post">
+        <input type="text" name="cardid" placeholder="卡号" required="">
+        <button type="submit">查询</button>
+    </form>
+    <form th:switch="${function}" th:case="'withdraw'" action="/withdraw" method="post">
+        <input type="text" name="cardid" placeholder="卡号" required="">
+        <input type="text" name="money" placeholder="金额" required="">
+        <button type="submit">确认提款</button>
+    </form>
+    <form th:switch="${function}" th:case="'deposit'" action="/deposit" method="post">
+        <input type="text" name="cardid" placeholder="卡号" required="">
+        <input type="text" name="money" placeholder="金额" required="">
+        <button type="submit">确认存款</button>
+    </form>
+</div>
+
+<p th:text="${result}" th:if="${not #strings.isEmpty(result)}" class="result-message"></p>
+
+<script>
+    var functionSelect = document.getElementById('functionSelect');
+
+    // 获取当前页面加载时所选的功能
+    var initialFunction = functionSelect.value;
+    var contentDiv = document.getElementById('content');
+    var resultMessage = document.querySelector('.result-message');
+
+
+    functionSelect.onclick = function () {
+        var selectedValue = functionSelect.value;
+        if(resultMessage != null) {
+            resultMessage.textContent = '';
+        }
+
+        // 更新当前功能
+        initialFunction = selectedValue;
+        updateContentDiv();
+    };
+
+    // 根据所选功能更新 contentDiv
+    function updateContentDiv() {
+        contentDiv.innerHTML = '';
+
+        switch (initialFunction) {
+            case 'transfer':
+                contentDiv.innerHTML = `
+                    <h2>转账</h2>
+                    <form action="/transfer" method="post">
+                        <input type="text" name="sender" placeholder="转账人" required="">
+                        <input type="text" name="receiver" placeholder="收款人" required="">
+                        <input type="text" name="money" placeholder="金额" required="">
+                        <button type="submit">确认转账</button>
+                    </form>
+                `;
+                break;
+            case 'query':
+                contentDiv.innerHTML = `
+                    <h2>查询</h2>
+                    <form action="/query" method="post">
+                        <input type="text" name="cardid" placeholder="卡号" required="">
+                        <button type="submit">查询</button>
+                    </form>
+                `;
+                break;
+            case 'withdraw':
+                contentDiv.innerHTML = `
+                    <h2>提款</h2>
+                    <form action="/withdraw" method="post">
+                        <input type="text" name="cardid" placeholder="卡号" required="">
+                        <input type="text" name="money" placeholder="金额" required="">
+                        <button type="submit">确认提款</button>
+                    </form>
+                `;
+                break;
+            case 'deposit':
+                contentDiv.innerHTML = `
+                    <h2>存款</h2>
+                    <form action="/deposit" method="post">
+                        <input type="text" name="cardid" placeholder="卡号" required="">
+                        <input type="text" name="money" placeholder="金额" required="">
+                        <button type="submit">确认存款</button>
+                    </form>
+                `;
+                break;
+            default:
+                break;
+        }
+    }
+
+    updateContentDiv();
+</script>
+</body>
+</html>

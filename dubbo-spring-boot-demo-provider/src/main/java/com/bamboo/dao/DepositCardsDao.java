@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -20,5 +22,5 @@ public interface DepositCardsDao {
     int depositMoneyByCardId(@Param("cardId") String cardId, @Param("money") long money);
 
     @Update("update depositcards set money=money-#{money} where cardid=#{cardId} and money>=#{money}")
-    int     withdrawMoneyByCardId(@Param("cardId") String cardId, @Param("money") long money);
+    int withdrawMoneyByCardId(@Param("cardId") String cardId, @Param("money") long money);
 }

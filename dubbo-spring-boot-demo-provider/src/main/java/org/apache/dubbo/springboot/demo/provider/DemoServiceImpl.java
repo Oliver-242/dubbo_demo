@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  * @author oliver
  * @date 2023/08/17 16:00
  */
-@DubboService
+@DubboService(group = "group1", version = "1.0.0")
 @Transactional(rollbackFor = Exception.class)
 @Service
 public class DemoServiceImpl implements DemoService{
@@ -67,7 +67,7 @@ public class DemoServiceImpl implements DemoService{
             if (rem_2 == 0){
                 res.status = 1;
                 res.returnString = "转账失败！";
-                throw new Exception("zhuanzhangshibai");
+                throw new Exception("转账失败");
             } else {
                 res.returnString = "由" + tParam.firstAccount + "向" + tParam.secondAccount + "转账"
                     + tParam.money + "元！";
