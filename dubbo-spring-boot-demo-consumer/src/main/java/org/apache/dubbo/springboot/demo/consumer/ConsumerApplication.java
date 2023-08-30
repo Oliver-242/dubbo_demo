@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @EnableDubbo
+@Deprecated
 public class ConsumerApplication {
 
     public static void main(String[] args) {

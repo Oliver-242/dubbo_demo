@@ -5,9 +5,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.apache.dubbo.springboot.demo.*;
 
+/**
+ * @author caijizhou
+ * @date 2023/08/16 15:30
+ */
 @Component
 public class consumerTest implements CommandLineRunner {
-    @DubboReference
+    @DubboReference(group = "group1", version = "1.0.0")
     private DemoService demoService;
 
     @Override

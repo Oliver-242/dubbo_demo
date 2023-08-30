@@ -13,6 +13,7 @@ import java.io.Serializable;
 public class TParam implements Serializable {
     @Serial
     private static final long serialVersionUID = 7833252070488339211L;
+
     public String firstAccount;
 
     public String secondAccount;

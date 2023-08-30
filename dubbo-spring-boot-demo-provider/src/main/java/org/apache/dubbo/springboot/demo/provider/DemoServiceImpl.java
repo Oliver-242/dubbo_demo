@@ -1,13 +1,14 @@
 package org.apache.dubbo.springboot.demo.provider;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.springboot.demo.*;
 
 import com.bamboo.dao.DepositCardsDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 
 /**
  * @author oliver
@@ -16,9 +17,15 @@ import javax.annotation.Resource;
 @DubboService(group = "group1", version = "1.0.0")
 @Transactional(rollbackFor = Exception.class)
 @Service
+@Slf4j
 public class DemoServiceImpl implements DemoService{
-    @Resource
-    DepositCardsDao depositCardsDao;
+
+    private final DepositCardsDao depositCardsDao;
+
+    @Autowired
+    public DemoServiceImpl(DepositCardsDao depositCardsDao) {
+        this.depositCardsDao = depositCardsDao;
+    }
 
     @Override
     public TReturn deposit(TParam tParam) throws Exception{

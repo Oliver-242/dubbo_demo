@@ -1,25 +1,32 @@
 package org.apache.dubbo.springboot.demo.web.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.springboot.demo.DemoService;
 import org.apache.dubbo.springboot.demo.TParam;
 import org.apache.dubbo.springboot.demo.TReturn;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * @author caijizhou
+ * @date 2023/08/30 14:00
+ */
 @Controller
+@Slf4j
 public class MyController {
 
     @DubboReference(group = "group1", version = "1.0.0")
     private DemoService demoservice;
 
     @GetMapping(value = "/")
-    public String home(Model model) {
+    public String home(@NotNull Model model) {
         model.addAttribute("function", "transfer");
-        model.addAttribute("result", " ");
+        model.addAttribute("result", "");
         return "home";
     }
 
@@ -43,7 +50,7 @@ public class MyController {
     }
 
     @PostMapping("/query")
-    public String query(@RequestParam("cardid") String cardId, Model model) throws Exception {
+    public String query(@RequestParam("cardid") String cardId, @NotNull Model model) throws Exception {
         TParam tParam = new TParam(cardId);
         TReturn tReturn = demoservice.inquire(tParam);
 
@@ -55,7 +62,7 @@ public class MyController {
     @PostMapping("/withdraw")
     public String withdraw(@RequestParam("cardid") String cardId,
                            @RequestParam("money") long money,
-                           Model model) throws Exception {
+                           @NotNull Model model) throws Exception {
         TParam tParam = new TParam(cardId, money);
         TReturn tReturn = demoservice.withdraw(tParam);
 
@@ -67,7 +74,7 @@ public class MyController {
     @PostMapping("/deposit")
     public String deposit(@RequestParam("cardid") String cardId,
                           @RequestParam("money") long money,
-                          Model model) throws Exception {
+                          @NotNull Model model) throws Exception {
         TParam tParam = new TParam(cardId, money);
         TReturn tReturn = demoservice.deposit(tParam);
 

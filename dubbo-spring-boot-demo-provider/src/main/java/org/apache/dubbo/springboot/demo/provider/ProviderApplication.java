@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableDubbo
 @EnableTransactionManagement
 @MapperScan("com.bamboo.dao")
+@Deprecated
 public class ProviderApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProviderApplication.class, args);
