@@ -1,6 +1,8 @@
 package org.apache.dubbo.springboot.demo.test;
 
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.springboot.demo.model.TParam;
+import org.apache.dubbo.springboot.demo.model.TReturn;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.apache.dubbo.springboot.demo.*;

@@ -12,17 +12,21 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
     cache: false
-  #  datasource:
-  #    url: jdbc:mysql://localhost:3306/myfirst?allowMultiQueries=true
-  #    username: root
-  #    password: root
-  #    driver-class-name: com.mysql.cj.jdbc.Driver
   datasource:
-    url: jdbc:mysql://8.147.4.249:3306/myfirst
+    url: jdbc:mysql://localhost:3306/myfirst?allowMultiQueries=true
     username: root
-    password: Administrator_
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+#  datasource:
+#    url: jdbc:mysql://8.147.4.249:3306/myfirst
+#    username: root
+#    password: Administrator_
+#    driver-class-name: com.mysql.cj.jdbc.Driver
 
 server:
   port: 8989
 #  address: 0.0.0.0
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  config-location: classpath:mybatis-config.xml

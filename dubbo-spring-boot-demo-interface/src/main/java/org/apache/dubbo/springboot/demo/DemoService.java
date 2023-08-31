@@ -1,5 +1,8 @@
 package org.apache.dubbo.springboot.demo;
 
+import org.apache.dubbo.springboot.demo.model.TParam;
+import org.apache.dubbo.springboot.demo.model.TReturn;
+
 /**
  * @author oliver
  * @date 2023/08/11 11:00

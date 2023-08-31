@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.apache.dubbo.springboot.demo.mapper.TransactionRecordsDao">
+    <resultMap id="BaseResultMap" type="org.apache.dubbo.springboot.demo.model.TransactionRecords">
+        <id column="id" property="id" jdbcType="CHAR"/>
+        <result column="userid" property="userId" jdbcType="BIGINT"/>
+        <result column="typeid" property="typeId" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="CHAR"/>
+        <result column="firstcard" property="firstCard" jdbcType="CHAR"/>
+        <result column="secondcard" property="secondCard" jdbcType="CHAR"/>
+        <result column="money" property="money" jdbcType="BIGINT"/>
+        <result column="createtime" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="All_Column_List">
+        id, userid, typeid, status, firstcard, secondcard, money, createtime
+    </sql>
+
+    <select id="queryAllRecords" resultMap="BaseResultMap">
+        select * from transactionrecords
+    </select>
+
+</mapper>

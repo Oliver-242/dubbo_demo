@@ -1,4 +1,4 @@
-package org.apache.dubbo.springboot.demo;
+package org.apache.dubbo.springboot.demo.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;

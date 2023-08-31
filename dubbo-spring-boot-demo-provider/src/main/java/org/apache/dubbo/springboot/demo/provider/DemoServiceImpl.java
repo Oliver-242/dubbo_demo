@@ -4,7 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.springboot.demo.*;
 
-import com.bamboo.dao.DepositCardsDao;
+import org.apache.dubbo.springboot.demo.mapper.DepositCardsDao;
+import org.apache.dubbo.springboot.demo.model.TParam;
+import org.apache.dubbo.springboot.demo.model.TReturn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package com.bamboo.pojo;
+package org.apache.dubbo.springboot.demo.model;
 
 import lombok.Data;
 
@@ -9,9 +9,15 @@ import lombok.Data;
 @Data
 public class DepositCards {
     private String userName;
-    private int userId;
+
+    private long userId;
+
     private String cardId;
+
     private long money;
+
     private String createTime;
+
     private String updateTime;
+
 }

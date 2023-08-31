@@ -59,7 +59,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <!-- 指定该Main Class为全局的唯一入口 -->
-                    <mainClass>org.apache.dubbo.springboot.demo.MyControllerApplication</mainClass>
+                    <mainClass>org.apache.dubbo.springboot.demo.web.MyControllerApplication</mainClass>
                     <layout>ZIP</layout>
                 </configuration>
                 <executions>
