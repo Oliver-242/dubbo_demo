@@ -2,6 +2,7 @@ package org.apache.dubbo.springboot.demo.mapper;
 
 import org.apache.dubbo.springboot.demo.model.TransactionRecords;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,4 +15,8 @@ import java.util.List;
 @Repository
 public interface TransactionRecordsDao {
     List<TransactionRecords> queryAllRecords();
+
+    List<TransactionRecords> queryByUserId(String userId);
+
+    int saveRecord(@Param("record") TransactionRecords transactionRecords);
 }

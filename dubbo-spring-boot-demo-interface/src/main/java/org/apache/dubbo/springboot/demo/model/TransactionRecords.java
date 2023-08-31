@@ -1,12 +1,14 @@
 package org.apache.dubbo.springboot.demo.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author caijizhou
  * @date 2023/08/30 18:00
  */
 @Data
+@NoArgsConstructor
 public class TransactionRecords {
     private String id;
 
@@ -17,7 +19,7 @@ public class TransactionRecords {
      */
     private String typeId;
 
-    private String status;
+    private int status;
 
     private String firstCard;
 

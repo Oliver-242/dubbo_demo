@@ -14,11 +14,11 @@ public class TParam implements Serializable {
     @Serial
     private static final long serialVersionUID = 7833252070488339211L;
 
-    public String firstAccount;
+    private String firstAccount;
 
-    public String secondAccount;
+    private String secondAccount;
 
-    public long money;
+    private long money;
 
     public TParam(String firstAccount, String secondAccount, long money) {
         this.firstAccount = firstAccount;

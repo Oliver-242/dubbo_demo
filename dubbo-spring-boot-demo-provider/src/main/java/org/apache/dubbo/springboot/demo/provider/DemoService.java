@@ -1,4 +1,4 @@
-package org.apache.dubbo.springboot.demo;
+package org.apache.dubbo.springboot.demo.provider;
 
 import org.apache.dubbo.springboot.demo.model.TParam;
 import org.apache.dubbo.springboot.demo.model.TReturn;

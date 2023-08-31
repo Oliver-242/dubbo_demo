@@ -2,9 +2,11 @@ package org.apache.dubbo.springboot.demo.web.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.apache.dubbo.springboot.demo.DemoService;
+import org.apache.dubbo.springboot.demo.model.dto.SaveRecordDto;
+import org.apache.dubbo.springboot.demo.provider.DemoService;
 import org.apache.dubbo.springboot.demo.model.TParam;
 import org.apache.dubbo.springboot.demo.model.TReturn;
+import org.apache.dubbo.springboot.demo.provider.RecordService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MyController {
 
     @DubboReference(group = "group1", version = "1.0.0")
-    private DemoService demoservice;
+    private DemoService demoService;
+
+    @DubboReference(group = "group1", version = "1.0.0")
+    private RecordService recordService;
 
     @GetMapping(value = "/")
     public String home(@NotNull Model model) {
@@ -42,7 +47,9 @@ public class MyController {
         }
         long money1 = Long.valueOf(money);
         TParam tParam = new TParam(sender, receiver, money1);
-        TReturn tReturn = demoservice.transfer(tParam);
+        TReturn tReturn = demoService.transfer(tParam);
+        SaveRecordDto saveRecordDto = new SaveRecordDto(tParam, tReturn, "transfer", 1);
+        recordService.saveRecord(saveRecordDto);
 
         model.addAttribute("result", tReturn.getReturnString());
         model.addAttribute("function", "transfer");
@@ -52,7 +59,9 @@ public class MyController {
     @PostMapping("/query")
     public String query(@RequestParam("cardid") String cardId, @NotNull Model model) throws Exception {
         TParam tParam = new TParam(cardId);
-        TReturn tReturn = demoservice.inquire(tParam);
+        TReturn tReturn = demoService.inquire(tParam);
+        SaveRecordDto saveRecordDto = new SaveRecordDto(tParam, tReturn, "query", 1);
+        recordService.saveRecord(saveRecordDto);
 
         model.addAttribute("result", tReturn.getReturnString());
         model.addAttribute("function", "query");
@@ -64,7 +73,9 @@ public class MyController {
                            @RequestParam("money") long money,
                            @NotNull Model model) throws Exception {
         TParam tParam = new TParam(cardId, money);
-        TReturn tReturn = demoservice.withdraw(tParam);
+        TReturn tReturn = demoService.withdraw(tParam);
+        SaveRecordDto saveRecordDto = new SaveRecordDto(tParam, tReturn, "withdraw", 1);
+        recordService.saveRecord(saveRecordDto);
 
         model.addAttribute("result", tReturn.getReturnString());
         model.addAttribute("function", "withdraw");
@@ -76,7 +87,9 @@ public class MyController {
                           @RequestParam("money") long money,
                           @NotNull Model model) throws Exception {
         TParam tParam = new TParam(cardId, money);
-        TReturn tReturn = demoservice.deposit(tParam);
+        TReturn tReturn = demoService.deposit(tParam);
+        SaveRecordDto saveRecordDto = new SaveRecordDto(tParam, tReturn, "deposit", 1);
+        recordService.saveRecord(saveRecordDto);
 
         model.addAttribute("result", tReturn.getReturnString());
         model.addAttribute("function", "deposit");

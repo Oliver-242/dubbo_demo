@@ -17,7 +17,25 @@
     </sql>
 
     <select id="queryAllRecords" resultMap="BaseResultMap">
-        select * from transactionrecords
+        select
+        <include refid="All_Column_List"/>
+        from transactionrecords
+        limit 50
     </select>
+
+    <select id="queryByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="All_Column_List"/>
+        from transactionrecords
+        where userid = #{userId,jdbcType=CHAR}
+        limit 50
+    </select>
+
+    <insert id="saveRecord" parameterType="org.apache.dubbo.springboot.demo.model.TransactionRecords">
+        insert into
+        transactionrecords(id, userid, typeid, status, firstcard, secondcard, money)
+        values (#{record.id}, #{record.userId}, #{record.typeId}, #{record.status}, #{record.firstCard},
+                #{record.secondCard}, #{record.money})
+    </insert>
 
 </mapper>

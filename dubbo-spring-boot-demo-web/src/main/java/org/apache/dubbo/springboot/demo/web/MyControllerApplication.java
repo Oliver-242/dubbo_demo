@@ -2,16 +2,20 @@ package org.apache.dubbo.springboot.demo.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 /**
  * @author caijizhou
  * @date 2023/08/29 16:00
  */
-@SpringBootApplication(scanBasePackages = {"org.apache.dubbo.springboot.demo.web.controller",
-                        "org.apache.dubbo.springboot.demo.provider"})
+@SpringBootApplication(scanBasePackages = {"org.apache.dubbo.springboot.demo.web.controller"
+                        , "org.apache.dubbo.springboot.demo.provider"})
+@MapperScan("org.apache.dubbo.springboot.demo.mapper")
+@EnableTransactionManagement
 @EnableDubbo
 @Slf4j
 public class MyControllerApplication {
