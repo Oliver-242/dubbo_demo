@@ -32,7 +32,7 @@ public class MyController {
     public String home(@NotNull Model model) {
         model.addAttribute("function", "transfer");
         model.addAttribute("result", "");
-        return "home";
+        return "transaction";
     }
 
     @PostMapping("/transfer")
@@ -43,7 +43,7 @@ public class MyController {
         if(sender==null || receiver==null || money==null) {
             model.addAttribute("result", "输入不能为空！");
             model.addAttribute("function", "transfer");
-            return "home";
+            return "transaction";
         }
         long money1 = Long.valueOf(money);
         TParam tParam = new TParam(sender, receiver, money1);
@@ -53,7 +53,7 @@ public class MyController {
 
         model.addAttribute("result", tReturn.getReturnString());
         model.addAttribute("function", "transfer");
-        return "home";
+        return "transaction";
     }
 
     @PostMapping("/query")
@@ -65,7 +65,7 @@ public class MyController {
 
         model.addAttribute("result", tReturn.getReturnString());
         model.addAttribute("function", "query");
-        return "home";
+        return "transaction";
     }
 
     @PostMapping("/withdraw")
@@ -79,7 +79,7 @@ public class MyController {
 
         model.addAttribute("result", tReturn.getReturnString());
         model.addAttribute("function", "withdraw");
-        return "home";
+        return "transaction";
     }
 
     @PostMapping("/deposit")
@@ -93,6 +93,6 @@ public class MyController {
 
         model.addAttribute("result", tReturn.getReturnString());
         model.addAttribute("function", "deposit");
-        return "home";
+        return "transaction";
     }
 }

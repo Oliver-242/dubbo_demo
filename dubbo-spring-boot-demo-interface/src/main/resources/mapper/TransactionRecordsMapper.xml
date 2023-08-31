@@ -20,6 +20,7 @@
         select
         <include refid="All_Column_List"/>
         from transactionrecords
+        order by createtime desc
         limit 50
     </select>
 
@@ -27,7 +28,8 @@
         select
         <include refid="All_Column_List"/>
         from transactionrecords
-        where userid = #{userId,jdbcType=CHAR}
+        where userid = #{userId,jdbcType=BIGINT}
+        order by createtime desc
         limit 50
     </select>
 

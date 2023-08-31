@@ -16,7 +16,7 @@ import java.util.List;
 public interface TransactionRecordsDao {
     List<TransactionRecords> queryAllRecords();
 
-    List<TransactionRecords> queryByUserId(String userId);
+    List<TransactionRecords> queryByUserId(long userId);
 
     int saveRecord(@Param("record") TransactionRecords transactionRecords);
 }

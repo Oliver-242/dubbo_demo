@@ -1,11 +1,13 @@
 package org.apache.dubbo.springboot.demo.provider.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.springboot.demo.mapper.TransactionRecordsDao;
 import org.apache.dubbo.springboot.demo.model.TransactionRecords;
 import org.apache.dubbo.springboot.demo.model.dto.SaveRecordDto;
 import org.apache.dubbo.springboot.demo.provider.RecordService;
+import org.apache.dubbo.springboot.demo.provider.SnowService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,9 @@ public class RecordServiceImpl implements RecordService {
     @Resource
     private TransactionRecordsDao transactionRecordsDao;
 
+    @DubboReference(group = "group1", version = "1.0.0")
+    private SnowService snowService;
+
     /**
      * 用户每进行一条操作，就在系统中留下一条记录
      * @param saveRecordDto 整合多方信息组成流水单号的要素
@@ -33,7 +38,8 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public void saveRecord(SaveRecordDto saveRecordDto) {
         TransactionRecords transactionRecords = new TransactionRecords();
-        String id = generateId();
+
+        String id = snowService.getGeneratedId();
 
         transactionRecords.setId(id);
         transactionRecords.setUserId(saveRecordDto.getUserId());
@@ -47,10 +53,20 @@ public class RecordServiceImpl implements RecordService {
     }
 
     /**
-     * 用于生成14位随机流水单号：8位日期 + 6位随机数
-     * @return 14位流水单号
+     * 用于生成16位随机流水单号：2位操作类型 + 8位日期 + 6位随机数
+     * @return 16位流水单号
+     * @deprecated 采用snowflake算法作为64位流水单号生成
      */
-    private String generateId(){
+    @Deprecated
+    private String generateId(String typeId){
+        String prefixId = switch (typeId) {
+            case "transfer" -> "ZZ";
+            case "deposit" -> "CK";
+            case "withdraw" -> "TK";
+            case "query" -> "CX";
+            default -> throw new UnsupportedOperationException("无匹配操作！");
+        };
+
         LocalDate localDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String currentDate = localDate.format(formatter);
@@ -58,6 +74,6 @@ public class RecordServiceImpl implements RecordService {
         int randomNumber = ThreadLocalRandom.current().nextInt(1000000);
         String formatNumber = String.format("%06d", randomNumber);
 
-        return currentDate + formatNumber;
+        return prefixId + currentDate + formatNumber;
     }
 }
