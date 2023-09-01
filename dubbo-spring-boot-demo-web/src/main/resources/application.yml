@@ -4,6 +4,8 @@ dubbo:
   protocol:
     name: dubbo
     port: -1
+    threads: 500
+    thread-pool: fixed
   registry:
     address: zookeeper://${zookeeper.address:127.0.0.1}:2181
 
@@ -25,6 +27,9 @@ spring:
 
 server:
   port: 8989
+  tomcat:
+    threads:
+      max: 200
 #  address: 0.0.0.0
 
 mybatis:
