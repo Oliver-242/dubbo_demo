@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.concurrent.CompletableFuture;
+
 /**
  * @author caijizhou
  * @date 2023/08/30 14:00
@@ -45,10 +47,10 @@ public class MyController {
             model.addAttribute("function", "transfer");
             return "transaction";
         }
-        long money1 = Long.valueOf(money);
+        long money1 = Long.parseLong(money);
         TParam tParam = new TParam(sender, receiver, money1);
         TReturn tReturn = demoService.transfer(tParam);
-        SaveRecordDto saveRecordDto = new SaveRecordDto(tParam, tReturn, "transfer", 1);
+        SaveRecordDto<TReturn> saveRecordDto = new SaveRecordDto<>(tParam, tReturn, "transfer", 1);
         recordService.saveRecord(saveRecordDto);
 
         model.addAttribute("result", tReturn.getReturnString());
@@ -59,11 +61,12 @@ public class MyController {
     @PostMapping("/query")
     public String query(@RequestParam("cardid") String cardId, @NotNull Model model) throws Exception {
         TParam tParam = new TParam(cardId);
-        TReturn tReturn = demoService.inquire(tParam);
-        SaveRecordDto saveRecordDto = new SaveRecordDto(tParam, tReturn, "query", 1);
-        recordService.saveRecord(saveRecordDto);
-
-        model.addAttribute("result", tReturn.getReturnString());
+        CompletableFuture<TReturn> tReturn = demoService.inquire(tParam);
+        SaveRecordDto<CompletableFuture<TReturn>> saveRecordDto =
+                new SaveRecordDto<>(tParam, tReturn, "query", 1);
+        recordService.saveRecordAsync(saveRecordDto);
+        var res = tReturn.get();
+        model.addAttribute("result", res.getReturnString());
         model.addAttribute("function", "query");
         return "transaction";
     }
@@ -74,7 +77,7 @@ public class MyController {
                            @NotNull Model model) throws Exception {
         TParam tParam = new TParam(cardId, money);
         TReturn tReturn = demoService.withdraw(tParam);
-        SaveRecordDto saveRecordDto = new SaveRecordDto(tParam, tReturn, "withdraw", 1);
+        SaveRecordDto<TReturn> saveRecordDto = new SaveRecordDto<>(tParam, tReturn, "withdraw", 1);
         recordService.saveRecord(saveRecordDto);
 
         model.addAttribute("result", tReturn.getReturnString());
@@ -88,7 +91,7 @@ public class MyController {
                           @NotNull Model model) throws Exception {
         TParam tParam = new TParam(cardId, money);
         TReturn tReturn = demoService.deposit(tParam);
-        SaveRecordDto saveRecordDto = new SaveRecordDto(tParam, tReturn, "deposit", 1);
+        SaveRecordDto<TReturn> saveRecordDto = new SaveRecordDto<>(tParam, tReturn, "deposit", 1);
         recordService.saveRecord(saveRecordDto);
 
         model.addAttribute("result", tReturn.getReturnString());

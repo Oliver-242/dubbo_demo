@@ -4,6 +4,8 @@ dubbo:
   protocol:
     name: dubbo
     port: -1
+    threads: 5000
+    thread-pool: fixed
   registry:
     address: zookeeper://${zookeeper.address:127.0.0.1}:2181
 

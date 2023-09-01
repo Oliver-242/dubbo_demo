@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.springboot.demo.mapper.TransactionRecordsDao;
+import org.apache.dubbo.springboot.demo.model.TReturn;
 import org.apache.dubbo.springboot.demo.model.TransactionRecords;
 import org.apache.dubbo.springboot.demo.model.dto.SaveRecordDto;
 import org.apache.dubbo.springboot.demo.provider.RecordService;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -36,7 +38,7 @@ public class RecordServiceImpl implements RecordService {
      * @param saveRecordDto 整合多方信息组成流水单号的要素
      */
     @Override
-    public void saveRecord(SaveRecordDto saveRecordDto) {
+    public void saveRecord(SaveRecordDto<TReturn> saveRecordDto) {
         TransactionRecords transactionRecords = new TransactionRecords();
 
         String id = snowService.getGeneratedId();
@@ -48,6 +50,23 @@ public class RecordServiceImpl implements RecordService {
         transactionRecords.setFirstCard(saveRecordDto.getTParam().getFirstAccount());
         transactionRecords.setSecondCard(saveRecordDto.getTParam().getSecondAccount());
         transactionRecords.setMoney(saveRecordDto.getTReturn().getData());
+
+        transactionRecordsDao.saveRecord(transactionRecords);
+    }
+
+    @Override
+    public void saveRecordAsync(SaveRecordDto<CompletableFuture<TReturn>> saveRecordDto) throws Exception {
+        TransactionRecords transactionRecords = new TransactionRecords();
+
+        String id = snowService.getGeneratedId();
+
+        transactionRecords.setId(id);
+        transactionRecords.setUserId(saveRecordDto.getUserId());
+        transactionRecords.setTypeId(saveRecordDto.getTypeId());
+        transactionRecords.setStatus(saveRecordDto.getTReturn().get().getStatus());
+        transactionRecords.setFirstCard(saveRecordDto.getTParam().getFirstAccount());
+        transactionRecords.setSecondCard(saveRecordDto.getTParam().getSecondAccount());
+        transactionRecords.setMoney(saveRecordDto.getTReturn().get().getData());
 
         transactionRecordsDao.saveRecord(transactionRecords);
     }

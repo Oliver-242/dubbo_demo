@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.concurrent.CompletableFuture;
+
 
 /**
  * @author oliver
@@ -86,7 +88,7 @@ public class DemoServiceImpl implements DemoService {
     }
 
     @Override
-    public TReturn inquire(TParam tParam) throws Exception {;
+    public CompletableFuture<TReturn> inquire(TParam tParam) throws Exception {;
         TReturn res = new TReturn();
         Long money = depositCardsDao.selectMoneyByCardId(tParam.getFirstAccount());
         if (money == null) {
@@ -96,7 +98,7 @@ public class DemoServiceImpl implements DemoService {
             res.setData(money);
             res.setReturnString("账户" + tParam.getFirstAccount() + "的余额为：" + money);
         }
-        return res;
+        return CompletableFuture.completedFuture(res);
     }
 
 }

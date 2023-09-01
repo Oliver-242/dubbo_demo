@@ -2,6 +2,9 @@ package org.apache.dubbo.springboot.demo.provider;
 
 import org.apache.dubbo.springboot.demo.model.TParam;
 import org.apache.dubbo.springboot.demo.model.TReturn;
+import org.springframework.scheduling.annotation.Async;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author oliver
@@ -13,6 +16,6 @@ public interface DemoService {
     TReturn withdraw(TParam tParam) throws Exception;
 
     TReturn transfer(TParam tParam) throws Exception;
-
-    TReturn inquire(TParam tParam) throws Exception;
+    @Async
+    CompletableFuture<TReturn> inquire(TParam tParam) throws Exception;
 }
