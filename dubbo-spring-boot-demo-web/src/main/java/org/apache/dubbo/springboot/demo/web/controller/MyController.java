@@ -2,6 +2,7 @@ package org.apache.dubbo.springboot.demo.web.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.springboot.demo.enums.ServiceTypeEnum;
 import org.apache.dubbo.springboot.demo.model.dto.SaveRecordDto;
 import org.apache.dubbo.springboot.demo.provider.DemoService;
 import org.apache.dubbo.springboot.demo.model.TParam;
@@ -32,7 +33,7 @@ public class MyController {
 
     @GetMapping(value = "/")
     public String home(@NotNull Model model) {
-        model.addAttribute("function", "transfer");
+        model.addAttribute("function", ServiceTypeEnum.TRANSFER.getDesc());
         model.addAttribute("result", "");
         return "transaction";
     }
@@ -44,17 +45,18 @@ public class MyController {
                            Model model) throws Exception {
         if(sender==null || receiver==null || money==null) {
             model.addAttribute("result", "输入不能为空！");
-            model.addAttribute("function", "transfer");
+            model.addAttribute("function", ServiceTypeEnum.TRANSFER.getDesc());
             return "transaction";
         }
         long money1 = Long.parseLong(money);
         TParam tParam = new TParam(sender, receiver, money1);
         TReturn tReturn = demoService.transfer(tParam);
-        SaveRecordDto<TReturn> saveRecordDto = new SaveRecordDto<>(tParam, tReturn, "transfer", 1);
+        SaveRecordDto<TReturn> saveRecordDto =
+                new SaveRecordDto<>(tParam, tReturn, ServiceTypeEnum.TRANSFER.getDesc(), 1);
         recordService.saveRecord(saveRecordDto);
 
         model.addAttribute("result", tReturn.getReturnString());
-        model.addAttribute("function", "transfer");
+        model.addAttribute("function", ServiceTypeEnum.TRANSFER.getDesc());
         return "transaction";
     }
 
@@ -69,11 +71,11 @@ public class MyController {
 
         TReturn tReturn = demoService.inquire(tParam);
         SaveRecordDto<TReturn> saveRecordDto =
-                new SaveRecordDto<>(tParam, tReturn, "query", 1);
+                new SaveRecordDto<>(tParam, tReturn, ServiceTypeEnum.QUERY.getDesc(), 1);
         recordService.saveRecord(saveRecordDto);
 
         model.addAttribute("result", tReturn.getReturnString());
-        model.addAttribute("function", "query");
+        model.addAttribute("function", ServiceTypeEnum.QUERY.getDesc());
         return "transaction";
     }
 
@@ -83,11 +85,12 @@ public class MyController {
                            @NotNull Model model) throws Exception {
         TParam tParam = new TParam(cardId, money);
         TReturn tReturn = demoService.withdraw(tParam);
-        SaveRecordDto<TReturn> saveRecordDto = new SaveRecordDto<>(tParam, tReturn, "withdraw", 1);
+        SaveRecordDto<TReturn> saveRecordDto =
+                new SaveRecordDto<>(tParam, tReturn, ServiceTypeEnum.WITHDRAW.getDesc(), 1);
         recordService.saveRecord(saveRecordDto);
 
         model.addAttribute("result", tReturn.getReturnString());
-        model.addAttribute("function", "withdraw");
+        model.addAttribute("function", ServiceTypeEnum.WITHDRAW.getDesc());
         return "transaction";
     }
 
@@ -97,11 +100,12 @@ public class MyController {
                           @NotNull Model model) throws Exception {
         TParam tParam = new TParam(cardId, money);
         TReturn tReturn = demoService.deposit(tParam);
-        SaveRecordDto<TReturn> saveRecordDto = new SaveRecordDto<>(tParam, tReturn, "deposit", 1);
+        SaveRecordDto<TReturn> saveRecordDto =
+                new SaveRecordDto<>(tParam, tReturn, ServiceTypeEnum.DEPOSIT.getDesc(), 1);
         recordService.saveRecord(saveRecordDto);
 
         model.addAttribute("result", tReturn.getReturnString());
-        model.addAttribute("function", "deposit");
+        model.addAttribute("function", ServiceTypeEnum.DEPOSIT.getDesc());
         return "transaction";
     }
 }

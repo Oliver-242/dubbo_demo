@@ -5,6 +5,7 @@ import org.apache.dubbo.springboot.demo.provider.SnowService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+
 /**
  * @author caijizhou
  * @date 2023/08/31 16:00
@@ -15,8 +16,7 @@ public class InitAfterStart implements CommandLineRunner {
     private SnowService snowService;
 
     @Override
-    public void run(String... rags) throws Exception {
+    public void run(String... args) throws Exception {
         snowService.initiator();
-        System.out.println("fff");
     }
 }

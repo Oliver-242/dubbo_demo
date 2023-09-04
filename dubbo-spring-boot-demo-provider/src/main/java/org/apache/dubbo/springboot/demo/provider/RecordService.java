@@ -2,7 +2,6 @@ package org.apache.dubbo.springboot.demo.provider;
 
 import org.apache.dubbo.springboot.demo.model.TReturn;
 import org.apache.dubbo.springboot.demo.model.dto.SaveRecordDto;
-import org.springframework.scheduling.annotation.Async;
 
 import java.util.concurrent.CompletableFuture;
 
