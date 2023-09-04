@@ -61,12 +61,18 @@ public class MyController {
     @PostMapping("/query")
     public String query(@RequestParam("cardid") String cardId, @NotNull Model model) throws Exception {
         TParam tParam = new TParam(cardId);
-        CompletableFuture<TReturn> tReturn = demoService.inquire(tParam);
-        SaveRecordDto<CompletableFuture<TReturn>> saveRecordDto =
+//        CompletableFuture<TReturn> tReturn = demoService.inquireAsync(tParam);
+//        SaveRecordDto<CompletableFuture<TReturn>> saveRecordDto =
+//                new SaveRecordDto<>(tParam, tReturn, "query", 1);
+//        recordService.saveRecordAsync(saveRecordDto);
+//        var res = tReturn.get();
+
+        TReturn tReturn = demoService.inquire(tParam);
+        SaveRecordDto<TReturn> saveRecordDto =
                 new SaveRecordDto<>(tParam, tReturn, "query", 1);
-        recordService.saveRecordAsync(saveRecordDto);
-        var res = tReturn.get();
-        model.addAttribute("result", res.getReturnString());
+        recordService.saveRecord(saveRecordDto);
+
+        model.addAttribute("result", tReturn.getReturnString());
         model.addAttribute("function", "query");
         return "transaction";
     }

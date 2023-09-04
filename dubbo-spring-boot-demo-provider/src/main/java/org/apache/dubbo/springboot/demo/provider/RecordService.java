@@ -13,6 +13,5 @@ import java.util.concurrent.CompletableFuture;
 public interface RecordService {
     void saveRecord(SaveRecordDto<TReturn> saveRecordDto);
 
-    @Async
     void saveRecordAsync(SaveRecordDto<CompletableFuture<TReturn>> saveRecordDto) throws Exception;
 }

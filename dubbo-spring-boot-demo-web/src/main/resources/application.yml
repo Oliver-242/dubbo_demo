@@ -4,12 +4,15 @@ dubbo:
   protocol:
     name: dubbo
     port: -1
-    threads: 500
+    threads: 5000
     thread-pool: fixed
+
   registry:
     address: zookeeper://${zookeeper.address:127.0.0.1}:2181
 
 spring:
+  jmx:
+    enabled: false
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
@@ -19,6 +22,14 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    jedis:
+      pool:
+        enabled: true
+    timeout: 60
+
 #  datasource:
 #    url: jdbc:mysql://8.147.4.249:3306/myfirst
 #    username: root
@@ -26,10 +37,13 @@ spring:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 
 server:
+
   port: 8989
   tomcat:
     threads:
-      max: 200
+      max: 5000
+    accept-count: 5000
+    max-connections: 8192
 #  address: 0.0.0.0
 
 mybatis:

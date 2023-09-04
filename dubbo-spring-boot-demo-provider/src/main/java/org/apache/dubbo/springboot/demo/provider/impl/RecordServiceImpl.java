@@ -9,6 +9,7 @@ import org.apache.dubbo.springboot.demo.model.TransactionRecords;
 import org.apache.dubbo.springboot.demo.model.dto.SaveRecordDto;
 import org.apache.dubbo.springboot.demo.provider.RecordService;
 import org.apache.dubbo.springboot.demo.provider.SnowService;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +39,7 @@ public class RecordServiceImpl implements RecordService {
      * @param saveRecordDto 整合多方信息组成流水单号的要素
      */
     @Override
+    @Async
     public void saveRecord(SaveRecordDto<TReturn> saveRecordDto) {
         TransactionRecords transactionRecords = new TransactionRecords();
 
@@ -55,6 +57,7 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
+    @Async
     public void saveRecordAsync(SaveRecordDto<CompletableFuture<TReturn>> saveRecordDto) throws Exception {
         TransactionRecords transactionRecords = new TransactionRecords();
 

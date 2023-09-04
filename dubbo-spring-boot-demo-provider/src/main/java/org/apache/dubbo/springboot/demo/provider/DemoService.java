@@ -16,6 +16,8 @@ public interface DemoService {
     TReturn withdraw(TParam tParam) throws Exception;
 
     TReturn transfer(TParam tParam) throws Exception;
-    @Async
-    CompletableFuture<TReturn> inquire(TParam tParam) throws Exception;
+
+    CompletableFuture<TReturn> inquireAsync(TParam tParam) throws Exception;
+
+    TReturn inquire(TParam tParam) throws Exception;
 }
