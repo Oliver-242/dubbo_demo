@@ -1,6 +1,7 @@
 package org.apache.dubbo.springboot.demo.model;
 
 import lombok.Data;
+import lombok.Getter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -20,10 +21,6 @@ public class TReturn implements Serializable {
     private long data;
 
     private String returnString;
-
-//    public String getReturnString() {
-//        return returnString;
-//    }
 
     public TReturn() {
         status = 0;

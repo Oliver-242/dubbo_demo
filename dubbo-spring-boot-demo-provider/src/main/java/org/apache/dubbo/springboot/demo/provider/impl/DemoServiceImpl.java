@@ -36,6 +36,7 @@ public class DemoServiceImpl implements DemoService {
 
     Logger logger = LoggerFactory.getLogger(DemoServiceImpl.class);
 
+    private final String prefix = "balance_";
 
     @Autowired
     public DemoServiceImpl(DepositCardsDao depositCardsDao) {
@@ -51,6 +52,7 @@ public class DemoServiceImpl implements DemoService {
             res.setStatus(1);
             res.setReturnString("查询结果为空！");
         } else {
+            syncToRedis(tParam.getFirstAccount());
             res.setReturnString("成功向" + tParam.getFirstAccount() + "存入" + tParam.getMoney() + "元！");
         }
         return res;
@@ -70,6 +72,7 @@ public class DemoServiceImpl implements DemoService {
                 res.setStatus(2);
                 res.setReturnString("余额不足！");
             } else {
+                syncToRedis(tParam.getFirstAccount());
                 res.setReturnString("成功从" + tParam.getFirstAccount() + "提现" + tParam.getMoney() + "元");
             }
         }
@@ -91,6 +94,8 @@ public class DemoServiceImpl implements DemoService {
                 res.setReturnString("转账失败！");
                 throw new Exception("转账失败");
             } else {
+                syncToRedis(tParam.getFirstAccount());
+                syncToRedis(tParam.getSecondAccount());
                 res.setReturnString("由" + tParam.getFirstAccount() + "向" + tParam.getSecondAccount() + "转账"
                     + tParam.getMoney() + "元！");
             }
@@ -100,7 +105,7 @@ public class DemoServiceImpl implements DemoService {
 
     @Override
     public TReturn inquire(TParam tParam) throws Exception {
-        String cacheKey = "balance_" + tParam.getFirstAccount();
+        String cacheKey = this.prefix + tParam.getFirstAccount();
         TReturn res = new TReturn();
 
         try (Jedis jedis = jedisPool.getResource()) {
@@ -122,33 +127,21 @@ public class DemoServiceImpl implements DemoService {
                 res.setReturnString("账户" + tParam.getFirstAccount() + "的余额为：" + money);
 
                 // 将查询结果缓存到 Redis 中，设置过期时间
-                jedis.setex(cacheKey, 300, String.valueOf(res.getData())); // 设置缓存时间为1小时
+                jedis.setex(cacheKey, 300, String.valueOf(res.getData()));
             }
         } catch (Exception e) {
-
+            logger.info("缓存出错：" + e.getMessage());
+            throw new Exception("缓存出错！");
         }
 
         return res;
     }
 
-//    @Override
-//    public CompletableFuture<TReturn> inquire(TParam tParam) throws Exception {;
-//        TReturn res = new TReturn();
-//        Long money = depositCardsDao.selectMoneyByCardId(tParam.getFirstAccount());
-//        if (money == null) {
-//            res.setStatus(1);
-//            res.setReturnString("查询结果为空！");
-//        } else {
-//            res.setData(money);
-//            res.setReturnString("账户" + tParam.getFirstAccount() + "的余额为：" + money);
-//        }
-//        return CompletableFuture.completedFuture(res);
-//    }
 
     @Override
     @Async
     public CompletableFuture<TReturn> inquireAsync(TParam tParam) throws Exception {
-        String cacheKey = "balance_" + tParam.getFirstAccount();
+        String cacheKey = this.prefix + tParam.getFirstAccount();
         TReturn res = new TReturn();
 
         try (Jedis jedis = jedisPool.getResource()) {
@@ -170,13 +163,28 @@ public class DemoServiceImpl implements DemoService {
                 res.setReturnString("账户" + tParam.getFirstAccount() + "的余额为：" + money);
 
                 // 将查询结果缓存到 Redis 中，设置过期时间
-                jedis.setex(cacheKey, 300, String.valueOf(res.getData())); // 设置缓存时间为1小时
+                jedis.setex(cacheKey, 300, String.valueOf(res.getData()));
             }
         } catch (Exception e) {
-            logger.info("数据库查询出错：" + e.getMessage());
+            logger.info("缓存出错：" + e.getMessage());
+            throw new Exception("缓存出错！");
         }
 
         return CompletableFuture.completedFuture(res);
+    }
+
+    private void syncToRedis(String cardId) throws Exception {
+        String cacheKey = this.prefix + cardId;
+        long money = depositCardsDao.selectMoneyByCardId(cardId);
+        try (Jedis jedis = jedisPool.getResource()) {
+            String cachedResult = jedis.get(cacheKey);
+            if(cachedResult != null) {
+                jedis.setex(cacheKey, 300, String.valueOf(money));
+            }
+        } catch (Exception ex) {
+            logger.info("缓存出错：" + ex.getMessage());
+            throw new Exception("缓存出错！");
+        }
     }
 
 }

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.springboot.demo.mapper.TransactionRecordsDao;
+import org.apache.dubbo.springboot.demo.model.TRRegister;
 import org.apache.dubbo.springboot.demo.model.TReturn;
 import org.apache.dubbo.springboot.demo.model.dao.TransactionRecords;
 import org.apache.dubbo.springboot.demo.model.dto.SaveRecordDto;
@@ -58,7 +59,7 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     @Async
-    public void saveRecordAsync(SaveRecordDto<CompletableFuture<TReturn>> saveRecordDto) throws Exception {
+    public void saveRecordServiceAsync(SaveRecordDto<CompletableFuture<TReturn>> saveRecordDto) throws Exception {
         TransactionRecords transactionRecords = new TransactionRecords();
 
         String id = snowService.getGeneratedId();
@@ -72,6 +73,12 @@ public class RecordServiceImpl implements RecordService {
         transactionRecords.setMoney(saveRecordDto.getTReturn().get().getData());
 
         transactionRecordsDao.saveRecord(transactionRecords);
+    }
+
+    @Override
+    @Async
+    public void saveRecordRegLogAsync(SaveRecordDto<CompletableFuture<TRRegister>> saveRecordDto) throws Exception {
+
     }
 
     /**

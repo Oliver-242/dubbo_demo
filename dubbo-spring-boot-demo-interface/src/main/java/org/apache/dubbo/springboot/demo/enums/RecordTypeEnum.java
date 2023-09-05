@@ -8,15 +8,17 @@ import lombok.Getter;
  * @date 2023/09/04 11:25
  */
 @Getter
-public enum ServiceTypeEnum {
+public enum RecordTypeEnum {
     TRANSFER("transfer"),
     QUERY("query"),
     WITHDRAW("withdraw"),
-    DEPOSIT("deposit");
+    DEPOSIT("deposit"),
+    LOGIN("login"),
+    REGISTER("register");
 
     private final String desc;
 
-    ServiceTypeEnum(String desc) {
+    RecordTypeEnum(String desc) {
         this.desc = desc;
     }
 }
