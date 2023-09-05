@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>菜粥天地银行</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <title>Center Image</title>
+    <style>
+        .center-container {
+            display: flex; /* 使用 Flex 布局 */
+            justify-content: center; /* 在水平方向上居中 */
+            align-items: center; /* 在垂直方向上居中 */
+            height: 50vh;
+        }
+        .center-container img{
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <form action="/login" method="post">
+        <div class="center-container">
+            <img th:src="@{/images/img.png}" alt="">
+        </div>
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+        <input type="text" name="username" class="form-control" required="" autofocus="" >
+        <input type="password" name="password" class="form-control" required="" >
+
+        <label for="userType">Select User Type:</label>
+        <select name="userType" id="userType" class="form-control">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+        </select>
+
+<!--        <label>-->
+<!--            <input type="checkbox" id="remember" name="remember" >-->
+<!--        </label>-->
+<!--        <label for="remember">Remember Me</label>-->
+        <button class="btn btn-lg btn-primary btn-block" type="submit" >sign in</button>
+
+        <p style="text-align: center;">
+            <u><a href="/register">Register</a></u>
+        </p>
+    </form>
+</div>
+</body>
+</html>

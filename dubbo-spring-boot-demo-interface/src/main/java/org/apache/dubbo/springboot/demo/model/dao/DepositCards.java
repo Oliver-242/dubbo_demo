@@ -1,4 +1,4 @@
-package org.apache.dubbo.springboot.demo.model;
+package org.apache.dubbo.springboot.demo.model.dao;
 
 import lombok.Data;
 

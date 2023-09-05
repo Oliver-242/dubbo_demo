@@ -32,10 +32,8 @@ public class MyController {
     private RecordService recordService;
 
     @GetMapping(value = "/")
-    public String home(@NotNull Model model) {
-        model.addAttribute("function", ServiceTypeEnum.TRANSFER.getDesc());
-        model.addAttribute("result", "");
-        return "transaction";
+    public String home() {
+        return "syslogin";
     }
 
     @PostMapping("/transfer")
@@ -63,18 +61,18 @@ public class MyController {
     @PostMapping("/query")
     public String query(@RequestParam("cardid") String cardId, @NotNull Model model) throws Exception {
         TParam tParam = new TParam(cardId);
-//        CompletableFuture<TReturn> tReturn = demoService.inquireAsync(tParam);
-//        SaveRecordDto<CompletableFuture<TReturn>> saveRecordDto =
-//                new SaveRecordDto<>(tParam, tReturn, "query", 1);
-//        recordService.saveRecordAsync(saveRecordDto);
-//        var res = tReturn.get();
+        CompletableFuture<TReturn> tReturn = demoService.inquireAsync(tParam);
+        var res = tReturn.get();
+        SaveRecordDto<CompletableFuture<TReturn>> saveRecordDto =
+                new SaveRecordDto<>(tParam, tReturn, "query", 1);
+        recordService.saveRecordAsync(saveRecordDto);
 
-        TReturn tReturn = demoService.inquire(tParam);
-        SaveRecordDto<TReturn> saveRecordDto =
-                new SaveRecordDto<>(tParam, tReturn, ServiceTypeEnum.QUERY.getDesc(), 1);
-        recordService.saveRecord(saveRecordDto);
+//        TReturn tReturn = demoService.inquire(tParam);
+//        SaveRecordDto<TReturn> saveRecordDto =
+//                new SaveRecordDto<>(tParam, tReturn, ServiceTypeEnum.QUERY.getDesc(), 1);
+//        recordService.saveRecord(saveRecordDto);
 
-        model.addAttribute("result", tReturn.getReturnString());
+        model.addAttribute("result", res.getReturnString());
         model.addAttribute("function", ServiceTypeEnum.QUERY.getDesc());
         return "transaction";
     }

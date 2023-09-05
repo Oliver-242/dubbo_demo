@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center; /* 在水平方向上居中 */
+            align-items: center; /* 在垂直方向上居中 */
+            height: 100vh; /* 让 body 占据整个视口高度 */
+            margin: 0; /* 去除默认的外边距 */
+            padding: 0; /* 去除默认的内边距 */
+        }
+
+        .container {
+            width: 400px; /* 设置容器的宽度 */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 添加按住图标时的颜色效果 */
+        #togglePasswordBtn:active {
+            color: red;
+        }
+        #toggleConfirmPasswordBtn:active {
+            color: red;
+        }
+    </style>
+</head>
+<body onmouseup="hidePassword('password'); hidePassword('confirmPassword')">
+<div class="container" onmouseup="hidePassword('password'); hidePassword('confirmPassword')">
+    <h2 style="text-align: center">User Registration</h2>
+    <form action="/register" method="post" onsubmit="return validateForm()">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" class="form-control" required="required" th:field="${user.name}">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-group">
+                <input type="password" name="password" id="password" class="form-control" required="required" th:field="${user.password}">
+                <div class="input-group-append">
+                    <button type="button" id="togglePasswordBtn" class="btn btn-outline-secondary" onmousedown="showPassword('password')" onmouseup="hidePassword('password')">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <div class="input-group">
+                <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" required="required">
+                <div class="input-group-append">
+                    <button type="button" id="toggleConfirmPasswordBtn" class="btn btn-outline-secondary" onmousedown="showPassword('confirmPassword')" onmouseup="hidePassword('confirmPassword')">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+            <p id="passwordError" style="color: red; display: none;"></p>
+        </div>
+        <div class="form-group">
+            <label for="nickname">Nickname</label>
+            <input type="text" name="nickname" id="nickname" class="form-control" placeholder="选填" th:field="${user.nickname}">
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+    </form>
+
+    <!-- 引入 Font Awesome 的 JavaScript 库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <script>
+        var passwordInput = document.getElementById('password');
+        var confirmPasswordInput = document.getElementById('confirmPassword');
+
+        function validateForm() {
+            var password = passwordInput.value;
+            var confirmPassword = confirmPasswordInput.value;
+            var passwordError = document.getElementById('passwordError');
+
+            if (password !== confirmPassword) {
+                passwordError.textContent = 'Passwords do not match.';
+                passwordError.style.display = 'block';
+                return false; // 阻止表单提交
+            } else {
+                passwordError.style.display = 'none';
+                var passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{1,16}$/; // 密码格式正则表达式
+                if (!passwordRegex.test(password)) {
+                    passwordError.textContent = 'Password must contain only letters and numbers and be 1 to 16 characters long.';
+                    passwordError.style.display = 'block';
+                    return false; // 阻止表单提交
+                }
+                return true; // 允许表单提交
+            }
+        }
+
+        function showPassword(inputId) {
+            var input = document.getElementById(inputId);
+            input.type = 'text';
+        }
+
+        function hidePassword(inputId) {
+            var input = document.getElementById(inputId);
+            input.type = 'password';
+        }
+    </script>
+</div>
+</body>
+</html>

@@ -7,13 +7,14 @@ import org.apache.dubbo.springboot.demo.mapper.DepositCardsDao;
 import org.apache.dubbo.springboot.demo.model.TParam;
 import org.apache.dubbo.springboot.demo.model.TReturn;
 import org.apache.dubbo.springboot.demo.provider.DemoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.concurrent.CompletableFuture;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -32,6 +33,8 @@ public class DemoServiceImpl implements DemoService {
 
     @Autowired
     private JedisPool jedisPool; // 注入 Jedis 实例
+
+    Logger logger = LoggerFactory.getLogger(DemoServiceImpl.class);
 
 
     @Autowired
@@ -119,10 +122,10 @@ public class DemoServiceImpl implements DemoService {
                 res.setReturnString("账户" + tParam.getFirstAccount() + "的余额为：" + money);
 
                 // 将查询结果缓存到 Redis 中，设置过期时间
-                jedis.setex(cacheKey, 3600, String.valueOf(res.getData())); // 设置缓存时间为1小时
+                jedis.setex(cacheKey, 300, String.valueOf(res.getData())); // 设置缓存时间为1小时
             }
         } catch (Exception e) {
-            // 处理异常
+
         }
 
         return res;
@@ -152,7 +155,8 @@ public class DemoServiceImpl implements DemoService {
             // 先尝试从缓存中获取数据
             String cachedResult = jedis.get(cacheKey);
             if (cachedResult != null) {
-                res.setReturnString(cachedResult);
+                res.setData(Long.parseLong(cachedResult));
+                res.setReturnString("账户" + tParam.getFirstAccount() + "的余额为：" + cachedResult);
                 return CompletableFuture.completedFuture(res); // 从缓存返回结果
             }
 
@@ -166,10 +170,10 @@ public class DemoServiceImpl implements DemoService {
                 res.setReturnString("账户" + tParam.getFirstAccount() + "的余额为：" + money);
 
                 // 将查询结果缓存到 Redis 中，设置过期时间
-                jedis.setex(cacheKey, 3600, res.getReturnString()); // 设置缓存时间为1小时
+                jedis.setex(cacheKey, 300, String.valueOf(res.getData())); // 设置缓存时间为1小时
             }
         } catch (Exception e) {
-            // 处理异常
+            logger.info("数据库查询出错：" + e.getMessage());
         }
 
         return CompletableFuture.completedFuture(res);
