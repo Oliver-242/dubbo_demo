@@ -15,6 +15,8 @@ public class UserInfos {
 
     private String userName;
 
+    private String phoneNumber;
+
     /**
      * 不超过16位
      */
@@ -56,6 +58,7 @@ public class UserInfos {
             }
             UserInfos userInfos = new UserInfos();
             userInfos.setUserName(this.tpRegister.getUserName());
+            userInfos.setPhoneNumber(this.tpRegister.getPhoneNumber());
             userInfos.setPassword(this.tpRegister.getPassword());
             userInfos.setNickName(this.tpRegister.getNickName());
             userInfos.setIdentification("user");
@@ -74,6 +77,7 @@ public class UserInfos {
             }
             TPRegister tpRegister = new TPRegister();
             tpRegister.setUserName(this.userInfos.getUserName());
+            tpRegister.setPhoneNumber(this.userInfos.getPhoneNumber());
             tpRegister.setUserName(this.userInfos.getPassword());
             tpRegister.setUserName(this.userInfos.getNickName());
             return tpRegister;

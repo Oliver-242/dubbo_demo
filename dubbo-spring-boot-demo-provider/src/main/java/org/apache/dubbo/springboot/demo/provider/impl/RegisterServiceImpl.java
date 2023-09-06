@@ -27,11 +27,10 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public TRRegister loginVerify(TPRegister tpRegister) {
-        List<UserInfos> userInfosList = this.userInfosDao.queryAllByUserName(tpRegister.getUserName())
-                .stream().map(info -> UserInfos.builder().setTpRegister(UserInfos.converter()
-                    .setUserInfos(info).toTPRegister()).build()).toList();
+        List<UserInfos> userInfosList = this.userInfosDao.queryAllByUserName(tpRegister.getPhoneNumber());
         for(UserInfos info: userInfosList) {
-            if(tpRegister.getPassword().equals(info.getPassword())) {
+            if(tpRegister.getPassword().equals(info.getPassword()) &&
+                    tpRegister.getUserType().equals(info.getIdentification())) {
                 return new TRRegister(true, "登录成功！");
             }
         }

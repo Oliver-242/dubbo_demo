@@ -16,10 +16,14 @@ public class TPRegister implements Serializable {
 
     private String userName;
 
+    private String phoneNumber;
+
     private String password;
 
     /**
      * 昵称可为空
      */
     private String nickName;
+
+    private String userType;
 }

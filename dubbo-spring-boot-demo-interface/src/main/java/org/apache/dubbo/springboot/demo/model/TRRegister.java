@@ -2,8 +2,6 @@ package org.apache.dubbo.springboot.demo.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import org.apache.dubbo.springboot.demo.model.dao.UserInfos;
 
 import java.io.Serial;
 import java.io.Serializable;

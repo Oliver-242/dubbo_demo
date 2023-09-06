@@ -21,12 +21,16 @@
             display: flex; /* 使用 Flex 布局 */
             justify-content: center; /* 在水平方向上居中 */
             align-items: center; /* 在垂直方向上居中 */
-            height: 50vh;
+            height: 41vh;
         }
         .center-container img{
             width: 300px;
             height: 300px;
         }
+        .space {
+            margin: 10px 0;
+        }
+
     </style>
 </head>
 <body>
@@ -37,23 +41,24 @@
         </div>
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
         <p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
-        <input type="text" name="username" class="form-control" required="" autofocus="" >
-        <input type="password" name="password" class="form-control" required="" >
+        <input type="text" th:text="${phonenumber}" name="phonenumber" class="form-control" placeholder="phonenumber" required="" autofocus="" >
+        <div class="space"></div>
+        <input type="password" name="password" class="form-control" placeholder="password" required="" >
 
         <label for="userType">Select User Type:</label>
         <select name="userType" id="userType" class="form-control">
             <option value="user">User</option>
             <option value="admin">Admin</option>
         </select>
+        <div class="space"></div>
 
-<!--        <label>-->
-<!--            <input type="checkbox" id="remember" name="remember" >-->
-<!--        </label>-->
-<!--        <label for="remember">Remember Me</label>-->
         <button class="btn btn-lg btn-primary btn-block" type="submit" >sign in</button>
 
         <p style="text-align: center;">
             <u><a href="/register">Register</a></u>
+        </p>
+        <p style="text-align: center; color: dimgrey">
+            Forget password please contact administrator email: cjz210oliver@gmail.com
         </p>
     </form>
 </div>

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Objects;
+
 /**
  * @author caijizhou
  * @date 2023/09/05 14:00
@@ -22,17 +24,23 @@ public class LoginController {
     private RegisterService registerService;
 
     @PostMapping(value = "/login")
-    public String login(@RequestParam("username") String userName,
+    public String login(@RequestParam("phonenumber") String phoneNumber,
                         @RequestParam("password") String password,
                         @RequestParam("userType") String userType, Model model) {
         TPRegister tpRegister = new TPRegister();
-        tpRegister.setUserName(userName);
+        tpRegister.setPhoneNumber(phoneNumber);
         tpRegister.setPassword(password);
-        tpRegister.setNickName(userType);
+        tpRegister.setUserType(userType);
         if (this.registerService.loginVerify(tpRegister).isStatus()) {
-            return "transaction";
+            model.addAttribute("msg", "");
+            if(Objects.equals(userType, "user")) {
+                return "transaction";
+            } else {
+                return "admin";
+            }
         } else {
             model.addAttribute("msg", "登录失败!");
+            model.addAttribute("phonenumber", phoneNumber);
             return "syslogin";
 
         }
@@ -44,10 +52,13 @@ public class LoginController {
     }
 
     @PostMapping(value = "/sysregister")
-    public String sysRegister(@RequestParam("name") String userName, @RequestParam("password") String password,
-                              @RequestParam("nickname") String nickName, Model model) {
+    public String sysRegister(@RequestParam("name") String userName,
+                              @RequestParam("password") String password,
+                              @RequestParam("nickname") String nickName,
+                              @RequestParam("phonenumber") String phoneNumber, Model model) {
         TPRegister tpRegister = new TPRegister();
         tpRegister.setUserName(userName);
+        tpRegister.setPhoneNumber(phoneNumber);
         tpRegister.setPassword(password);
         tpRegister.setNickName(nickName);
         TRRegister trRegister = registerService.createUser(tpRegister);

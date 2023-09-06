@@ -18,5 +18,5 @@ public interface UserInfosDao {
 
     List<UserInfos> queryAllUserInfo();
 
-    List<UserInfos> queryAllByUserName(@Param("username") String userName);
+    List<UserInfos> queryAllByUserName(@Param("phonenumber") String phoneNumber);
 }
