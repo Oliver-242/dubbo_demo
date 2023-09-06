@@ -8,7 +8,7 @@ import org.apache.dubbo.springboot.demo.model.TRRegister;
  * @date 2023/09/05 17:50
  */
 public interface RegisterService {
-
+    TRRegister loginVerify(TPRegister tpRegister);
 
     TRRegister createUser(TPRegister tpRegister);
 }

@@ -8,16 +8,17 @@
         <result column="nickname" property="nickName" jdbcType="VARCHAR"/>
         <result column="creditcardnum" property="creditCardNum" jdbcType="INTEGER"/>
         <result column="depositcardnum" property="depositCardNum" jdbcType="INTEGER"/>
+        <result column="identification" property="identification" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="All_Column_List">
-        userid, username, password, nickname, creditcardnum, depositcardnum
+        userid, username, password, nickname, creditcardnum, depositcardnum, identification
     </sql>
 
     <insert id="createUserInfo" parameterType="org.apache.dubbo.springboot.demo.model.dao.UserInfos">
         insert into
-            userinfos(userid, username, password, nickname, creditcardnum, depositcardnum)
-        values (#{user.userId}, #{user.userName}, #{user.password}, #{user.nickName}, #{user.creditCardNum}, #{user.depositCardNum})
+            userinfos(username, password, nickname, identification)
+        values (#{user.userName}, #{user.password}, #{user.nickName}, #{user.identification})
     </insert>
 
     <select id="queryAllUserInfo" resultMap="BaseResultMap">

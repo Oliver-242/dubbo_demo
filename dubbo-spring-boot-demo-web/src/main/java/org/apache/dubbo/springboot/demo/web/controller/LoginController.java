@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.thymeleaf.util.StringUtils;
 
 /**
  * @author caijizhou
@@ -24,11 +23,16 @@ public class LoginController {
 
     @PostMapping(value = "/login")
     public String login(@RequestParam("username") String userName,
-                        @RequestParam("password") String passWord, Model model) {
-        if (!StringUtils.isEmpty(userName) && "123123".equals(passWord)) {
+                        @RequestParam("password") String password,
+                        @RequestParam("userType") String userType, Model model) {
+        TPRegister tpRegister = new TPRegister();
+        tpRegister.setUserName(userName);
+        tpRegister.setPassword(password);
+        tpRegister.setNickName(userType);
+        if (this.registerService.loginVerify(tpRegister).isStatus()) {
             return "transaction";
         } else {
-            model.addAttribute("msg", "用户名或者密码错误!");
+            model.addAttribute("msg", "登录失败!");
             return "syslogin";
 
         }

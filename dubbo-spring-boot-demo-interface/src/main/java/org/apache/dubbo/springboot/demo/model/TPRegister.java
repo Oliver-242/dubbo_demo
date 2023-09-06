@@ -1,7 +1,6 @@
 package org.apache.dubbo.springboot.demo.model;
 
 import lombok.Data;
-import org.apache.dubbo.springboot.demo.model.dao.UserInfos;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -19,5 +18,8 @@ public class TPRegister implements Serializable {
 
     private String password;
 
+    /**
+     * 昵称可为空
+     */
     private String nickName;
 }

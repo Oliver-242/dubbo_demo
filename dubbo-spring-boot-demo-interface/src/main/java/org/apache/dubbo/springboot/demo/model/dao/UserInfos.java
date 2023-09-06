@@ -1,6 +1,9 @@
 package org.apache.dubbo.springboot.demo.model.dao;
 
 import lombok.Data;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+import org.apache.dubbo.springboot.demo.model.TPRegister;
 
 /**
  * @author caijizhou
@@ -31,4 +34,49 @@ public class UserInfos {
      * 上限三张
      */
     private int depositCardNum;
+
+    private String identification;
+
+    public static UserInfos.Builder builder() {
+        return new UserInfos.Builder();
+    }
+
+    public static UserInfos.Converter converter() {
+        return new UserInfos.Converter();
+    }
+
+    @Accessors(chain = true)
+    public static class Builder {
+        @Setter
+        private TPRegister tpRegister;
+
+        public UserInfos build() {
+            if(this.tpRegister == null) {
+                return null;
+            }
+            UserInfos userInfos = new UserInfos();
+            userInfos.setUserName(this.tpRegister.getUserName());
+            userInfos.setPassword(this.tpRegister.getPassword());
+            userInfos.setNickName(this.tpRegister.getNickName());
+            userInfos.setIdentification("user");
+            return userInfos;
+        }
+    }
+
+    @Accessors(chain = true)
+    public static class Converter {
+        @Setter
+        private UserInfos userInfos;
+
+        public TPRegister toTPRegister() {
+            if(userInfos == null) {
+                return null;
+            }
+            TPRegister tpRegister = new TPRegister();
+            tpRegister.setUserName(this.userInfos.getUserName());
+            tpRegister.setUserName(this.userInfos.getPassword());
+            tpRegister.setUserName(this.userInfos.getNickName());
+            return tpRegister;
+        }
+    }
 }
