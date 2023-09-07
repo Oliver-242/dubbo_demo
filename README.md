@@ -1,4 +1,5 @@
 ### preliminary works
+主目录下的baseservices.bat一键启动（自行修改地址和环境变量）
 #### ***zookeeper注册中心***
 ```
 git clone --depth=1 --branch master git@github.com:apache/dubbo-samples.git
@@ -16,6 +17,7 @@ docker run --name some-zookeeper -p 2181:2181 --restart always -d zookeeper
 clone仓库后根据os三选一执行，即可建立注册中心
 #### ***mysql***
 版本8.0+，数据库名表名根据代码自行匹配
+#### ***redis***
 
 #### ***Test Program***
 ![image](https://github.com/Oliver-242/dubbo_demo/assets/74057449/54f4df2e-185f-455b-ab05-eec465e5ca76)
