@@ -1,5 +1,7 @@
 package org.apache.dubbo.springboot.demo.provider;
 
+import org.apache.dubbo.springboot.demo.model.TPRegister;
+import org.apache.dubbo.springboot.demo.model.TParam;
 import org.apache.dubbo.springboot.demo.model.TRRegister;
 import org.apache.dubbo.springboot.demo.model.TReturn;
 import org.apache.dubbo.springboot.demo.model.dto.SaveRecordDto;
@@ -11,9 +13,9 @@ import java.util.concurrent.CompletableFuture;
  * @date 2023/08/31 9:40
  */
 public interface RecordService {
-    void saveRecord(SaveRecordDto<TReturn> saveRecordDto);
+    void saveRecord(SaveRecordDto<TParam, TReturn> saveRecordDto);
 
-    void saveRecordServiceAsync(SaveRecordDto<CompletableFuture<TReturn>> saveRecordDto) throws Exception;
+    void saveRecordServiceAsync(SaveRecordDto<TParam, CompletableFuture<TReturn>> saveRecordDto) throws Exception;
 
-    void saveRecordRegLogAsync(SaveRecordDto<CompletableFuture<TRRegister>> saveRecordDto) throws Exception;
+    void saveRecordRegLogAsync(SaveRecordDto<TPRegister, TRRegister> saveRecordDto) throws Exception;
 }

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 /**
  * @author caijizhou
@@ -27,14 +26,12 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public TRRegister loginVerify(TPRegister tpRegister) {
-        List<UserInfos> userInfosList = this.userInfosDao.queryAllByUserName(tpRegister.getPhoneNumber());
-        for(UserInfos info: userInfosList) {
-            if(tpRegister.getPassword().equals(info.getPassword()) &&
-                    tpRegister.getUserType().equals(info.getIdentification())) {
-                return new TRRegister(true, "登录成功！");
-            }
+        UserInfos info = this.userInfosDao.queryAllByPhoneNumber(tpRegister.getPhoneNumber());
+        if(tpRegister.getPassword().equals(info.getPassword()) &&
+                tpRegister.getUserType().equals(info.getIdentification())) {
+            return new TRRegister(true, info.getUserId(), "登录成功！");
         }
-        return new TRRegister(false, "登录失败！");
+        return new TRRegister(false, info.getUserId(), "登录失败！");
     }
 
     @Override
@@ -47,6 +44,6 @@ public class RegisterServiceImpl implements RegisterService {
         } else {
             returnString = "注册失败！";
         }
-        return new TRRegister(status, returnString);
+        return new TRRegister(status, userInfos.getUserId(), returnString);
     }
 }

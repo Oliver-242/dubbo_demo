@@ -14,19 +14,19 @@ import java.util.concurrent.CompletableFuture;
  * @date 2023/08/31 10:30
  */
 @Data
-public class SaveRecordDto<T> implements Serializable {
+public class SaveRecordDto<T1, T2> implements Serializable {
     @Serial
     private static final long serialVersionUID = -8283476793301712821L;
 
-    private TParam tParam;
+    private T1 tParam;
 
-    private T tReturn;
+    private T2 tReturn;
 
     private String typeId;
 
     private long userId;
 
-    public SaveRecordDto(TParam tParam, T tReturn, String typeId, long userId) {
+    public SaveRecordDto(T1 tParam, T2 tReturn, String typeId, long userId) {
         this.tParam = tParam;
         this.tReturn = tReturn;
         this.typeId = typeId;

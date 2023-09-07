@@ -19,5 +19,7 @@ public class TRRegister implements Serializable {
     // 1代表成功，0代表失败
     private boolean status;
 
+    private long userId;
+
     private String returnString;
 }

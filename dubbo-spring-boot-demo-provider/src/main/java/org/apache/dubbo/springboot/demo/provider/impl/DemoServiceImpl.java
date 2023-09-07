@@ -52,6 +52,8 @@ public class DemoServiceImpl implements DemoService {
             res.setReturnString("查询结果为空！");
         } else {
             syncToRedis(tParam.getFirstAccount());
+            res.setData(tParam.getMoney());
+            res.setStatus(0);
             res.setReturnString("成功向" + tParam.getFirstAccount() + "存入" + tParam.getMoney() + "元！");
         }
         return res;
@@ -72,6 +74,8 @@ public class DemoServiceImpl implements DemoService {
                 res.setReturnString("余额不足！");
             } else {
                 syncToRedis(tParam.getFirstAccount());
+                res.setData(tParam.getMoney());
+                res.setStatus(0);
                 res.setReturnString("成功从" + tParam.getFirstAccount() + "提现" + tParam.getMoney() + "元");
             }
         }
@@ -95,6 +99,8 @@ public class DemoServiceImpl implements DemoService {
             } else {
                 syncToRedis(tParam.getFirstAccount());
                 syncToRedis(tParam.getSecondAccount());
+                res.setStatus(0);
+                res.setData(tParam.getMoney());
                 res.setReturnString("由" + tParam.getFirstAccount() + "向" + tParam.getSecondAccount() + "转账"
                     + tParam.getMoney() + "元！");
             }

@@ -36,6 +36,11 @@ public class MyController {
         return "syslogin";
     }
 
+    @GetMapping("/transfer")
+    public String dispTransfer() {
+        return "transaction";
+    }
+
     @PostMapping("/transfer")
     public String transfer(@RequestParam("sender") String sender,
                            @RequestParam("receiver") String receiver,
@@ -49,7 +54,7 @@ public class MyController {
         long money1 = Long.parseLong(money);
         TParam tParam = new TParam(sender, receiver, money1);
         TReturn tReturn = demoService.transfer(tParam);
-        SaveRecordDto<TReturn> saveRecordDto =
+        SaveRecordDto<TParam, TReturn> saveRecordDto =
                 new SaveRecordDto<>(tParam, tReturn, RecordTypeEnum.TRANSFER.getDesc(), 1);
         recordService.saveRecord(saveRecordDto);
 
@@ -63,7 +68,7 @@ public class MyController {
         TParam tParam = new TParam(cardId);
         CompletableFuture<TReturn> tReturn = demoService.inquireAsync(tParam);
         var res = tReturn.get();
-        SaveRecordDto<CompletableFuture<TReturn>> saveRecordDto =
+        SaveRecordDto<TParam, CompletableFuture<TReturn>> saveRecordDto =
                 new SaveRecordDto<>(tParam, tReturn, "query", 1);
         recordService.saveRecordServiceAsync(saveRecordDto);
 
@@ -78,7 +83,7 @@ public class MyController {
                            @NotNull Model model) throws Exception {
         TParam tParam = new TParam(cardId, money);
         TReturn tReturn = demoService.withdraw(tParam);
-        SaveRecordDto<TReturn> saveRecordDto =
+        SaveRecordDto<TParam, TReturn> saveRecordDto =
                 new SaveRecordDto<>(tParam, tReturn, RecordTypeEnum.WITHDRAW.getDesc(), 1);
         recordService.saveRecord(saveRecordDto);
 
@@ -93,7 +98,7 @@ public class MyController {
                           @NotNull Model model) throws Exception {
         TParam tParam = new TParam(cardId, money);
         TReturn tReturn = demoService.deposit(tParam);
-        SaveRecordDto<TReturn> saveRecordDto =
+        SaveRecordDto<TParam, TReturn> saveRecordDto =
                 new SaveRecordDto<>(tParam, tReturn, RecordTypeEnum.DEPOSIT.getDesc(), 1);
         recordService.saveRecord(saveRecordDto);
 

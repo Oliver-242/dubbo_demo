@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.springboot.demo.mapper.TransactionRecordsDao;
+import org.apache.dubbo.springboot.demo.model.TPRegister;
+import org.apache.dubbo.springboot.demo.model.TParam;
 import org.apache.dubbo.springboot.demo.model.TRRegister;
 import org.apache.dubbo.springboot.demo.model.TReturn;
 import org.apache.dubbo.springboot.demo.model.dao.TransactionRecords;
@@ -41,7 +43,7 @@ public class RecordServiceImpl implements RecordService {
      */
     @Override
     @Async
-    public void saveRecord(SaveRecordDto<TReturn> saveRecordDto) {
+    public void saveRecord(SaveRecordDto<TParam, TReturn> saveRecordDto) {
         TransactionRecords transactionRecords = new TransactionRecords();
 
         String id = snowService.getGeneratedId();
@@ -59,7 +61,7 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     @Async
-    public void saveRecordServiceAsync(SaveRecordDto<CompletableFuture<TReturn>> saveRecordDto) throws Exception {
+    public void saveRecordServiceAsync(SaveRecordDto<TParam, CompletableFuture<TReturn>> saveRecordDto) throws Exception {
         TransactionRecords transactionRecords = new TransactionRecords();
 
         String id = snowService.getGeneratedId();
@@ -77,8 +79,17 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     @Async
-    public void saveRecordRegLogAsync(SaveRecordDto<CompletableFuture<TRRegister>> saveRecordDto) throws Exception {
+    public void saveRecordRegLogAsync(SaveRecordDto<TPRegister, TRRegister> saveRecordDto) throws Exception {
+        TransactionRecords transactionRecords = new TransactionRecords();
 
+        String id = snowService.getGeneratedId();
+
+        transactionRecords.setId(id);
+        transactionRecords.setUserId(saveRecordDto.getUserId());
+        transactionRecords.setTypeId(saveRecordDto.getTypeId());
+        transactionRecords.setStatus(saveRecordDto.getTReturn().isStatus() ? 0 : 1);   //0代表登录成功
+
+        transactionRecordsDao.saveRecord(transactionRecords);
     }
 
     /**

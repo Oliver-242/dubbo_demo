@@ -41,9 +41,9 @@
         </div>
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
         <p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
-        <input type="text" th:text="${phonenumber}" name="phonenumber" class="form-control" placeholder="phonenumber" required="" autofocus="" >
+        <input type="text" th:value="${phonenumber}" name="phonenumber" class="form-control" placeholder="phonenumber" required="" autofocus="" >
         <div class="space"></div>
-        <input type="password" name="password" class="form-control" placeholder="password" required="" >
+        <input type="password" name="password" th:value="${none}" class="form-control" placeholder="password" required="" >
 
         <label for="userType">Select User Type:</label>
         <select name="userType" id="userType" class="form-control">
