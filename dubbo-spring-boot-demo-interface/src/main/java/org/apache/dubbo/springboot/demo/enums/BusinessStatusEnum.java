@@ -9,7 +9,9 @@ import lombok.Getter;
 @Getter
 public enum BusinessStatusEnum {
     ACTIVE("正常"),
-    FROZEN("冻结");
+    FROZEN("冻结"),
+    SUCCESS("成功"),
+    FAILED("失败");
 
     private final String status;
 

@@ -10,16 +10,18 @@
         <result column="creditcardnum" property="creditCardNum" jdbcType="INTEGER"/>
         <result column="depositcardnum" property="depositCardNum" jdbcType="INTEGER"/>
         <result column="identification" property="identification" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="CHAR"/>
     </resultMap>
 
     <sql id="All_Column_List">
-        userid, username, phonenumber, password, nickname, creditcardnum, depositcardnum, identification
+        userid, username, phonenumber, password, nickname, creditcardnum, depositcardnum, identification, status
     </sql>
 
     <insert id="createUserInfo" parameterType="org.apache.dubbo.springboot.demo.model.dao.UserInfos">
         insert into
-            userinfos(username, phonenumber, password, nickname, identification)
-        values (#{user.userName}, #{user.phoneNumber}, #{user.password}, #{user.nickName}, #{user.identification})
+            userinfos(username, phonenumber, password, nickname, identification, status)
+        values
+            (#{user.userName}, #{user.phoneNumber}, #{user.password}, #{user.nickName}, #{user.identification}, #{user.status})
     </insert>
 
     <select id="queryAllUserInfo" resultMap="BaseResultMap">

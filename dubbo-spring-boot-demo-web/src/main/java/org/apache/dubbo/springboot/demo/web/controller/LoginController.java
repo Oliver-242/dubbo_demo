@@ -29,6 +29,11 @@ public class LoginController {
     @DubboReference(group = "group1", version = "1.0.0")
     private RecordService recordService;
 
+    @GetMapping(value = "/dogetlogin")
+    public String doGetLogin() {
+        return "syslogin";
+    }
+
     @PostMapping(value = "/login")
     public String login(@RequestParam("phonenumber") String phoneNumber,
                         @RequestParam("password") String password,
@@ -58,7 +63,7 @@ public class LoginController {
     }
 
     @GetMapping(value = "/register")
-    public String register() {
+    public String doGetRegister() {
         return "register";
     }
 
@@ -77,6 +82,6 @@ public class LoginController {
                 new SaveRecordDto<>(tpRegister, trRegister, RecordTypeEnum.REGISTER.getDesc(), 1);
         recordService.saveRecordRegLogAsync(saveRecordDto);
         model.addAttribute("result", trRegister.getReturnString());
-        return "redirect:/login";
+        return "regsuccess";
     }
 }

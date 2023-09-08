@@ -1,11 +1,14 @@
 package org.apache.dubbo.springboot.demo.mapper;
 
+import org.apache.dubbo.springboot.demo.model.dao.DepositCards;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author oliver
@@ -14,6 +17,9 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface DepositCardsDao {
+    @Select("select * from depositcards order by userid")
+    List<DepositCards> queryAllCardInfo();
+
     @Select("select money from depositcards where cardid=#{cardId}")
     Long selectMoneyByCardId(@Param("cardId") String cardId);
 

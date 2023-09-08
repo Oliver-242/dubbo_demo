@@ -3,13 +3,18 @@ package org.apache.dubbo.springboot.demo.model.dao;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author caijizhou
  * @date 2023/08/30 18:00
  */
 @Data
 @NoArgsConstructor
-public class TransactionRecords {
+public class TransactionRecords implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -2700083195959390924L;
     private String id;
 
     private long userId;
@@ -19,7 +24,7 @@ public class TransactionRecords {
      */
     private String typeId;
 
-    private int status;
+    private String status;
 
     private String firstCard;
 

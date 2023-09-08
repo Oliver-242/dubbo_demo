@@ -45,6 +45,8 @@ public class UserInfos implements Serializable {
 
     private String identification;
 
+    private String status;
+
     public static UserInfos.Builder builder() {
         return new UserInfos.Builder();
     }
@@ -68,6 +70,7 @@ public class UserInfos implements Serializable {
             userInfos.setPassword(this.tpRegister.getPassword());
             userInfos.setNickName(this.tpRegister.getNickName());
             userInfos.setIdentification("user");
+            userInfos.setStatus("正常");
             return userInfos;
         }
     }

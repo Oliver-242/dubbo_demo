@@ -6,79 +6,124 @@
     <style>
         /*--预设--*/
         body {
-            padding:0px;
+            padding: 0px;
             margin: 0px;
         }
+
+        .table-container {
+            max-height: 90%; /* 设置容器的最大高度 */
+            overflow-y: auto; /* 启用垂直滚动 */
+        }
+
         table {
             border-collapse: collapse;
             width: 100%;
         }
 
         th, td {
-            border: 1px solid #ddd;
+            border: 1px solid #a8a4a4;
             padding: 8px;
-            text-align: left;
+            text-align: center;
         }
 
         th {
             background-color: #f2f2f2;
         }
 
-        tr:nth-child(even) {
+        th.sortable {
+            cursor: pointer;
+        }
+
+        th.sort-asc:after {
+            content: "↑"; /* 上箭头符号 */
+        }
+
+        th.sort-desc:after {
+            content: "↓"; /* 下箭头符号 */
+        }
+
+        thead th {
+            position: sticky;
+            top: 0; /* 表头在顶部固定 */
             background-color: #f2f2f2;
         }
 
-        tr:hover {
-            background-color: #ddd;
+        tr:nth-child(even) {
+            background-color: #a8a5a5;
         }
-        .content-container{
+
+        tr:hover {
+            background-color: #d0cece;
+        }
+
+        .content-container {
             display: flex;
-            align-items: center;
             justify-content: center; /* 添加此行以水平居中内容 */
             height: 100vh;
         }
-        .operation-content{
+
+        .operation-content {
             display: flex;
             flex: 3;
             flex-direction: column;
             align-items: center;
             max-width: 100%; /* 限制宽度为父容器的100% */
         }
-        #lyrow, #lyrow input, #lyrow textarea { font-size:12px;font-family: 'Microsoft YaHei', '微软雅黑', MicrosoftJhengHei, '华文细黑', STHeiti, MingLiu; }
+
+        #lyrow, #lyrow input, #lyrow textarea {
+            font-size: 12px;
+            font-family: 'Microsoft YaHei', '微软雅黑', MicrosoftJhengHei, '华文细黑', STHeiti, MingLiu, serif;
+        }
+
         /*#lyrow { height:100vh;width: 100vw; }*/
-        #lyrow input, #lyrow textarea { border:rgb(235, 235, 235) 1px solid;border-radius: 3px;padding: 5px 8px;outline: 0; }
-        #lyrow input:hover, #lyrow textarea:hover { border: 1px solid #6bc1f2; }
+        #lyrow input, #lyrow textarea {
+            border: rgb(235, 235, 235) 1px solid;
+            border-radius: 3px;
+            padding: 5px 8px;
+            outline: 0;
+        }
+
+        #lyrow input:hover, #lyrow textarea:hover {
+            border: 1px solid #6bc1f2;
+        }
+
         /*--编辑--*/
         #lyrow .funcframe {
             display: flex;
-            background-color:rgba(110, 63, 110, 1);
-            width:80%;
-            height:100%;
-            overflow-y:scroll;
+            background-color: rgba(110, 63, 110, 1);
+            width: 80%;
+            height: 100%;
+            overflow-y: scroll;
             flex-direction: column;
             align-items: center;
             flex: 1; /* 使用 flex 来分配剩余宽度 */
             max-width: 250px; /* 设置最大宽度，以防内容过宽 */
         }
-        #lyrow .funcframe::-webkit-scrollbar { display:none; }
-        #lyrow .function {
-            width:240px;
-            background-color:rgba(201, 18, 201, 1);
-            border-radius:8px 8px 8px 8px;
-            height:50px !important;
-            margin:2px 2px 2px 2px;
-            font-size:18px;color:rgba(255, 255, 255, 1);
-            vertical-align:middle;
-            font-weight:bold;
-            cursor:pointer;
+
+        #lyrow .funcframe::-webkit-scrollbar {
+            display: none;
         }
+
+        #lyrow .function {
+            width: 240px;
+            background-color: rgba(201, 18, 201, 1);
+            border-radius: 8px 8px 8px 8px;
+            height: 50px !important;
+            margin: 2px 2px 2px 2px;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 1);
+            vertical-align: middle;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
         #lyrow .subframe {
-            margin:2px 2px 2px 2px;
-            max-width:250px;
-            align-content:space-around;
-            align-items:center;
-            flex-direction:column;
-            display:flex !important;
+            margin: 2px 2px 2px 2px;
+            max-width: 250px;
+            align-content: space-around;
+            align-items: center;
+            flex-direction: column;
+            display: flex !important;
         }
 
     </style>
@@ -88,59 +133,150 @@
     <div id="lyrow" class="funcframe">
         <div class="subframe">
             <button class="function" onclick="showOperation('user-management')">用户管理</button>
-            <button class="function" onclick="showOperation('bank-card-management')">银行卡管理</button>
+            <button class="function" onclick="showOperation('deposit-card-management')">储蓄卡管理</button>
+            <button class="function" onclick="showOperation('credit-card-management')">信用卡管理</button>
+            <button class="function" onclick="showOperation('record-management')">用户操作记录管理</button>
             <button class="function" onclick="showOperation('stock-account-management')">股票账户管理</button>
         </div>
     </div>
 
-<div class="operation-content" id="user-management">
-    <!-- 用户管理界面内容 -->
-    <h2>User Management</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>User ID</th>
-            <th>User Name</th>
-            <th>Phone Number</th>
-            <th>Password</th>
-            <th>Nick Name</th>
-            <th>Credit Card Num</th>
-            <th>Deposit Card Num</th>
-            <th>Identification</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="info : ${infos}">
-            <td th:text="${info.userId}"></td>
-            <td th:text="${info.userName}"></td>
-            <td th:text="${info.phoneNumber}"></td>
-            <td th:text="${info.password}"></td>
-            <td th:text="${info.nickName}"></td>
-            <td th:text="${info.creditCardNum}"></td>
-            <td th:text="${info.depositCardNum}"></td>
-            <td th:text="${info.identification}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+    <div class="operation-content" id="user-management" style="overflow-x: auto; max-width: 100%;">
+        <!-- 用户管理界面内容 -->
+        <h2>User Management</h2>
+        <div class="table-container">
+            <table id="user">
+                <thead>
+                <tr>
+                    <th class="sortable" data-sort="asc">User ID</th>
+                    <th class="sortable" data-sort="asc">User Name</th>
+                    <th>Phone Number</th>
+                    <th>Password</th>
+                    <th>Nick Name</th>
+                    <th class="sortable" data-sort="asc">Credit Card Num</th>
+                    <th class="sortable" data-sort="asc">Deposit Card Num</th>
+                    <th>Identification</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="info : ${infos}">
+                    <td th:text="${info.userId}"></td>
+                    <td th:text="${info.userName}"></td>
+                    <td th:text="${info.phoneNumber}"></td>
+                    <td th:text="${info.password}"></td>
+                    <td th:text="${info.nickName}"></td>
+                    <td th:text="${info.creditCardNum}"></td>
+                    <td th:text="${info.depositCardNum}"></td>
+                    <td th:text="${info.identification}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-<div class="operation-content" id="bank-card-management">
-    <!-- 银行卡管理界面内容 -->
-    <h2>Bank Card Management</h2>
-    <!-- 添加银行卡管理页面的内容 -->
-</div>
+    <div class="operation-content" id="deposit-card-management" style="overflow-x: auto; max-width: 100%;">
+        <!-- 银行卡管理界面内容 -->
+        <h2>Depositcard Card Management</h2>
+        <div class="table-container">
+            <table id="deposit">
+                <thead>
+                <tr>
+                    <th class="sortable" data-sort="asc">User ID</th>
+                    <th>Card ID</th>
+                    <th class="sortable" data-sort="asc">Money</th>
+                    <th>Status</th>
+                    <th class="sortable" data-sort="asc">Create Time</th>
+                    <th class="sortable" data-sort="asc">Update Time</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="card : ${cards}">
+                    <td th:text="${card.userId}"></td>
+                    <td th:text="${card.cardId}"></td>
+                    <td th:text="${card.money}"></td>
+                    <td th:text="${card.status}"></td>
+                    <td th:text="${card.createTime}"></td>
+                    <td th:text="${card.updateTime}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-<div class="operation-content" id="stock-account-management">
-    <!-- 股票账户管理界面内容 -->
-    <h2>Stock Account Management</h2>
-    <!-- 添加股票账户管理页面的内容 -->
-</div>
+    <div class="operation-content" id="credit-card-management" style="overflow-x: auto; max-width: 100%;">
+        <!-- 银行卡管理界面内容 -->
+        <h2>Credit Card Management</h2>
+        <div class="table-container">
+            <table id="credit">
+                <thead>
+                <tr>
+                    <th class="sortable" data-sort="asc">User ID</th>
+                    <th>Card ID</th>
+                    <th class="sortable" data-sort="asc">Money</th>
+                    <th>Status</th>
+                    <th class="sortable" data-sort="asc">Create Time</th>
+                    <th class="sortable" data-sort="asc">Update Time</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="card : ${cards}">
+                    <td th:text="${card.userId}"></td>
+                    <td th:text="${card.cardId}"></td>
+                    <td th:text="${card.money}"></td>
+                    <td th:text="${card.status}"></td>
+                    <td th:text="${card.createTime}"></td>
+                    <td th:text="${card.updateTime}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="operation-content" id="record-management" style="overflow-x: auto; max-width: 100%;">
+        <h2>Record Management</h2>
+        <div class="table-container">
+            <table id="record">
+                <thead>
+                <tr>
+                    <th class="sortable" data-sort="asc">ID</th>
+                    <th class="sortable" data-sort="asc">User ID</th>
+                    <th class="sortable" data-sort="asc">Type ID</th>
+                    <th>Status</th>
+                    <th>First Card</th>
+                    <th>Second Card</th>
+                    <th class="sortable" data-sort="asc">money</th>
+                    <th class="sortable" data-sort="asc">Create Time</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="card1 : ${card1s}">
+                    <td th:text="${card1.id}"></td>
+                    <td th:text="${card1.userId}"></td>
+                    <td th:text="${card1.typeId}"></td>
+                    <td th:text="${card1.status}"></td>
+                    <td th:text="${card1.firstCard}"></td>
+                    <td th:text="${card1.secondCard}"></td>
+                    <td th:text="${card1.money}"></td>
+                    <td th:text="${card1.createTime}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="operation-content" id="stock-account-management" style="overflow-x: auto; max-width: 100%;">
+        <!-- 股票账户管理界面内容 -->
+        <h2>Stock Account Management</h2>
+        <div class="table-container">
+
+        </div>
+    </div>
 </div>
 
 <script>
     window.addEventListener('DOMContentLoaded', (event) => {
         showOperation('user-management');
     });
+
     function showOperation(operationId) {
         // 隐藏所有操作界面
         var operationContents = document.querySelectorAll('.operation-content');
@@ -154,6 +290,63 @@
             selectedOperation.style.display = 'flex';
         }
     }
+
+    const sortableHeaders = document.querySelectorAll(".sortable");
+
+
+    sortableHeaders.forEach(header => {
+        header.addEventListener("click", () => {
+            const currentSort = header.getAttribute("data-sort");
+            const nextSort = currentSort === "asc" ? "desc" : "asc";
+            const haha = header.closest("table");
+            const table = document.getElementById(haha.id);
+            const tableBody = table.querySelector("tbody");
+            // 重置所有表头的排序状态
+            sortableHeaders.forEach(header => {
+                header.setAttribute("data-sort", "asc");
+                header.classList.remove("sort-asc", "sort-desc");
+            });
+
+            // 更新当前表头的排序状态
+            header.setAttribute("data-sort", nextSort);
+            header.classList.add(`sort-${nextSort}`);
+
+            const columnIdx = header.cellIndex;
+
+            const rows = Array.from(tableBody.rows);
+
+            rows.sort((rowA, rowB) => {
+                const cellA = rowA.cells[columnIdx].textContent;
+                const cellB = rowB.cells[columnIdx].textContent;
+
+                let compareResult;
+
+                // 判断单元格内容是否为数字
+                if (!isNaN(cellA) && !isNaN(cellB)) {
+                    // 如果都是数字，转换为数字后比较
+                    const numA = parseFloat(cellA);
+                    const numB = parseFloat(cellB);
+                    compareResult = numA - numB;
+                } else {
+                    // 如果不是数字，按字符串比较
+                    compareResult = cellA.localeCompare(cellB);
+                }
+
+                // 根据排序方向返回比较结果
+                return nextSort === "asc" ? compareResult : -compareResult;
+            });
+
+            // 清空表格内容
+            while (tableBody.firstChild) {
+                tableBody.removeChild(tableBody.firstChild);
+            }
+
+            // 重新添加排好序的行
+            rows.forEach(row => {
+                tableBody.appendChild(row);
+            });
+        });
+    });
 </script>
 </body>
 </html>

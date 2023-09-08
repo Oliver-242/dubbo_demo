@@ -51,7 +51,7 @@ public class RecordServiceImpl implements RecordService {
         transactionRecords.setId(id);
         transactionRecords.setUserId(saveRecordDto.getUserId());
         transactionRecords.setTypeId(saveRecordDto.getTypeId());
-        transactionRecords.setStatus(saveRecordDto.getTReturn().getStatus());
+        transactionRecords.setStatus(saveRecordDto.getTReturn().getStatus() == 0 ? "成功" : "失败");
         transactionRecords.setFirstCard(saveRecordDto.getTParam().getFirstAccount());
         transactionRecords.setSecondCard(saveRecordDto.getTParam().getSecondAccount());
         transactionRecords.setMoney(saveRecordDto.getTReturn().getData());
@@ -69,7 +69,7 @@ public class RecordServiceImpl implements RecordService {
         transactionRecords.setId(id);
         transactionRecords.setUserId(saveRecordDto.getUserId());
         transactionRecords.setTypeId(saveRecordDto.getTypeId());
-        transactionRecords.setStatus(saveRecordDto.getTReturn().get().getStatus());
+        transactionRecords.setStatus(saveRecordDto.getTReturn().get().getStatus() == 0 ? "成功" : "失败");
         transactionRecords.setFirstCard(saveRecordDto.getTParam().getFirstAccount());
         transactionRecords.setSecondCard(saveRecordDto.getTParam().getSecondAccount());
         transactionRecords.setMoney(saveRecordDto.getTReturn().get().getData());
@@ -87,7 +87,8 @@ public class RecordServiceImpl implements RecordService {
         transactionRecords.setId(id);
         transactionRecords.setUserId(saveRecordDto.getUserId());
         transactionRecords.setTypeId(saveRecordDto.getTypeId());
-        transactionRecords.setStatus(saveRecordDto.getTReturn().isStatus() ? 0 : 1);   //0代表登录成功
+        transactionRecords.setMoney(-1L);
+        transactionRecords.setStatus(saveRecordDto.getTReturn().isStatus() ? "成功" : "失败");   //0代表登录成功
 
         transactionRecordsDao.saveRecord(transactionRecords);
     }

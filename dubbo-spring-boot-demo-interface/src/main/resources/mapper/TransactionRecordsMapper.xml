@@ -21,7 +21,6 @@
         <include refid="All_Column_List"/>
         from transactionrecords
         order by createtime desc
-        limit 50
     </select>
 
     <select id="queryByUserId" resultMap="BaseResultMap">
