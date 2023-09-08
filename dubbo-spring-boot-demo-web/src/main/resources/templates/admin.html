@@ -1,10 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Admin</title>
+    <style>
+        /*--预设--*/
+        body {
+            padding:0px;
+            margin: 0px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+        .content-container{
+            display: flex;
+            align-items: center;
+            justify-content: center; /* 添加此行以水平居中内容 */
+            height: 100vh;
+        }
+        .operation-content{
+            display: flex;
+            flex: 3;
+            flex-direction: column;
+            align-items: center;
+            max-width: 100%; /* 限制宽度为父容器的100% */
+        }
+        #lyrow, #lyrow input, #lyrow textarea { font-size:12px;font-family: 'Microsoft YaHei', '微软雅黑', MicrosoftJhengHei, '华文细黑', STHeiti, MingLiu; }
+        /*#lyrow { height:100vh;width: 100vw; }*/
+        #lyrow input, #lyrow textarea { border:rgb(235, 235, 235) 1px solid;border-radius: 3px;padding: 5px 8px;outline: 0; }
+        #lyrow input:hover, #lyrow textarea:hover { border: 1px solid #6bc1f2; }
+        /*--编辑--*/
+        #lyrow .funcframe {
+            display: flex;
+            background-color:rgba(110, 63, 110, 1);
+            width:80%;
+            height:100%;
+            overflow-y:scroll;
+            flex-direction: column;
+            align-items: center;
+            flex: 1; /* 使用 flex 来分配剩余宽度 */
+            max-width: 250px; /* 设置最大宽度，以防内容过宽 */
+        }
+        #lyrow .funcframe::-webkit-scrollbar { display:none; }
+        #lyrow .function {
+            width:240px;
+            background-color:rgba(201, 18, 201, 1);
+            border-radius:8px 8px 8px 8px;
+            height:50px !important;
+            margin:2px 2px 2px 2px;
+            font-size:18px;color:rgba(255, 255, 255, 1);
+            vertical-align:middle;
+            font-weight:bold;
+            cursor:pointer;
+        }
+        #lyrow .subframe {
+            margin:2px 2px 2px 2px;
+            max-width:250px;
+            align-content:space-around;
+            align-items:center;
+            flex-direction:column;
+            display:flex !important;
+        }
+
+    </style>
 </head>
 <body>
+<div class="content-container">
+    <div id="lyrow" class="funcframe">
+        <div class="subframe">
+            <button class="function" onclick="showOperation('user-management')">用户管理</button>
+            <button class="function" onclick="showOperation('bank-card-management')">银行卡管理</button>
+            <button class="function" onclick="showOperation('stock-account-management')">股票账户管理</button>
+        </div>
+    </div>
 
+<div class="operation-content" id="user-management">
+    <!-- 用户管理界面内容 -->
+    <h2>User Management</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>User ID</th>
+            <th>User Name</th>
+            <th>Phone Number</th>
+            <th>Password</th>
+            <th>Nick Name</th>
+            <th>Credit Card Num</th>
+            <th>Deposit Card Num</th>
+            <th>Identification</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="info : ${infos}">
+            <td th:text="${info.userId}"></td>
+            <td th:text="${info.userName}"></td>
+            <td th:text="${info.phoneNumber}"></td>
+            <td th:text="${info.password}"></td>
+            <td th:text="${info.nickName}"></td>
+            <td th:text="${info.creditCardNum}"></td>
+            <td th:text="${info.depositCardNum}"></td>
+            <td th:text="${info.identification}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="operation-content" id="bank-card-management">
+    <!-- 银行卡管理界面内容 -->
+    <h2>Bank Card Management</h2>
+    <!-- 添加银行卡管理页面的内容 -->
+</div>
+
+<div class="operation-content" id="stock-account-management">
+    <!-- 股票账户管理界面内容 -->
+    <h2>Stock Account Management</h2>
+    <!-- 添加股票账户管理页面的内容 -->
+</div>
+</div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        showOperation('user-management');
+    });
+    function showOperation(operationId) {
+        // 隐藏所有操作界面
+        var operationContents = document.querySelectorAll('.operation-content');
+        operationContents.forEach(function (content) {
+            content.style.display = 'none';
+        });
+
+        // 显示选定的操作界面
+        var selectedOperation = document.getElementById(operationId);
+        if (selectedOperation) {
+            selectedOperation.style.display = 'flex';
+        }
+    }
+</script>
 </body>
 </html>

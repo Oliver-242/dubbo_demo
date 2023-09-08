@@ -16,6 +16,8 @@ public class DepositCards {
 
     private long money;
 
+    private String status;
+
     private String createTime;
 
     private String updateTime;

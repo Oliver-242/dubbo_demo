@@ -1,5 +1,6 @@
 package org.apache.dubbo.springboot.demo.mapper;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -16,9 +17,15 @@ public interface DepositCardsDao {
     @Select("select money from depositcards where cardid=#{cardId}")
     Long selectMoneyByCardId(@Param("cardId") String cardId);
 
-    @Update("update depositcards set money=money+#{money} where cardid=#{cardId}")
+    @Update("update depositcards set money=money+#{money} where cardid=#{cardId} and status='正常'")
     int depositMoneyByCardId(@Param("cardId") String cardId, @Param("money") long money);
 
-    @Update("update depositcards set money=money-#{money} where cardid=#{cardId} and money>=#{money}")
+    @Update("update depositcards set money=money-#{money} where cardid=#{cardId} and money>=#{money} and status='正常'")
     int withdrawMoneyByCardId(@Param("cardId") String cardId, @Param("money") long money);
+
+    @Delete("delete from depositcards where cardid=#{cardId}")
+    int deleteCardByCardId(@Param("cardId") String cardId);
+
+    @Delete("delete from depositcards where userid=#{userId}")
+    int deleteCardByUserId(@Param("userId") long userId);
 }

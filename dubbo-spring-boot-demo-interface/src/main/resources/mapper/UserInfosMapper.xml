@@ -26,6 +26,7 @@
         select
         <include refid="All_Column_List"/>
         from userinfos
+        where identification='user'
         order by userid
     </select>
 
@@ -37,5 +38,9 @@
         order by userid
     </select>
 
+    <delete id="deleteUserByUserId">
+        delete from userinfos
+        where userid=#{userId}
+    </delete>
 
 </mapper>

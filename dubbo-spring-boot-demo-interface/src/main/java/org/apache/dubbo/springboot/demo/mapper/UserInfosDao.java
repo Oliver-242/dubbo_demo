@@ -19,4 +19,6 @@ public interface UserInfosDao {
     List<UserInfos> queryAllUserInfo();
 
     UserInfos queryAllByPhoneNumber(@Param("phonenumber") String phoneNumber);
+
+    int deleteUserByUserId(long userId);
 }

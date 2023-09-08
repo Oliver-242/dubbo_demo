@@ -5,12 +5,18 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.apache.dubbo.springboot.demo.model.TPRegister;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author caijizhou
  * @date 2023/09/05 11:30
  */
 @Data
-public class UserInfos {
+public class UserInfos implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 5389909157521868552L;
+
     private long userId;
 
     private String userName;

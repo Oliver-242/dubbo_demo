@@ -77,6 +77,6 @@ public class LoginController {
                 new SaveRecordDto<>(tpRegister, trRegister, RecordTypeEnum.REGISTER.getDesc(), 1);
         recordService.saveRecordRegLogAsync(saveRecordDto);
         model.addAttribute("result", trRegister.getReturnString());
-        return "redirect:/transfer";
+        return "redirect:/login";
     }
 }
