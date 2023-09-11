@@ -3,6 +3,7 @@ package org.apache.dubbo.springboot.demo.model.dao;
 import lombok.Data;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.apache.dubbo.springboot.demo.enums.BusinessStatusEnum;
 import org.apache.dubbo.springboot.demo.model.TPRegister;
 
 import java.io.Serial;
@@ -70,7 +71,7 @@ public class UserInfos implements Serializable {
             userInfos.setPassword(this.tpRegister.getPassword());
             userInfos.setNickName(this.tpRegister.getNickName());
             userInfos.setIdentification("user");
-            userInfos.setStatus("正常");
+            userInfos.setStatus(BusinessStatusEnum.ACTIVE.getStatus());
             return userInfos;
         }
     }

@@ -3,6 +3,7 @@ package org.apache.dubbo.springboot.demo.provider.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
+import org.apache.dubbo.springboot.demo.enums.BusinessStatusEnum;
 import org.apache.dubbo.springboot.demo.mapper.TransactionRecordsDao;
 import org.apache.dubbo.springboot.demo.model.TPRegister;
 import org.apache.dubbo.springboot.demo.model.TParam;
@@ -12,11 +13,11 @@ import org.apache.dubbo.springboot.demo.model.dao.TransactionRecords;
 import org.apache.dubbo.springboot.demo.model.dto.SaveRecordDto;
 import org.apache.dubbo.springboot.demo.provider.RecordService;
 import org.apache.dubbo.springboot.demo.provider.SnowService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.CompletableFuture;
@@ -31,7 +32,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Service
 @Slf4j
 public class RecordServiceImpl implements RecordService {
-    @Resource
+    @Autowired
     private TransactionRecordsDao transactionRecordsDao;
 
     @DubboReference(group = "group1", version = "1.0.0")
@@ -51,7 +52,8 @@ public class RecordServiceImpl implements RecordService {
         transactionRecords.setId(id);
         transactionRecords.setUserId(saveRecordDto.getUserId());
         transactionRecords.setTypeId(saveRecordDto.getTypeId());
-        transactionRecords.setStatus(saveRecordDto.getTReturn().getStatus() == 0 ? "成功" : "失败");
+        transactionRecords.setStatus(saveRecordDto.getTReturn().getStatus() == 0
+                ? BusinessStatusEnum.SUCCESS.getStatus() : BusinessStatusEnum.FAILED.getStatus());
         transactionRecords.setFirstCard(saveRecordDto.getTParam().getFirstAccount());
         transactionRecords.setSecondCard(saveRecordDto.getTParam().getSecondAccount());
         transactionRecords.setMoney(saveRecordDto.getTReturn().getData());
@@ -69,7 +71,8 @@ public class RecordServiceImpl implements RecordService {
         transactionRecords.setId(id);
         transactionRecords.setUserId(saveRecordDto.getUserId());
         transactionRecords.setTypeId(saveRecordDto.getTypeId());
-        transactionRecords.setStatus(saveRecordDto.getTReturn().get().getStatus() == 0 ? "成功" : "失败");
+        transactionRecords.setStatus(saveRecordDto.getTReturn().get().getStatus() == 0
+                ? BusinessStatusEnum.SUCCESS.getStatus() : BusinessStatusEnum.FAILED.getStatus());
         transactionRecords.setFirstCard(saveRecordDto.getTParam().getFirstAccount());
         transactionRecords.setSecondCard(saveRecordDto.getTParam().getSecondAccount());
         transactionRecords.setMoney(saveRecordDto.getTReturn().get().getData());
@@ -88,7 +91,8 @@ public class RecordServiceImpl implements RecordService {
         transactionRecords.setUserId(saveRecordDto.getUserId());
         transactionRecords.setTypeId(saveRecordDto.getTypeId());
         transactionRecords.setMoney(-1L);
-        transactionRecords.setStatus(saveRecordDto.getTReturn().isStatus() ? "成功" : "失败");   //0代表登录成功
+        transactionRecords.setStatus(saveRecordDto.getTReturn().isStatus()
+                ? BusinessStatusEnum.SUCCESS.getStatus() : BusinessStatusEnum.FAILED.getStatus());   //0代表登录成功
 
         transactionRecordsDao.saveRecord(transactionRecords);
     }

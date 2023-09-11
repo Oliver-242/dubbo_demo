@@ -155,6 +155,7 @@
                     <th class="sortable" data-sort="asc">Credit Card Num</th>
                     <th class="sortable" data-sort="asc">Deposit Card Num</th>
                     <th>Identification</th>
+                    <th class="sortable" data-sort="asc">Status</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -167,6 +168,10 @@
                     <td th:text="${info.creditCardNum}"></td>
                     <td th:text="${info.depositCardNum}"></td>
                     <td th:text="${info.identification}"></td>
+                    <td th:text="${info.status}"></td>
+                    <td><button class="action-button" data-action="freeze" data-userid="${info.userId}">冻结</button></td>
+                    <td><button class="action-button" data-action="delete" data-userid="${info.userId}">删除</button></td>
+                    <td><button class="action-button" data-action="restore" data-userid="${info.userId}">恢复</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -272,7 +277,61 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    $(document).on('click', '.action-button', function() {
+        const userId = $(this).data('userid');
+        const action = $(this).data('action');
+        if (action === "freeze") {
+            $.ajax({
+            url: '/admin/freeze-user',
+            method: 'POST',
+            data: { userId: userId },
+            success: function(response) {
+                // window.location.reload(function() {
+                //     const successMessage = "用户已成功冻结。";
+                //     alert(successMessage);
+                // });
+                $('#user tbody tr[data-userid="' + userId + '"]').remove();
+            },
+            error: function(error) {
+                // 处理错误响应
+                console.error('Error:', error);
+            }
+        });
+        } else if (action === "delete") {
+            $.ajax({
+                url: '/admin/delete-user',
+                method: 'POST',
+                data: { userId: userId },
+                success: function(response) {
+                    location.reload();
+                    const successMessage = "用户已成功删除。";
+                    alert(successMessage);
+                },
+                error: function(error) {
+                    // 处理错误响应
+                    console.error('Error:', error);
+                }
+            });
+        } else {
+            $.ajax({
+                url: '/admin/restore-user',
+                method: 'POST',
+                data: { userId: userId },
+                success: function(response) {
+                    location.reload();
+                    const successMessage = "用户已成功恢复。";
+                    alert(successMessage);
+                },
+                error: function(error) {
+                    // 处理错误响应
+                    console.error('Error:', error);
+                }
+            });
+        }
+    });
+
     window.addEventListener('DOMContentLoaded', (event) => {
         showOperation('user-management');
     });

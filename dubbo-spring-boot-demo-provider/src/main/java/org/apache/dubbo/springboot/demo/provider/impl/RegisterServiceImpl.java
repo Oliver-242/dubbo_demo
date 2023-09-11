@@ -2,6 +2,7 @@ package org.apache.dubbo.springboot.demo.provider.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
+import org.apache.dubbo.springboot.demo.enums.BusinessStatusEnum;
 import org.apache.dubbo.springboot.demo.mapper.UserInfosDao;
 import org.apache.dubbo.springboot.demo.model.TPRegister;
 import org.apache.dubbo.springboot.demo.model.TRRegister;
@@ -28,7 +29,8 @@ public class RegisterServiceImpl implements RegisterService {
     public TRRegister loginVerify(TPRegister tpRegister) {
         UserInfos info = this.userInfosDao.queryAllByPhoneNumber(tpRegister.getPhoneNumber());
         if(tpRegister.getPassword().equals(info.getPassword()) &&
-                tpRegister.getUserType().equals(info.getIdentification())) {
+                tpRegister.getUserType().equals(info.getIdentification()) &&
+                    info.getStatus().equals(BusinessStatusEnum.ACTIVE.getStatus())) {
             return new TRRegister(true, info.getUserId(), "登录成功！");
         }
         return new TRRegister(false, info.getUserId(), "登录失败！");

@@ -5,7 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -15,7 +17,7 @@ import redis.clients.jedis.JedisPoolConfig;
  * @date 2023/09/03 17:00
  */
 @Configuration
-@Service
+@Component
 public class RedisServiceConfig extends CachingConfigurerSupport {
 
     Logger logger = LoggerFactory.getLogger(RedisServiceConfig.class);
