@@ -6,8 +6,6 @@ import org.apache.dubbo.springboot.demo.provider.SnowService;
 import org.apache.dubbo.springboot.demo.util.SnowFlake;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
@@ -16,12 +14,12 @@ import java.util.Objects;
  * @date 2023/08/31 9:50
  */
 @DubboService(group = "group1", version = "1.0.0")
-@Service
 @Slf4j
 public class SnowServiceImpl implements SnowService {
     @Autowired
     private Environment environment;
 
+//    @Autowired
     private SnowFlake snowFlake;
 
     /**
@@ -29,11 +27,16 @@ public class SnowServiceImpl implements SnowService {
      */
     @Override
     public void initiator() {
-        if (snowFlake == null) {
+        try {
+            assert snowFlake == null;
             snowFlake = new SnowFlake(Long.parseLong(Objects.requireNonNull(environment.getProperty("datacenterId"))),
                     Long.parseLong(Objects.requireNonNull(environment.getProperty("machineId"))));
+            log.debug("当前数据中心ID为{},服务器ID为{}",
+                    environment.getProperty("datacenterId"), environment.getProperty("machineId"));
+        } catch (AssertionError ex) {
+            log.error("snowFlake初始化之前非空: {}", ex.getMessage());
         }
-        System.out.println(environment.getProperty("machineId"));
+
     }
 
     @Override

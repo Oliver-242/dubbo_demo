@@ -6,11 +6,12 @@ dubbo:
     port: -1
     threads: 5000
     thread-pool: fixed
-
   registry:
     address: zookeeper://${zookeeper.address:127.0.0.1}:2181
 
 spring:
+  application:
+    name: 菜粥天地银行
   jmx:
     enabled: false
   thymeleaf:
@@ -37,8 +38,7 @@ spring:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 
 server:
-
-  port: 8989
+  port: 8988
   tomcat:
     threads:
       max: 5000
@@ -52,3 +52,6 @@ mybatis:
 
 machineId: 1
 datacenterId: 1
+#logging:
+#  level:
+#    com: debug
