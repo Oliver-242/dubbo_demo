@@ -38,11 +38,13 @@ public class LoginController {
     public String login(@RequestParam("phonenumber") String phoneNumber,
                         @RequestParam("password") String password,
                         @RequestParam("userType") String userType, Model model) throws Exception {
+        log.info("调用login(controller)");
         TPRegister tpRegister = new TPRegister();
         tpRegister.setPhoneNumber(phoneNumber);
         tpRegister.setPassword(password);
         tpRegister.setUserType(userType);
         TRRegister trRegister = this.registerService.loginVerify(tpRegister);
+        log.info("调用结果：{}", trRegister);
         SaveRecordDto<TPRegister, TRRegister> saveRecordDto =
             new SaveRecordDto<>(tpRegister, trRegister, RecordTypeEnum.LOGIN.getDesc(), 1);
         recordService.saveRecordRegLogAsync(saveRecordDto);
@@ -72,12 +74,14 @@ public class LoginController {
                               @RequestParam("password") String password,
                               @RequestParam("nickname") String nickName,
                               @RequestParam("phonenumber") String phoneNumber, Model model) throws Exception {
+        log.info("调用sysRegister(controller)");
         TPRegister tpRegister = new TPRegister();
         tpRegister.setUserName(userName);
         tpRegister.setPhoneNumber(phoneNumber);
         tpRegister.setPassword(password);
         tpRegister.setNickName(nickName);
         TRRegister trRegister = registerService.createUser(tpRegister);
+        log.info("调用结果：{}", trRegister);
         SaveRecordDto<TPRegister, TRRegister> saveRecordDto =
                 new SaveRecordDto<>(tpRegister, trRegister, RecordTypeEnum.REGISTER.getDesc(), 1);
         recordService.saveRecordRegLogAsync(saveRecordDto);

@@ -5,6 +5,8 @@ import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.springboot.demo.mapper.DepositCardsDao;
 import org.apache.dubbo.springboot.demo.mapper.TransactionRecordsDao;
 import org.apache.dubbo.springboot.demo.mapper.UserInfosDao;
+import org.apache.dubbo.springboot.demo.model.TPAdminButton;
+import org.apache.dubbo.springboot.demo.model.TRAdminButton;
 import org.apache.dubbo.springboot.demo.model.dao.DepositCards;
 import org.apache.dubbo.springboot.demo.model.dao.TransactionRecords;
 import org.apache.dubbo.springboot.demo.model.dao.UserInfos;
@@ -47,5 +49,18 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<TransactionRecords> queryAllRecordInfo() {
         return this.transactionRecordsDao.queryAllRecords();
+    }
+
+    @Override
+    public TRAdminButton modStatusByUserId(TPAdminButton tpAdminButton) {
+        int var1 = this.userInfosDao.modStatusByUserId(tpAdminButton.getStatus(), tpAdminButton.getUserId());
+        boolean var2 = (var1 != 0);
+        String returnString = null;
+        if (var2) {
+            returnString = "成功设置用户状态为" + tpAdminButton.getStatus();
+        } else {
+            returnString = "用户已处于" + tpAdminButton.getStatus() + "状态";
+        }
+        return new TRAdminButton(var2, returnString);
     }
 }

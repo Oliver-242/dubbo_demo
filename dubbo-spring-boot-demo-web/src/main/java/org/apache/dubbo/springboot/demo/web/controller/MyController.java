@@ -46,6 +46,7 @@ public class MyController {
                            @RequestParam("receiver") String receiver,
                            @RequestParam("money") String money,
                            Model model) throws Exception {
+        log.info("调用transfer(controller)");
         if(sender==null || receiver==null || money==null) {
             model.addAttribute("result", "输入不能为空！");
             model.addAttribute("function", RecordTypeEnum.TRANSFER.getDesc());
@@ -54,6 +55,7 @@ public class MyController {
         long money1 = Long.parseLong(money);
         TParam tParam = new TParam(sender, receiver, money1);
         TReturn tReturn = demoService.transfer(tParam);
+        log.info("调用结果：{}", tReturn);
         SaveRecordDto<TParam, TReturn> saveRecordDto =
                 new SaveRecordDto<>(tParam, tReturn, RecordTypeEnum.TRANSFER.getDesc(), 1);
         recordService.saveRecord(saveRecordDto);
@@ -65,9 +67,11 @@ public class MyController {
 
     @PostMapping("/query")
     public String query(@RequestParam("cardid") String cardId, @NotNull Model model) throws Exception {
+        log.info("调用query(controller)");
         TParam tParam = new TParam(cardId);
         CompletableFuture<TReturn> tReturn = demoService.inquireAsync(tParam);
         var res = tReturn.get();
+        log.info("调用结果：{}", tReturn);
         SaveRecordDto<TParam, CompletableFuture<TReturn>> saveRecordDto =
                 new SaveRecordDto<>(tParam, tReturn, "query", 1);
         recordService.saveRecordServiceAsync(saveRecordDto);
@@ -81,8 +85,10 @@ public class MyController {
     public String withdraw(@RequestParam("cardid") String cardId,
                            @RequestParam("money") long money,
                            @NotNull Model model) throws Exception {
+        log.info("调用withdraw(controller)");
         TParam tParam = new TParam(cardId, money);
         TReturn tReturn = demoService.withdraw(tParam);
+        log.info("调用结果：{}", tReturn);
         SaveRecordDto<TParam, TReturn> saveRecordDto =
                 new SaveRecordDto<>(tParam, tReturn, RecordTypeEnum.WITHDRAW.getDesc(), 1);
         recordService.saveRecord(saveRecordDto);
@@ -96,8 +102,10 @@ public class MyController {
     public String deposit(@RequestParam("cardid") String cardId,
                           @RequestParam("money") long money,
                           @NotNull Model model) throws Exception {
+        log.info("调用deposit(controller)");
         TParam tParam = new TParam(cardId, money);
         TReturn tReturn = demoService.deposit(tParam);
+        log.info("调用结果：{}", tReturn);
         SaveRecordDto<TParam, TReturn> saveRecordDto =
                 new SaveRecordDto<>(tParam, tReturn, RecordTypeEnum.DEPOSIT.getDesc(), 1);
         recordService.saveRecord(saveRecordDto);

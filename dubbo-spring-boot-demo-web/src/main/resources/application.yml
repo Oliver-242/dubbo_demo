@@ -52,6 +52,6 @@ mybatis:
 
 machineId: 1
 datacenterId: 1
-#logging:
-#  level:
-#    com: debug
+
+logging:
+  config: classpath:log4j2-spring.xml

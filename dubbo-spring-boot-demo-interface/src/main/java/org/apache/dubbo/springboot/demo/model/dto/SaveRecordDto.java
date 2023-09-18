@@ -24,6 +24,11 @@ public class SaveRecordDto<T1, T2> implements Serializable {
 
     private String typeId;
 
+    /**
+     * 平时表示操作的执行者
+     * <p><strong>如果是"id1(id2)"的形式，那么id1是执行人(通常为admin)
+     * id2则为受影响人</strong></p>
+     */
     private long userId;
 
     public SaveRecordDto(T1 tParam, T2 tReturn, String typeId, long userId) {

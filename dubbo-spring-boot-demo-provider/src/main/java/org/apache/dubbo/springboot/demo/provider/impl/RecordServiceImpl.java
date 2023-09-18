@@ -5,8 +5,10 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.springboot.demo.enums.BusinessStatusEnum;
 import org.apache.dubbo.springboot.demo.mapper.TransactionRecordsDao;
+import org.apache.dubbo.springboot.demo.model.TPAdminButton;
 import org.apache.dubbo.springboot.demo.model.TPRegister;
 import org.apache.dubbo.springboot.demo.model.TParam;
+import org.apache.dubbo.springboot.demo.model.TRAdminButton;
 import org.apache.dubbo.springboot.demo.model.TRRegister;
 import org.apache.dubbo.springboot.demo.model.TReturn;
 import org.apache.dubbo.springboot.demo.model.dao.TransactionRecords;
@@ -43,11 +45,14 @@ public class RecordServiceImpl implements RecordService {
      * @param saveRecordDto 整合多方信息组成流水单号的要素
      */
     @Override
-    @Async
-    public void saveRecord(SaveRecordDto<TParam, TReturn> saveRecordDto) {
+    public void saveRecord(SaveRecordDto<TParam, TReturn> saveRecordDto) throws Exception {
         TransactionRecords transactionRecords = new TransactionRecords();
 
         String id = snowService.getGeneratedId();
+        if (id == null) {
+            log.error("snowflake生成流水id失败！");
+            throw new Exception("流水号为空！");
+        }
 
         transactionRecords.setId(id);
         transactionRecords.setUserId(saveRecordDto.getUserId());
@@ -58,7 +63,37 @@ public class RecordServiceImpl implements RecordService {
         transactionRecords.setSecondCard(saveRecordDto.getTParam().getSecondAccount());
         transactionRecords.setMoney(saveRecordDto.getTReturn().getData());
 
-        transactionRecordsDao.saveRecord(transactionRecords);
+        if (transactionRecordsDao.saveRecord(transactionRecords) == 1) {
+            log.info("操作记录存储成功！\n{}", transactionRecords);
+        } else {
+            log.error("操作记录存储失败！");
+            throw new Exception("操作记录存储失败！");
+        }
+    }
+
+    @Override
+    public void saveRecordButton(SaveRecordDto<TPAdminButton, TRAdminButton> saveRecordDto) throws Exception {
+        TransactionRecords transactionRecords = new TransactionRecords();
+
+        String id = snowService.getGeneratedId();
+        if (id == null) {
+            log.error("snowflake生成流水id失败！");
+            throw new Exception("流水号为空！");
+        }
+
+        transactionRecords.setId(id);
+        transactionRecords.setUserId(saveRecordDto.getUserId());
+        transactionRecords.setTypeId(saveRecordDto.getTypeId());
+        transactionRecords.setStatus(saveRecordDto.getTReturn().isStatus()
+                ? BusinessStatusEnum.SUCCESS.getStatus() : BusinessStatusEnum.FAILED.getStatus());
+        transactionRecords.setMoney(-1L);
+
+        if (transactionRecordsDao.saveRecord(transactionRecords) == 1) {
+            log.info("操作记录存储成功！\n{}", transactionRecords);
+        } else {
+            log.error("操作记录存储失败！");
+            throw new Exception("操作记录存储失败！");
+        }
     }
 
     @Override
@@ -67,6 +102,10 @@ public class RecordServiceImpl implements RecordService {
         TransactionRecords transactionRecords = new TransactionRecords();
 
         String id = snowService.getGeneratedId();
+        if (id == null) {
+            log.error("snowflake生成流水id失败！");
+            throw new Exception("流水号为空！");
+        }
 
         transactionRecords.setId(id);
         transactionRecords.setUserId(saveRecordDto.getUserId());
@@ -77,7 +116,12 @@ public class RecordServiceImpl implements RecordService {
         transactionRecords.setSecondCard(saveRecordDto.getTParam().getSecondAccount());
         transactionRecords.setMoney(saveRecordDto.getTReturn().get().getData());
 
-        transactionRecordsDao.saveRecord(transactionRecords);
+        if (transactionRecordsDao.saveRecord(transactionRecords) == 1) {
+            log.info("操作记录存储成功！\n{}", transactionRecords);
+        } else {
+            log.error("操作记录存储失败！");
+            throw new Exception("操作记录存储失败！");
+        }
     }
 
     @Override
@@ -86,6 +130,10 @@ public class RecordServiceImpl implements RecordService {
         TransactionRecords transactionRecords = new TransactionRecords();
 
         String id = snowService.getGeneratedId();
+        if (id == null) {
+            log.error("snowflake生成流水id失败！");
+            throw new Exception("流水号为空！");
+        }
 
         transactionRecords.setId(id);
         transactionRecords.setUserId(saveRecordDto.getUserId());
@@ -94,7 +142,12 @@ public class RecordServiceImpl implements RecordService {
         transactionRecords.setStatus(saveRecordDto.getTReturn().isStatus()
                 ? BusinessStatusEnum.SUCCESS.getStatus() : BusinessStatusEnum.FAILED.getStatus());   //0代表登录成功
 
-        transactionRecordsDao.saveRecord(transactionRecords);
+        if (transactionRecordsDao.saveRecord(transactionRecords) == 1) {
+            log.info("操作记录存储成功！\n{}", transactionRecords);
+        } else {
+            log.error("操作记录存储失败！");
+            throw new Exception("操作记录存储失败！");
+        }
     }
 
     /**

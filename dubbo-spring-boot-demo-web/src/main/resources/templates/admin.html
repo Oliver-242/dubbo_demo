@@ -287,17 +287,15 @@
             url: '/admin/freeze-user',
             method: 'POST',
             data: { userId: userId },
-            success: function(response) {
-                // window.location.reload(function() {
-                //     const successMessage = "用户已成功冻结。";
-                //     alert(successMessage);
-                // });
-                $('#user tbody tr[data-userid="' + userId + '"]').remove();
-            },
-            error: function(error) {
-                // 处理错误响应
-                console.error('Error:', error);
-            }
+                success: function(response) {
+                    location.reload();
+                    const successMessage = "用户已成功冻结。";
+                    alert(successMessage);
+                },
+                error: function(error) {
+                    // 处理错误响应
+                    console.error('Error:', error);
+                }
         });
         } else if (action === "delete") {
             $.ajax({

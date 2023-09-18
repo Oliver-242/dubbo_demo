@@ -31,6 +31,7 @@ public class SnowServiceImpl implements SnowService {
             assert snowFlake == null;
             snowFlake = new SnowFlake(Long.parseLong(Objects.requireNonNull(environment.getProperty("datacenterId"))),
                     Long.parseLong(Objects.requireNonNull(environment.getProperty("machineId"))));
+            log.info("snowflake算法初始化成功！");
             log.debug("当前数据中心ID为{},服务器ID为{}",
                     environment.getProperty("datacenterId"), environment.getProperty("machineId"));
         } catch (AssertionError ex) {

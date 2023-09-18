@@ -21,4 +21,6 @@ public interface UserInfosDao {
     UserInfos queryAllByPhoneNumber(@Param("phonenumber") String phoneNumber);
 
     int deleteUserByUserId(long userId);
+
+    int modStatusByUserId(String status, long userId);
 }

@@ -1,5 +1,7 @@
 package org.apache.dubbo.springboot.demo.provider;
 
+import org.apache.dubbo.springboot.demo.model.TPAdminButton;
+import org.apache.dubbo.springboot.demo.model.TRAdminButton;
 import org.apache.dubbo.springboot.demo.model.dao.DepositCards;
 import org.apache.dubbo.springboot.demo.model.dao.TransactionRecords;
 import org.apache.dubbo.springboot.demo.model.dao.UserInfos;
@@ -16,4 +18,6 @@ public interface AdminService {
     List<DepositCards> queryAllDeCardsInfo();
 
     List<TransactionRecords> queryAllRecordInfo();
+
+    TRAdminButton modStatusByUserId(TPAdminButton tpAdminButton);
 }

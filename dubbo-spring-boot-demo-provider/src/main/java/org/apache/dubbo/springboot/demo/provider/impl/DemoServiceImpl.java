@@ -86,15 +86,16 @@ public class DemoServiceImpl implements DemoService {
     public TReturn transfer(TParam tParam) throws Exception{
         TReturn res = new TReturn();
 
-        int rem_1 = depositCardsDao.withdrawMoneyByCardId(tParam.getFirstAccount(), tParam.getMoney());
-        if (rem_1 == 0) {
+        int var1 = depositCardsDao.withdrawMoneyByCardId(tParam.getFirstAccount(), tParam.getMoney());
+        if (var1 == 0) {
             res.setStatus(1);
             res.setReturnString("转账失败！");
         } else {
-            int rem_2 = depositCardsDao.depositMoneyByCardId(tParam.getSecondAccount(), tParam.getMoney());
-            if (rem_2 == 0){
+            int var2 = depositCardsDao.depositMoneyByCardId(tParam.getSecondAccount(), tParam.getMoney());
+            if (var2 == 0){
                 res.setStatus(1);
                 res.setReturnString("转账失败！");
+                log.error("转账失败！");
                 throw new Exception("转账失败");
             } else {
                 syncToRedis(tParam.getFirstAccount());
@@ -135,7 +136,7 @@ public class DemoServiceImpl implements DemoService {
                 jedis.setex(cacheKey, 300, String.valueOf(res.getData()));
             }
         } catch (Exception e) {
-            logger.info("缓存出错：" + e.getMessage());
+            logger.error("缓存出错：" + e.getMessage());
             throw new Exception("缓存出错！");
         }
 

@@ -14,7 +14,10 @@ public enum RecordTypeEnum {
     WITHDRAW("withdraw"),
     DEPOSIT("deposit"),
     LOGIN("login"),
-    REGISTER("register");
+    REGISTER("register"),
+    FREEZEUSER("freeze_user"),
+    RESTOREUSER("restore_user"),
+    DELETEUSER("delete_user");
 
     private final String desc;
 

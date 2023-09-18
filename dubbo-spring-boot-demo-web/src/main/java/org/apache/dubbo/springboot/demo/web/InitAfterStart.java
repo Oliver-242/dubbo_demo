@@ -28,6 +28,8 @@ public class InitAfterStart implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         log.info("您正在使用{}", applicationName);
+
+        log.info("开始初始化snowflake算法...");
         snowService.initiator();
     }
 }
