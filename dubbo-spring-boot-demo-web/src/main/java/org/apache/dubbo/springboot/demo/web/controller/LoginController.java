@@ -30,7 +30,7 @@ public class LoginController {
     private RecordService recordService;
 
     @GetMapping(value = "/dogetlogin")
-    public String doGetLogin() {
+    private String doGetLogin() {
         return "syslogin";
     }
 

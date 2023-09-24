@@ -1,5 +1,6 @@
 package org.apache.dubbo.springboot.demo.web.interceptor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -10,19 +11,20 @@ import javax.servlet.http.HttpServletResponse;
  * @author caijizhou
  * @date 2023/09/24 17:00
  */
+@Slf4j
 public class PageAccessInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response,
                              @NotNull Object handler)
             throws Exception {
+        log.info("preHandle鉴权开始");
         if (!isAdminUser(request)) {
-            // 如果用户不是管理员，可以重定向到无权限页面
             response.sendRedirect("/access-denied");
-            return false; // 中止请求
+            return false;
         }
 
-        return true; // 允许继续请求处理
+        return true;
     }
 
     @Override
