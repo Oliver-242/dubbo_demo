@@ -1,6 +1,7 @@
 package org.apache.dubbo.springboot.demo.web.filter;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.springboot.demo.enums.UserTypeEnum;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * @author caijizhou
@@ -34,21 +36,27 @@ public class AuthenticationFilter implements Filter {
 
         if(pathCheck(httpServletRequest)) {
             log.info("过滤中...");
-
+            HttpSession httpSession = httpServletRequest.getSession(false);
+            if(httpSession == null) {
+//                httpServletResponse.sendRedirect("/");        //未登录用户定向到登录界面
+            } else {
+                return;
+//                chain.doFilter(request, response);
+            }
             log.info("过滤结束");
         } else {
             log.info("跳过过滤");
-            chain.doFilter(request, response);
-        }
-
-        HttpSession session = httpServletRequest.getSession(false);
-        // 示例：假设用户登录信息存储在Session中
-        if (session.getAttribute("user") == null) {
-            // 未登录，重定向到登录页
-            httpServletResponse.sendRedirect("/login");
-        } else {
-            // 用户已登录，继续请求处理
-            chain.doFilter(request, response);
+            HttpSession httpSession = httpServletRequest.getSession(false);
+            if(httpSession == null) {
+//                chain.doFilter(request,response);
+            } else {                                               //已登录用户按照用户类型定位到不同操作界面
+                String userType = (String) httpSession.getAttribute("userType");
+                if(Objects.equals(userType, UserTypeEnum.USER.name())) {
+                    httpServletResponse.sendRedirect("/transfer");
+                } else {
+                    httpServletResponse.sendRedirect("/home");
+                }
+            }
         }
     }
 

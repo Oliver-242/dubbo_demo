@@ -3,6 +3,7 @@ package org.apache.dubbo.springboot.demo.web.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.springboot.demo.enums.RecordTypeEnum;
+import org.apache.dubbo.springboot.demo.enums.UserTypeEnum;
 import org.apache.dubbo.springboot.demo.model.TPRegister;
 import org.apache.dubbo.springboot.demo.model.TRRegister;
 import org.apache.dubbo.springboot.demo.model.dto.SaveRecordDto;
@@ -50,7 +51,7 @@ public class LoginController {
         recordService.saveRecordRegLogAsync(saveRecordDto);
         if (trRegister.isStatus()) {
             model.addAttribute("msg", "");
-            if(Objects.equals(userType, "user")) {
+            if(Objects.equals(userType, UserTypeEnum.USER.name())) {
                 return "redirect:/transfer";
             } else {
                 return "redirect:/admin/home";
