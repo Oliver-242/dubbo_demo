@@ -31,33 +31,26 @@ public class AuthenticationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+        log.info("In doFilter");
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
         if(pathCheck(httpServletRequest)) {
-            log.info("过滤中...");
             HttpSession httpSession = httpServletRequest.getSession(false);
             if(httpSession == null) {
-//                httpServletResponse.sendRedirect("/");        //未登录用户定向到登录界面
-            } else {
-                return;
-//                chain.doFilter(request, response);
-            }
-            log.info("过滤结束");
-        } else {
-            log.info("跳过过滤");
-            HttpSession httpSession = httpServletRequest.getSession(false);
-            if(httpSession == null) {
-//                chain.doFilter(request,response);
+                chain.doFilter(request,response);
             } else {                                               //已登录用户按照用户类型定位到不同操作界面
                 String userType = (String) httpSession.getAttribute("userType");
-                if(Objects.equals(userType, UserTypeEnum.USER.name())) {
+                if(Objects.equals(userType, UserTypeEnum.USER.getUserType())) {
                     httpServletResponse.sendRedirect("/transfer");
+                    return;
                 } else {
                     httpServletResponse.sendRedirect("/home");
+                    return;
                 }
             }
         }
+        chain.doFilter(request, response);
     }
 
     @Override
@@ -67,6 +60,6 @@ public class AuthenticationFilter implements Filter {
     private boolean pathCheck(HttpServletRequest httpServletRequest) {
         log.info("doFilter路径检查开始...");
         String requestUrl = httpServletRequest.getRequestURI();
-        return !("/".equals(requestUrl) || "/register".equals(requestUrl));
+        return ("/".equals(requestUrl) || "/register".equals(requestUrl) || "/dogetlogin".equals(requestUrl));
     }
 }

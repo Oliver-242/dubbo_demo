@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -66,14 +67,14 @@ public class MyController {
     }
 
     @PostMapping("/query")
-    public String query(@RequestParam("cardid") String cardId, @NotNull Model model) throws Exception {
+    public String query(HttpServletRequest httpServletRequest, @RequestParam("cardid") String cardId, @NotNull Model model) throws Exception {
         log.info("调用query(controller)");
         TParam tParam = new TParam(cardId);
         CompletableFuture<TReturn> tReturn = demoService.inquireAsync(tParam);
         var res = tReturn.get();
         log.info("调用结果：{}", tReturn);
         SaveRecordDto<TParam, CompletableFuture<TReturn>> saveRecordDto =
-                new SaveRecordDto<>(tParam, tReturn, "query", 1);
+                new SaveRecordDto<>(tParam, tReturn, "query", (long) httpServletRequest.getSession(false).getAttribute("userId"));
         recordService.saveRecordServiceAsync(saveRecordDto);
 
         model.addAttribute("result", res.getReturnString());

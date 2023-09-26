@@ -9,12 +9,15 @@ import org.apache.dubbo.springboot.demo.model.TRRegister;
 import org.apache.dubbo.springboot.demo.model.dto.SaveRecordDto;
 import org.apache.dubbo.springboot.demo.provider.RecordService;
 import org.apache.dubbo.springboot.demo.provider.RegisterService;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
 /**
@@ -36,7 +39,8 @@ public class LoginController {
     }
 
     @PostMapping(value = "/login")
-    public String login(@RequestParam("phonenumber") String phoneNumber,
+    public String login(HttpServletRequest httpServletRequest,
+                        @RequestParam("phonenumber") String phoneNumber,
                         @RequestParam("password") String password,
                         @RequestParam("userType") String userType, Model model) throws Exception {
         log.info("调用login(controller)");
@@ -47,11 +51,12 @@ public class LoginController {
         TRRegister trRegister = this.registerService.loginVerify(tpRegister);
         log.info("调用结果：{}", trRegister);
         SaveRecordDto<TPRegister, TRRegister> saveRecordDto =
-            new SaveRecordDto<>(tpRegister, trRegister, RecordTypeEnum.LOGIN.getDesc(), 1);
+            new SaveRecordDto<>(tpRegister, trRegister, RecordTypeEnum.LOGIN.getDesc(), trRegister.getUserId());
         recordService.saveRecordRegLogAsync(saveRecordDto);
         if (trRegister.isStatus()) {
+            createSession(httpServletRequest, trRegister.getUserId(), userType);
             model.addAttribute("msg", "");
-            if(Objects.equals(userType, UserTypeEnum.USER.name())) {
+            if(Objects.equals(userType, UserTypeEnum.USER.getUserType())) {
                 return "redirect:/transfer";
             } else {
                 return "redirect:/admin/home";
@@ -61,7 +66,6 @@ public class LoginController {
             model.addAttribute("phonenumber", phoneNumber);
             model.addAttribute("none", "");
             return "syslogin";
-
         }
     }
 
@@ -84,9 +88,15 @@ public class LoginController {
         TRRegister trRegister = registerService.createUser(tpRegister);
         log.info("调用结果：{}", trRegister);
         SaveRecordDto<TPRegister, TRRegister> saveRecordDto =
-                new SaveRecordDto<>(tpRegister, trRegister, RecordTypeEnum.REGISTER.getDesc(), 1);
+                new SaveRecordDto<>(tpRegister, trRegister, RecordTypeEnum.REGISTER.getDesc(), trRegister.getUserId());
         recordService.saveRecordRegLogAsync(saveRecordDto);
         model.addAttribute("result", trRegister.getReturnString());
         return "regsuccess";
+    }
+
+    private void createSession(HttpServletRequest httpServletRequest, long userId, String userType) {
+        HttpSession httpSession = httpServletRequest.getSession(true);
+        httpSession.setAttribute("userId", userId);
+        httpSession.setAttribute("userType", userType);
     }
 }

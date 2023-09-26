@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MavenProjectsManager">
@@ -5,109 +6,6 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
       </list>
-    </option>
-    <option name="ignoredFiles">
-      <set>
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-config/dubbo-config-api/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-config/dubbo-config-spring/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-configcenter/dubbo-configcenter-apollo/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-configcenter/dubbo-configcenter-nacos/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-configcenter/dubbo-configcenter-zookeeper/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-container/dubbo-container-api/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-container/dubbo-container-spring/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-annotation/dubbo-demo-annotation-consumer/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-annotation/dubbo-demo-annotation-provider/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-annotation/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-api/dubbo-demo-api-consumer/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-api/dubbo-demo-api-provider/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-api/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-generic-call/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-interface/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-native/dubbo-demo-native-consumer/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-native/dubbo-demo-native-interface/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-native/dubbo-demo-native-provider/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-native/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-spring-boot/dubbo-demo-spring-boot-consumer/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-spring-boot/dubbo-demo-spring-boot-interface/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-spring-boot/dubbo-demo-spring-boot-provider/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-spring-boot/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-triple/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-xml/dubbo-demo-jaxrs-rest-consumer/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-xml/dubbo-demo-jaxrs-rest-provider/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-xml/dubbo-demo-spring-mvc-rest-consumer/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-xml/dubbo-demo-spring-mvc-rest-provider/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-xml/dubbo-demo-xml-consumer/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-xml/dubbo-demo-xml-provider/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-demo/dubbo-demo-xml/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-dependencies/dubbo-dependencies-zookeeper-curator5/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-dependencies/dubbo-dependencies-zookeeper/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-filter/dubbo-filter-cache/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-filter/dubbo-filter-validation/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-metadata/dubbo-metadata-api/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-metadata/dubbo-metadata-definition-protobuf/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-metadata/dubbo-metadata-processor/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-metadata/dubbo-metadata-report-nacos/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-metadata/dubbo-metadata-report-redis/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-metadata/dubbo-metadata-report-zookeeper/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-metrics/dubbo-metrics-api/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-metrics/dubbo-metrics-config-center/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-metrics/dubbo-metrics-default/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-metrics/dubbo-metrics-metadata/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-metrics/dubbo-metrics-prometheus/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-metrics/dubbo-metrics-registry/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-monitor/dubbo-monitor-api/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-monitor/dubbo-monitor-default/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-plugin/dubbo-auth/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-plugin/dubbo-qos-api/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-plugin/dubbo-qos/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-plugin/dubbo-reactive/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-plugin/dubbo-security/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-plugin/dubbo-spring-security/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-registry/dubbo-registry-api/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-registry/dubbo-registry-multicast/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-registry/dubbo-registry-multiple/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-registry/dubbo-registry-nacos/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-registry/dubbo-registry-zookeeper/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-remoting/dubbo-remoting-api/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-remoting/dubbo-remoting-http/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-remoting/dubbo-remoting-netty/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-remoting/dubbo-remoting-netty4/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-remoting/dubbo-remoting-zookeeper-curator5/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-remoting/dubbo-remoting-zookeeper/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-rpc/dubbo-rpc-api/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-rpc/dubbo-rpc-dubbo/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-rpc/dubbo-rpc-injvm/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-rpc/dubbo-rpc-rest/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-rpc/dubbo-rpc-triple/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-serialization/dubbo-serialization-api/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-serialization/dubbo-serialization-fastjson2/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-serialization/dubbo-serialization-hessian2/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-serialization/dubbo-serialization-jdk/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-spring-boot/dubbo-spring-boot-actuator/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-spring-boot/dubbo-spring-boot-autoconfigure/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-spring-boot/dubbo-spring-boot-compatible/actuator/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-spring-boot/dubbo-spring-boot-compatible/autoconfigure/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-spring-boot/dubbo-spring-boot-compatible/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-spring-boot/dubbo-spring-boot-starter/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-spring-boot/dubbo-spring-boot-starters/dubbo-nacos-spring-boot-starter/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-spring-boot/dubbo-spring-boot-starters/dubbo-zookeeper-curator5-spring-boot-starter/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-spring-boot/dubbo-spring-boot-starters/dubbo-zookeeper-spring-boot-starter/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-spring-boot/dubbo-spring-boot-starters/observability/autoconfigure/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-spring-boot/dubbo-spring-boot-starters/observability/dubbo-spring-boot-observability-starter/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-spring-boot/dubbo-spring-boot-starters/observability/dubbo-spring-boot-tracing-brave-zipkin-starter/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-spring-boot/dubbo-spring-boot-starters/observability/dubbo-spring-boot-tracing-otel-otlp-starter/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-spring-boot/dubbo-spring-boot-starters/observability/dubbo-spring-boot-tracing-otel-zipkin-starter/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-spring-boot/dubbo-spring-boot-starters/observability/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-spring-boot/dubbo-spring-boot-starters/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-test/dubbo-dependencies-all/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-test/dubbo-test-check/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-test/dubbo-test-common/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-test/dubbo-test-modules/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-test/dubbo-test-spring/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-test/dubbo-test-spring3.2/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-test/dubbo-test-spring4.1/pom.xml" />
-        <option value="$PROJECT_DIR$/../../dubbo/dubbo-test/dubbo-test-spring4.2/pom.xml" />
-      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="corretto-17" project-jdk-type="JavaSDK">
