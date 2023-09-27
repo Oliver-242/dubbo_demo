@@ -13,12 +13,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
     private final static String[] EXCLUDE = {"/", "/register"};
+
+    private final static String[] ADD_AUTH = {"/deposit", "/query", "/transfer", "/withdraw"};
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         log.info("Intercepter初始化中...");
+
         registry.addInterceptor(new PageAccessInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns(EXCLUDE);
+        registry.addInterceptor(new UserAuthInterceptor())
+                .addPathPatterns(ADD_AUTH);
+
         log.info("Intercepter初始化完毕");
     }
 }

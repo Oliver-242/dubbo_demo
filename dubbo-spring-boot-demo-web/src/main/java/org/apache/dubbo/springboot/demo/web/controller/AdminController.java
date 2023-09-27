@@ -55,8 +55,16 @@ public class AdminController {
 
     @PostMapping(value = "/freeze-user")
     @EntranceLog
-    public ResponseEntity<String> doPostFreezeUser(@RequestParam("userId") String userId) {
+    public ResponseEntity<String> doPostFreezeUser(HttpServletRequest httpServletRequest,
+                                                   @RequestParam("userId") String userId) throws Exception {
         log.info("调用freezeUser(controller)");
+        TPAdminButton tpAdminButton =
+                new TPAdminButton(BusinessStatusEnum.FROZEN.getStatus(), Long.parseLong(userId));
+        TRAdminButton trAdminButton = adminService.modStatusByUserId(tpAdminButton);
+        SaveRecordDto<TPAdminButton, TRAdminButton> saveRecordDto =
+                new SaveRecordDto<>(tpAdminButton, trAdminButton, RecordTypeEnum.DELETEUSER.getDesc(), (long) httpServletRequest.getSession().getAttribute("userId"));
+        recordService.saveRecordButton(saveRecordDto);
+
         return new ResponseEntity<>("User frozen successfully", HttpStatus.OK);
     }
 
@@ -65,12 +73,7 @@ public class AdminController {
     public ResponseEntity<String> doPostDeleteUser(HttpServletRequest httpServletRequest,
                                                    @RequestParam("userId") String userId) throws Exception {
         log.info("调用deleteUser(controller)");
-        TPAdminButton tpAdminButton =
-                new TPAdminButton(BusinessStatusEnum.FROZEN.getStatus(), Long.parseLong(userId));
-        TRAdminButton trAdminButton = adminService.modStatusByUserId(tpAdminButton);
-        SaveRecordDto<TPAdminButton, TRAdminButton> saveRecordDto =
-                new SaveRecordDto<>(tpAdminButton, trAdminButton, RecordTypeEnum.DELETEUSER.getDesc(), (long) httpServletRequest.getSession().getAttribute("userId"));
-        recordService.saveRecordButton(saveRecordDto);
+
 
         return new ResponseEntity<>("User delete successfully", HttpStatus.OK);
     }

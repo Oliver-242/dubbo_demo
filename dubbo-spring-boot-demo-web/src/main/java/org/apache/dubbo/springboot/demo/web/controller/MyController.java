@@ -45,8 +45,8 @@ public class MyController {
 
     @PostMapping("/transfer")
     @EntranceLog
-    public String transfer(@RequestParam("sender") String sender,
-                           @RequestParam("receiver") String receiver,
+    public String transfer(@RequestParam("cardid1") String sender,
+                           @RequestParam("cardid2") String receiver,
                            @RequestParam("money") String money,
                            Model model) throws Exception {
         log.info("调用transfer(controller)");
