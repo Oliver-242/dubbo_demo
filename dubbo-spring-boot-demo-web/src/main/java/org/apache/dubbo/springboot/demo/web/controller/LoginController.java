@@ -2,6 +2,7 @@ package org.apache.dubbo.springboot.demo.web.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.springboot.demo.annotation.EntranceLog;
 import org.apache.dubbo.springboot.demo.enums.RecordTypeEnum;
 import org.apache.dubbo.springboot.demo.enums.UserTypeEnum;
 import org.apache.dubbo.springboot.demo.model.TPRegister;
@@ -39,6 +40,7 @@ public class LoginController {
     }
 
     @PostMapping(value = "/login")
+    @EntranceLog
     public String login(HttpServletRequest httpServletRequest,
                         @RequestParam("phonenumber") String phoneNumber,
                         @RequestParam("password") String password,
@@ -75,6 +77,7 @@ public class LoginController {
     }
 
     @PostMapping(value = "/sysregister")
+    @EntranceLog
     public String sysRegister(@RequestParam("name") String userName,
                               @RequestParam("password") String password,
                               @RequestParam("nickname") String nickName,

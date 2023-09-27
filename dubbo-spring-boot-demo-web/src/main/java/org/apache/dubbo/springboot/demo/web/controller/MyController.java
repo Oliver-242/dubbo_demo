@@ -2,6 +2,7 @@ package org.apache.dubbo.springboot.demo.web.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.springboot.demo.annotation.EntranceLog;
 import org.apache.dubbo.springboot.demo.enums.RecordTypeEnum;
 import org.apache.dubbo.springboot.demo.model.dto.SaveRecordDto;
 import org.apache.dubbo.springboot.demo.provider.DemoService;
@@ -43,6 +44,7 @@ public class MyController {
     }
 
     @PostMapping("/transfer")
+    @EntranceLog
     public String transfer(@RequestParam("sender") String sender,
                            @RequestParam("receiver") String receiver,
                            @RequestParam("money") String money,
@@ -67,6 +69,7 @@ public class MyController {
     }
 
     @PostMapping("/query")
+    @EntranceLog
     public String query(HttpServletRequest httpServletRequest, @RequestParam("cardid") String cardId, @NotNull Model model) throws Exception {
         log.info("调用query(controller)");
         TParam tParam = new TParam(cardId);
@@ -83,6 +86,7 @@ public class MyController {
     }
 
     @PostMapping("/withdraw")
+    @EntranceLog
     public String withdraw(@RequestParam("cardid") String cardId,
                            @RequestParam("money") long money,
                            @NotNull Model model) throws Exception {
@@ -100,6 +104,7 @@ public class MyController {
     }
 
     @PostMapping("/deposit")
+    @EntranceLog
     public String deposit(@RequestParam("cardid") String cardId,
                           @RequestParam("money") long money,
                           @NotNull Model model) throws Exception {

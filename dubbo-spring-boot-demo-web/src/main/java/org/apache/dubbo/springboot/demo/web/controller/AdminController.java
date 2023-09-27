@@ -2,6 +2,7 @@ package org.apache.dubbo.springboot.demo.web.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.springboot.demo.annotation.EntranceLog;
 import org.apache.dubbo.springboot.demo.enums.BusinessStatusEnum;
 import org.apache.dubbo.springboot.demo.enums.RecordTypeEnum;
 import org.apache.dubbo.springboot.demo.model.TPAdminButton;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -40,6 +42,7 @@ public class AdminController {
     private RecordService recordService;
 
     @GetMapping(value = "/home")
+    @EntranceLog
     public String doGetAdminHome(Model model) {
         List<UserInfos> userInfosList = this.adminService.queryAllUserInfo();
         List<DepositCards> depositCardsList = this.adminService.queryAllDeCardsInfo();
@@ -51,25 +54,29 @@ public class AdminController {
     }
 
     @PostMapping(value = "/freeze-user")
+    @EntranceLog
     public ResponseEntity<String> doPostFreezeUser(@RequestParam("userId") String userId) {
         log.info("调用freezeUser(controller)");
         return new ResponseEntity<>("User frozen successfully", HttpStatus.OK);
     }
 
     @PostMapping(value = "/delete-user")
-    public ResponseEntity<String> doPostDeleteUser(@RequestParam("userId") String userId) throws Exception {
+    @EntranceLog
+    public ResponseEntity<String> doPostDeleteUser(HttpServletRequest httpServletRequest,
+                                                   @RequestParam("userId") String userId) throws Exception {
         log.info("调用deleteUser(controller)");
         TPAdminButton tpAdminButton =
                 new TPAdminButton(BusinessStatusEnum.FROZEN.getStatus(), Long.parseLong(userId));
         TRAdminButton trAdminButton = adminService.modStatusByUserId(tpAdminButton);
         SaveRecordDto<TPAdminButton, TRAdminButton> saveRecordDto =
-                new SaveRecordDto<>(tpAdminButton, trAdminButton, RecordTypeEnum.DELETEUSER.getDesc(), 1);
+                new SaveRecordDto<>(tpAdminButton, trAdminButton, RecordTypeEnum.DELETEUSER.getDesc(), (long) httpServletRequest.getSession().getAttribute("userId"));
         recordService.saveRecordButton(saveRecordDto);
 
         return new ResponseEntity<>("User delete successfully", HttpStatus.OK);
     }
 
     @PostMapping(value = "/restore-user")
+    @EntranceLog
     public ResponseEntity<String> doPostRestoreUser(@RequestParam("userId") String userId) {
         log.info("调用restoreUser(controller)");
         return new ResponseEntity<>("User restore successfully", HttpStatus.OK);
