@@ -1,6 +1,6 @@
 package org.apache.dubbo.springboot.demo.mapper;
 
-import org.apache.dubbo.springboot.demo.model.dao.UserInfos;
+import org.apache.dubbo.springboot.demo.model.entity.UserInfos;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

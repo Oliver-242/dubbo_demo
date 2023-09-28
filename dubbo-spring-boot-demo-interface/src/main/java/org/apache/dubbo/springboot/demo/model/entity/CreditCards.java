@@ -1,18 +1,14 @@
-package org.apache.dubbo.springboot.demo.model.dao;
+package org.apache.dubbo.springboot.demo.model.entity;
 
 import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
 
-/**
- * @author caijizhou
- * @date 2023/08/17 10:00
- */
 @Data
-public class DepositCards implements Serializable {
+public class CreditCards implements Serializable {
     @Serial
-    private static final long serialVersionUID = -7593222070496677886L;
+    private static final long serialVersionUID = -1362343886756373721L;
 
     private String userName;
 
@@ -27,5 +23,4 @@ public class DepositCards implements Serializable {
     private String createTime;
 
     private String updateTime;
-
 }

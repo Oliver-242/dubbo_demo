@@ -13,6 +13,7 @@ public enum RecordTypeEnum {
     QUERY("query"),
     WITHDRAW("withdraw"),
     DEPOSIT("deposit"),
+    REPAY("repay"),
     LOGIN("login"),
     REGISTER("register"),
     FREEZEUSER("freeze_user"),

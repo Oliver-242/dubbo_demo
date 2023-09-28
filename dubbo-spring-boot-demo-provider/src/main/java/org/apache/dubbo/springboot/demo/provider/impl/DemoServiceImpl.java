@@ -3,6 +3,8 @@ package org.apache.dubbo.springboot.demo.provider.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 
+import org.apache.dubbo.springboot.demo.enums.RecordTypeEnum;
+import org.apache.dubbo.springboot.demo.mapper.CreditCardsDao;
 import org.apache.dubbo.springboot.demo.mapper.DepositCardsDao;
 import org.apache.dubbo.springboot.demo.model.TParam;
 import org.apache.dubbo.springboot.demo.model.TReturn;
@@ -14,6 +16,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -27,8 +30,11 @@ import redis.clients.jedis.JedisPool;
 @Service
 @Slf4j
 public class DemoServiceImpl implements DemoService {
-
+    @Autowired
     private final DepositCardsDao depositCardsDao;
+
+    @Autowired
+    private final CreditCardsDao creditCardsDao;
 
     @Autowired
     private JedisPool jedisPool; // 注入 Jedis 实例
@@ -38,8 +44,14 @@ public class DemoServiceImpl implements DemoService {
     private final String prefix = "balance_";
 
     @Autowired
-    public DemoServiceImpl(DepositCardsDao depositCardsDao) {
+    public DemoServiceImpl(DepositCardsDao depositCardsDao, CreditCardsDao creditCardsDao) {
         this.depositCardsDao = depositCardsDao;
+        this.creditCardsDao = creditCardsDao;
+    }
+
+    @Override
+    public TReturn repay(TParam tParam) throws Exception {
+        return null;
     }
 
     @Override
@@ -141,6 +153,17 @@ public class DemoServiceImpl implements DemoService {
         }
 
         return res;
+    }
+
+    @Override
+    public Boolean verify(List<String> cardIdList, long userId, String methodName) {
+        List<String> depositList = depositCardsDao.queryAllCardIdByUserId(userId);
+        List<String> creditList = creditCardsDao.queryAllCardIdByUserId(userId);
+        if(!methodName.equals(RecordTypeEnum.REPAY.getDesc())) {
+            return depositList.contains(cardIdList.get(0));
+        } else {    //信用卡还款功能要求第一个是信用卡，第二个是储蓄卡
+            return creditList.contains(cardIdList.get(0)) && depositList.contains(cardIdList.get(1));
+        }
     }
 
 

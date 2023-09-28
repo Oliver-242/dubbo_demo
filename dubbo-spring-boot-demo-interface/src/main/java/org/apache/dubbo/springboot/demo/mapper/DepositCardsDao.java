@@ -1,6 +1,6 @@
 package org.apache.dubbo.springboot.demo.mapper;
 
-import org.apache.dubbo.springboot.demo.model.dao.DepositCards;
+import org.apache.dubbo.springboot.demo.model.entity.DepositCards;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -19,6 +19,9 @@ import java.util.List;
 public interface DepositCardsDao {
     @Select("select * from depositcards order by userid")
     List<DepositCards> queryAllCardInfo();
+
+    @Select(("select cardid from depositcards where userid=#{userId}"))
+    List<String> queryAllCardIdByUserId(@Param("userId") long userId);
 
     @Select("select money from depositcards where cardid=#{cardId}")
     Long selectMoneyByCardId(@Param("cardId") String cardId);

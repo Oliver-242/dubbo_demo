@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.apache.dubbo.springboot.demo.mapper.TransactionRecordsDao">
-    <resultMap id="BaseResultMap" type="org.apache.dubbo.springboot.demo.model.dao.TransactionRecords">
+    <resultMap id="BaseResultMap" type="org.apache.dubbo.springboot.demo.model.entity.TransactionRecords">
         <id column="id" property="id" jdbcType="CHAR"/>
         <result column="userid" property="userId" jdbcType="BIGINT"/>
         <result column="typeid" property="typeId" jdbcType="VARCHAR"/>
@@ -32,7 +32,7 @@
         limit 50
     </select>
 
-    <insert id="saveRecord" parameterType="org.apache.dubbo.springboot.demo.model.dao.TransactionRecords">
+    <insert id="saveRecord" parameterType="org.apache.dubbo.springboot.demo.model.entity.TransactionRecords">
         insert into
         transactionrecords(id, userid, typeid, status, firstcard, secondcard, money)
         values (#{record.id}, #{record.userId}, #{record.typeId}, #{record.status}, #{record.firstCard},

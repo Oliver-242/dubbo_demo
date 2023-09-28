@@ -2,9 +2,9 @@ package org.apache.dubbo.springboot.demo.provider;
 
 import org.apache.dubbo.springboot.demo.model.TPAdminButton;
 import org.apache.dubbo.springboot.demo.model.TRAdminButton;
-import org.apache.dubbo.springboot.demo.model.dao.DepositCards;
-import org.apache.dubbo.springboot.demo.model.dao.TransactionRecords;
-import org.apache.dubbo.springboot.demo.model.dao.UserInfos;
+import org.apache.dubbo.springboot.demo.model.entity.DepositCards;
+import org.apache.dubbo.springboot.demo.model.entity.TransactionRecords;
+import org.apache.dubbo.springboot.demo.model.entity.UserInfos;
 
 import java.util.List;
 

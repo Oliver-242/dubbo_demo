@@ -25,8 +25,8 @@ public class EntranceLogAspect {
         long startTime = System.currentTimeMillis();
         String methodName = proceedingJoinPoint.getSignature().getName();
         Object result = proceedingJoinPoint.proceed();
-//        log.info("[EntranceLogAspect] {} end. costTime = {}ms, requestData={}，result={}", methodName, cost,
-//                requestBuffer, result);
+        long cost = System.currentTimeMillis() - startTime;
+        log.info("[EntranceLogAspect] {} end. costTime = {}ms, result={}", methodName, cost, result);
         return result;
     }
 

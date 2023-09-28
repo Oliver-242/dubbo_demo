@@ -6,7 +6,7 @@ import org.apache.dubbo.springboot.demo.enums.BusinessStatusEnum;
 import org.apache.dubbo.springboot.demo.mapper.UserInfosDao;
 import org.apache.dubbo.springboot.demo.model.TPRegister;
 import org.apache.dubbo.springboot.demo.model.TRRegister;
-import org.apache.dubbo.springboot.demo.model.dao.UserInfos;
+import org.apache.dubbo.springboot.demo.model.entity.UserInfos;
 import org.apache.dubbo.springboot.demo.provider.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

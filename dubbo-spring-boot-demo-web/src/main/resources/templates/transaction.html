@@ -82,11 +82,11 @@
         <form th:switch="${function}" th:case="'transfer'" action="/transfer" method="post">
             <div class="form-group">
                 <label for="sender">转账卡</label>
-                <input type="text" id="sender" name="sender" required="" class="form-control">
+                <input type="text" id="sender" name="cardid1" required="" class="form-control">
             </div>
             <div class="form-group">
                 <label for="receiver">收款卡</label>
-                <input type="text" id="receiver" name="receiver" required="" class="form-control">
+                <input type="text" id="receiver" name="cardid2" required="" class="form-control">
             </div>
             <div class="form-group">
                 <label for="money">金额</label>

@@ -120,4 +120,22 @@ public class MyController {
         model.addAttribute("function", RecordTypeEnum.DEPOSIT.getDesc());
         return "transaction";
     }
+
+    //TODO: 信用卡还款功能
+    @PostMapping("/repay")
+    @EntranceLog
+    public String repay(@RequestParam("cardid1") String cardId1, @RequestParam("cardid2") String cardId2,
+                          @RequestParam("money") long money, @NotNull Model model) throws Exception {
+        log.info("调用deposit(controller)");
+        TParam tParam = new TParam(cardId1, money);
+        TReturn tReturn = demoService.deposit(tParam);
+        log.info("调用结果：{}", tReturn);
+        SaveRecordDto<TParam, TReturn> saveRecordDto =
+                new SaveRecordDto<>(tParam, tReturn, RecordTypeEnum.REPAY.getDesc(), 1);
+        recordService.saveRecord(saveRecordDto);
+
+        model.addAttribute("result", tReturn.getReturnString());
+        model.addAttribute("function", RecordTypeEnum.REPAY.getDesc());
+        return "transaction";
+    }
 }

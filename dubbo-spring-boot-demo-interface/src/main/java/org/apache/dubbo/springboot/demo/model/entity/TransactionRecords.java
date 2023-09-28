@@ -1,4 +1,4 @@
-package org.apache.dubbo.springboot.demo.model.dao;
+package org.apache.dubbo.springboot.demo.model.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

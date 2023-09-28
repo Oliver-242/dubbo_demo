@@ -11,7 +11,7 @@ import org.apache.dubbo.springboot.demo.model.TParam;
 import org.apache.dubbo.springboot.demo.model.TRAdminButton;
 import org.apache.dubbo.springboot.demo.model.TRRegister;
 import org.apache.dubbo.springboot.demo.model.TReturn;
-import org.apache.dubbo.springboot.demo.model.dao.TransactionRecords;
+import org.apache.dubbo.springboot.demo.model.entity.TransactionRecords;
 import org.apache.dubbo.springboot.demo.model.dto.SaveRecordDto;
 import org.apache.dubbo.springboot.demo.provider.RecordService;
 import org.apache.dubbo.springboot.demo.provider.SnowService;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.apache.dubbo.springboot.demo.mapper.UserInfosDao">
-    <resultMap id="BaseResultMap" type="org.apache.dubbo.springboot.demo.model.dao.UserInfos">
+    <resultMap id="BaseResultMap" type="org.apache.dubbo.springboot.demo.model.entity.UserInfos">
         <id column="userid" property="userId" jdbcType="BIGINT"/>
         <result column="username" property="userName" jdbcType="VARCHAR"/>
         <result column="phonenumber" property="phoneNumber" jdbcType="CHAR"/>
@@ -17,7 +17,7 @@
         userid, username, phonenumber, password, nickname, creditcardnum, depositcardnum, identification, status
     </sql>
 
-    <insert id="createUserInfo" parameterType="org.apache.dubbo.springboot.demo.model.dao.UserInfos">
+    <insert id="createUserInfo" parameterType="org.apache.dubbo.springboot.demo.model.entity.UserInfos">
         insert into
             userinfos(username, phonenumber, password, nickname, identification, status)
         values
