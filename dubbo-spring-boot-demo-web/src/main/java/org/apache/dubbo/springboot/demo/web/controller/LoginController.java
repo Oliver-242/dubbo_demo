@@ -10,7 +10,6 @@ import org.apache.dubbo.springboot.demo.model.TRRegister;
 import org.apache.dubbo.springboot.demo.model.dto.SaveRecordDto;
 import org.apache.dubbo.springboot.demo.provider.RecordService;
 import org.apache.dubbo.springboot.demo.provider.RegisterService;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,18 +54,24 @@ public class LoginController {
         SaveRecordDto<TPRegister, TRRegister> saveRecordDto =
             new SaveRecordDto<>(tpRegister, trRegister, RecordTypeEnum.LOGIN.getDesc(), trRegister.getUserId());
         recordService.saveRecordRegLogAsync(saveRecordDto);
-        if (trRegister.isStatus()) {
-            createSession(httpServletRequest, trRegister.getUserId(), userType);
-            model.addAttribute("msg", "");
-            if(Objects.equals(userType, UserTypeEnum.USER.getUserType())) {
-                return "redirect:/transfer";
+        try{
+            if (trRegister.isStatus()) {
+                createSession(httpServletRequest, trRegister.getUserId(), userType);
+                model.addAttribute("msg", "");
+                if(Objects.equals(userType, UserTypeEnum.USER.getUserType())) {
+                    return "redirect:/dogettransfer";
+                } else {
+                    return "redirect:/admin/home";
+                }
             } else {
-                return "redirect:/admin/home";
+                model.addAttribute("msg", "登录失败!");
+                model.addAttribute("phonenumber", phoneNumber);
+                model.addAttribute("none", "");
+                httpServletRequest.getSession(false).invalidate();
+                return "syslogin";
             }
-        } else {
-            model.addAttribute("msg", "登录失败!");
-            model.addAttribute("phonenumber", phoneNumber);
-            model.addAttribute("none", "");
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
             return "syslogin";
         }
     }

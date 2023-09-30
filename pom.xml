@@ -17,7 +17,7 @@
     </modules>
 
     <properties>
-        <dubbo.version>3.2.0-beta.4</dubbo.version>
+        <dubbo.version>3.2.6</dubbo.version>
         <spring-boot.version>2.7.8</spring-boot.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -60,6 +60,16 @@
                 <artifactId>dubbo-dependencies-zookeeper-curator5</artifactId>
                 <version>${dubbo.version}</version>
                 <type>pom</type>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>logback-core</artifactId>
+                        <groupId>ch.qos.logback</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>ch.qos.logback</groupId>
+                        <artifactId>logback-classic</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -193,6 +203,10 @@
                 <exclusion>
                     <artifactId>slf4j-reload4j</artifactId>
                     <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

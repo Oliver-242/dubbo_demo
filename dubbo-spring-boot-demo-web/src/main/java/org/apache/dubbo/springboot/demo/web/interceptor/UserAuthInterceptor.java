@@ -1,5 +1,6 @@
 package org.apache.dubbo.springboot.demo.web.interceptor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.springboot.demo.provider.DemoService;
 import org.jetbrains.annotations.NotNull;
@@ -19,27 +20,50 @@ import java.util.List;
  * @date 2023/09/27 17:00
  */
 @Component
+@Slf4j
 public class UserAuthInterceptor implements HandlerInterceptor {
-    @DubboReference(version = "1.0.0", group = "group1")
+    @DubboReference(group = "group1", version = "1.0.0")
     private DemoService demoService;
 
     @Override
     public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response,
                              @NotNull Object handler) throws Exception {
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/plain; charset=UTF-8");
+
+        log.info("用户身份识别...");
         HttpSession httpSession = request.getSession(false);
-        if(httpSession != null) {
-            long userId = (long) httpSession.getAttribute("userId");
-            Enumeration<String> params = request.getParameterNames();
-            List<String> cardIdList = new ArrayList<>();
-            while(params.hasMoreElements()) {
-                String paramName = params.nextElement();
-                if(paramName.startsWith("cardid")) {
-                    cardIdList.add(paramName);
+        try{
+            if(httpSession != null) {
+                long userId = (long) httpSession.getAttribute("userId");
+                Enumeration<String> params = request.getParameterNames();
+                List<String> cardIdList = new ArrayList<>();
+                while(params.hasMoreElements()) {
+                    String paramName = params.nextElement();
+                    if(paramName.startsWith("cardid")) {
+                        cardIdList.add(request.getParameter(paramName));
+                    }
+                }
+                if(cardIdList.isEmpty()) {
+                    throw new Exception("卡参数为空！");
+                }
+                String url = request.getRequestURI().substring(1);
+                if(!demoService.verify(cardIdList, userId, url)) {
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    response.getWriter().write("非法操作！");
+                    return false;
+                } else {
+                    return true;
                 }
             }
-            String url = request.getRequestURI().substring(1);
-            return demoService.verify(cardIdList, userId, url);
+        } catch (Exception ex) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.getWriter().write("非法操作！");
+            return false;
         }
+        log.info("身份验证fail");
+        response.getWriter().write("请先登录！");
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         return false;
     }
 

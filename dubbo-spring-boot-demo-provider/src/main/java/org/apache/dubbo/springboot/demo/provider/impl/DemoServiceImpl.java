@@ -160,9 +160,10 @@ public class DemoServiceImpl implements DemoService {
         List<String> depositList = depositCardsDao.queryAllCardIdByUserId(userId);
         List<String> creditList = creditCardsDao.queryAllCardIdByUserId(userId);
         if(!methodName.equals(RecordTypeEnum.REPAY.getDesc())) {
-            return depositList.contains(cardIdList.get(0));
+            return !depositList.isEmpty() && depositList.contains(cardIdList.get(0));
         } else {    //信用卡还款功能要求第一个是信用卡，第二个是储蓄卡
-            return creditList.contains(cardIdList.get(0)) && depositList.contains(cardIdList.get(1));
+            return !creditList.isEmpty() && !depositList.isEmpty() && creditList.contains(cardIdList.get(0))
+                    && depositList.contains(cardIdList.get(1));
         }
     }
 

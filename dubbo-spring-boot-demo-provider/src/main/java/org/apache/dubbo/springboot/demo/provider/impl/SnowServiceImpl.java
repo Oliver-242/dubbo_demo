@@ -19,7 +19,6 @@ public class SnowServiceImpl implements SnowService {
     @Autowired
     private Environment environment;
 
-//    @Autowired
     private SnowFlake snowFlake;
 
     /**
@@ -28,13 +27,15 @@ public class SnowServiceImpl implements SnowService {
     @Override
     public void initiator() {
         try {
-            assert snowFlake == null;
+            if (snowFlake != null) {
+                throw new Exception();
+            }
             snowFlake = new SnowFlake(Long.parseLong(Objects.requireNonNull(environment.getProperty("datacenterId"))),
                     Long.parseLong(Objects.requireNonNull(environment.getProperty("machineId"))));
             log.info("snowflake算法初始化成功！");
             log.debug("当前数据中心ID为{},服务器ID为{}",
                     environment.getProperty("datacenterId"), environment.getProperty("machineId"));
-        } catch (AssertionError ex) {
+        } catch (Exception ex) {
             log.error("snowFlake初始化之前非空: {}", ex.getMessage());
         }
 

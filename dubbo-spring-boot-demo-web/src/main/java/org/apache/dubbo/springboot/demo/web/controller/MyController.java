@@ -38,7 +38,7 @@ public class MyController {
         return "syslogin";
     }
 
-    @GetMapping("/transfer")
+    @GetMapping("/dogettransfer")
     public String dispTransfer() {
         return "transaction";
     }

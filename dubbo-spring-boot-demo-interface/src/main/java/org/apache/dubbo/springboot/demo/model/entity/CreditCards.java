@@ -10,8 +10,6 @@ public class CreditCards implements Serializable {
     @Serial
     private static final long serialVersionUID = -1362343886756373721L;
 
-    private String userName;
-
     private long userId;
 
     private String cardId;

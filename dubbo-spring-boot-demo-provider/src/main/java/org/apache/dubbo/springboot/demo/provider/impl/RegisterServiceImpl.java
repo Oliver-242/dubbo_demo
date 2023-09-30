@@ -28,12 +28,12 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     public TRRegister loginVerify(TPRegister tpRegister) {
         UserInfos info = this.userInfosDao.queryAllByPhoneNumber(tpRegister.getPhoneNumber());
-        if(tpRegister.getPassword().equals(info.getPassword()) &&
+        if(info != null && tpRegister.getPassword().equals(info.getPassword()) &&
                 tpRegister.getUserType().equals(info.getIdentification()) &&
                     info.getStatus().equals(BusinessStatusEnum.ACTIVE.getStatus())) {
             return new TRRegister(true, info.getUserId(), "登录成功！");
         }
-        return new TRRegister(false, info.getUserId(), "登录失败！");
+        return new TRRegister(false, info != null ? info.getUserId() : -1, "登录失败！");
     }
 
     @Override

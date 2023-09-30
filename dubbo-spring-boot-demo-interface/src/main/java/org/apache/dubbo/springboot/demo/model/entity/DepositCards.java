@@ -14,8 +14,6 @@ public class DepositCards implements Serializable {
     @Serial
     private static final long serialVersionUID = -7593222070496677886L;
 
-    private String userName;
-
     private long userId;
 
     private String cardId;

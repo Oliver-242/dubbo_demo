@@ -42,7 +42,7 @@ public class AuthenticationFilter implements Filter {
             } else {                                               //已登录用户按照用户类型定位到不同操作界面
                 String userType = (String) httpSession.getAttribute("userType");
                 if(Objects.equals(userType, UserTypeEnum.USER.getUserType())) {
-                    httpServletResponse.sendRedirect("/transfer");
+                    httpServletResponse.sendRedirect("/dogettransfer");
                     return;
                 } else {
                     httpServletResponse.sendRedirect("/home");
