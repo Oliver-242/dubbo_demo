@@ -20,8 +20,8 @@ public interface DepositCardsDao {
     @Select("select * from depositcards order by userid")
     List<DepositCards> queryAllCardInfo();
 
-    @Select(("select cardid from depositcards where userid=#{userId}"))
-    List<String> queryAllCardIdByUserId(@Param("userId") long userId);
+    @Select(("select cardid from depositcards where userid=#{userId} and status=#{status}"))
+    List<String> queryAllValidCardIdByUserId(@Param("userId") long userId, @Param("status") String status);
 
     @Select("select money from depositcards where cardid=#{cardId}")
     Long selectMoneyByCardId(@Param("cardId") String cardId);

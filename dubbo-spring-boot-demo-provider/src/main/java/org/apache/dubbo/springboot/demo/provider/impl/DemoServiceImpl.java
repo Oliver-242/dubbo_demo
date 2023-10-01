@@ -3,6 +3,7 @@ package org.apache.dubbo.springboot.demo.provider.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 
+import org.apache.dubbo.springboot.demo.enums.BusinessStatusEnum;
 import org.apache.dubbo.springboot.demo.enums.RecordTypeEnum;
 import org.apache.dubbo.springboot.demo.mapper.CreditCardsDao;
 import org.apache.dubbo.springboot.demo.mapper.DepositCardsDao;
@@ -37,7 +38,7 @@ public class DemoServiceImpl implements DemoService {
     private final CreditCardsDao creditCardsDao;
 
     @Autowired
-    private JedisPool jedisPool; // 注入 Jedis 实例
+    private JedisPool jedisPool;
 
     Logger logger = LoggerFactory.getLogger(DemoServiceImpl.class);
 
@@ -157,8 +158,8 @@ public class DemoServiceImpl implements DemoService {
 
     @Override
     public Boolean verify(List<String> cardIdList, long userId, String methodName) {
-        List<String> depositList = depositCardsDao.queryAllCardIdByUserId(userId);
-        List<String> creditList = creditCardsDao.queryAllCardIdByUserId(userId);
+        List<String> depositList = depositCardsDao.queryAllValidCardIdByUserId(userId, BusinessStatusEnum.ACTIVE.getStatus());
+        List<String> creditList = creditCardsDao.queryAllValidCardIdByUserId(userId, BusinessStatusEnum.ACTIVE.getStatus());
         if(!methodName.equals(RecordTypeEnum.REPAY.getDesc())) {
             return !depositList.isEmpty() && depositList.contains(cardIdList.get(0));
         } else {    //信用卡还款功能要求第一个是信用卡，第二个是储蓄卡

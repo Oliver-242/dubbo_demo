@@ -17,21 +17,27 @@ public class InterceptorConfig implements WebMvcConfigurer {
     private PageAccessInterceptor pageAccessInterceptor;
     @Autowired
     private UserAuthInterceptor userAuthInterceptor;
+    @Autowired
+    private AdminAuthInterceptor adminAuthInterceptor;
 
     private final static String[] EXCLUDE = {"/", "/register"};
 
     private final static String[] ADD_AUTH = {"/deposit", "/query", "/transfer", "/withdraw"};
 
+    private final static String[] ADD_ADMIN_AUTH = {"/freeze-user", "/delete-user", "/restore-user"};
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        log.info("Intercepter初始化中...");
+        log.info("Interceptor初始化中...");
 
         registry.addInterceptor(pageAccessInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns(EXCLUDE);
         registry.addInterceptor(userAuthInterceptor)
                 .addPathPatterns(ADD_AUTH);
+        registry.addInterceptor(adminAuthInterceptor)
+                .addPathPatterns(ADD_ADMIN_AUTH);
 
-        log.info("Intercepter初始化完毕");
+        log.info("Interceptor初始化完毕");
     }
 }
