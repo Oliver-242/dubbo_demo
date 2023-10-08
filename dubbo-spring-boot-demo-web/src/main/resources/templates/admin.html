@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <title>Admin</title>
     <style>
+        .container {
+            display: flex;
+            flex-direction: column; /* 垂直排列 */
+            align-items: center; /* 垂直居中 */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
         /*--预设--*/
         body {
             padding: 0px;
@@ -132,6 +142,11 @@
 <div class="content-container">
     <div id="lyrow" class="funcframe">
         <div class="subframe">
+            <div class="container">
+                <form action="/logout" method="post">
+                    <button class="btn btn-danger" type="submit">Logout</button>
+                </form>
+            </div>
             <button class="function" onclick="showOperation('user-management')">用户管理</button>
             <button class="function" onclick="showOperation('deposit-card-management')">储蓄卡管理</button>
             <button class="function" onclick="showOperation('credit-card-management')">信用卡管理</button>
@@ -223,7 +238,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="card : ${cards}">
+                <tr th:each="card : ${card2s}">
                     <td th:text="${card.userId}"></td>
                     <td th:text="${card.cardId}"></td>
                     <td th:text="${card.money}"></td>
@@ -253,7 +268,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="card1 : ${card1s}">
+                <tr th:each="card1 : ${records}">
                     <td th:text="${card1.id}"></td>
                     <td th:text="${card1.userId}"></td>
                     <td th:text="${card1.typeId}"></td>

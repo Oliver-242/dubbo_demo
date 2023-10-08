@@ -2,6 +2,7 @@ package org.apache.dubbo.springboot.demo.provider;
 
 import org.apache.dubbo.springboot.demo.model.TPAdminButton;
 import org.apache.dubbo.springboot.demo.model.TRAdminButton;
+import org.apache.dubbo.springboot.demo.model.entity.CreditCards;
 import org.apache.dubbo.springboot.demo.model.entity.DepositCards;
 import org.apache.dubbo.springboot.demo.model.entity.TransactionRecords;
 import org.apache.dubbo.springboot.demo.model.entity.UserInfos;
@@ -17,7 +18,15 @@ public interface AdminService {
 
     List<DepositCards> queryAllDeCardsInfo();
 
+    List<CreditCards> queryAllCreCardsInfo();
+
+    List<DepositCards> queryAllDeCardsInfoByUserId(long userId);
+
+    List<CreditCards> queryAllCreCardsInfoByUserId(long userId);
+
     List<TransactionRecords> queryAllRecordInfo();
 
     TRAdminButton modStatusByUserId(TPAdminButton tpAdminButton);
+
+    TRAdminButton deleteUserByUserId(TPAdminButton tpAdminButton);
 }

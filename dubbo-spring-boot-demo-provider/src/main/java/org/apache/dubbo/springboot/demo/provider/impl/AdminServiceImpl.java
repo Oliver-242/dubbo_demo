@@ -2,11 +2,14 @@ package org.apache.dubbo.springboot.demo.provider.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
+import org.apache.dubbo.springboot.demo.enums.BusinessStatusEnum;
+import org.apache.dubbo.springboot.demo.mapper.CreditCardsDao;
 import org.apache.dubbo.springboot.demo.mapper.DepositCardsDao;
 import org.apache.dubbo.springboot.demo.mapper.TransactionRecordsDao;
 import org.apache.dubbo.springboot.demo.mapper.UserInfosDao;
 import org.apache.dubbo.springboot.demo.model.TPAdminButton;
 import org.apache.dubbo.springboot.demo.model.TRAdminButton;
+import org.apache.dubbo.springboot.demo.model.entity.CreditCards;
 import org.apache.dubbo.springboot.demo.model.entity.DepositCards;
 import org.apache.dubbo.springboot.demo.model.entity.TransactionRecords;
 import org.apache.dubbo.springboot.demo.model.entity.UserInfos;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -36,6 +40,9 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private TransactionRecordsDao transactionRecordsDao;
 
+    @Autowired
+    private CreditCardsDao creditCardsDao;
+
     @Override
     public List<UserInfos> queryAllUserInfo() {
         return this.userInfosDao.queryAllUserInfo();
@@ -44,6 +51,25 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<DepositCards> queryAllDeCardsInfo() {
         return this.depositCardsDao.queryAllCardInfo();
+    }
+
+    @Override
+    public List<CreditCards> queryAllCreCardsInfo() {
+        return this.creditCardsDao.queryAllCardInfo();
+    }
+
+    @Override
+    public List<DepositCards> queryAllDeCardsInfoByUserId(long userId) {
+        return this.depositCardsDao.queryAllCardInfo().stream()
+                .filter(card -> card.getUserId() == userId)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CreditCards> queryAllCreCardsInfoByUserId(long userId) {
+        return this.creditCardsDao.queryAllCardInfo().stream()
+                .filter(card -> card.getUserId() == userId)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -62,5 +88,10 @@ public class AdminServiceImpl implements AdminService {
             returnString = "用户已处于" + tpAdminButton.getStatus() + "状态";
         }
         return new TRAdminButton(var2, returnString);
+    }
+
+    @Override
+    public TRAdminButton deleteUserByUserId(TPAdminButton tpAdminButton) {
+        return new TRAdminButton(userInfosDao.deleteUserByUserId(tpAdminButton.getUserId()) != 0, "删除成功！");
     }
 }
