@@ -40,6 +40,13 @@
         order by userid
     </select>
 
+    <select id="queryAllByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="All_Column_List"/>
+        from userinfos
+        where userid=#{userId}
+    </select>
+
     <delete id="deleteUserByUserId">
         delete from userinfos
         where userid=#{userId}
@@ -48,6 +55,12 @@
     <update id="modStatusByUserId">
         update userinfos
         set status=#{status}
+        where userid=#{userId}
+    </update>
+
+    <update id="updateNickname">
+        update userinfos
+        set nickname=#{nickname}
         where userid=#{userId}
     </update>
 

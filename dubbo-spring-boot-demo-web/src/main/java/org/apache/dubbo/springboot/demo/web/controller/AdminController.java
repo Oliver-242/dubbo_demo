@@ -7,6 +7,7 @@ import org.apache.dubbo.springboot.demo.enums.BusinessStatusEnum;
 import org.apache.dubbo.springboot.demo.enums.RecordTypeEnum;
 import org.apache.dubbo.springboot.demo.model.TPAdminButton;
 import org.apache.dubbo.springboot.demo.model.TRAdminButton;
+import org.apache.dubbo.springboot.demo.model.entity.CreditCards;
 import org.apache.dubbo.springboot.demo.model.entity.DepositCards;
 import org.apache.dubbo.springboot.demo.model.entity.TransactionRecords;
 import org.apache.dubbo.springboot.demo.model.entity.UserInfos;
@@ -44,10 +45,12 @@ public class AdminController {
     public String doGetAdminHome(Model model) {
         List<UserInfos> userInfosList = this.adminService.queryAllUserInfo();
         List<DepositCards> depositCardsList = this.adminService.queryAllDeCardsInfo();
+        List<CreditCards> creditCardsList = this.adminService.queryAllCreCardsInfo();
         List<TransactionRecords> transactionRecordsList = this.adminService.queryAllRecordInfo();
         model.addAttribute("infos", userInfosList);
         model.addAttribute("cards", depositCardsList);
-        model.addAttribute("card1s", transactionRecordsList);
+        model.addAttribute("card2s", creditCardsList);
+        model.addAttribute("records", transactionRecordsList);
         return "admin";
     }
 
@@ -60,10 +63,10 @@ public class AdminController {
                 new TPAdminButton(BusinessStatusEnum.FROZEN.getStatus(), Long.parseLong(userId));
         TRAdminButton trAdminButton = adminService.modStatusByUserId(tpAdminButton);
         SaveRecordDto<TPAdminButton, TRAdminButton> saveRecordDto =
-                new SaveRecordDto<>(tpAdminButton, trAdminButton, RecordTypeEnum.DELETEUSER.getDesc(), (long) httpServletRequest.getSession().getAttribute("userId"));
+                new SaveRecordDto<>(tpAdminButton, trAdminButton, RecordTypeEnum.FREEZEUSER.getDesc(), (long) httpServletRequest.getSession().getAttribute("userId"));
         recordService.saveRecordButton(saveRecordDto);
 
-        return new ResponseEntity<>("User frozen successfully", HttpStatus.OK);
+        return new ResponseEntity<>("User freeze successfully", HttpStatus.OK);
     }
 
     @PostMapping(value = "/delete-user")
@@ -71,15 +74,28 @@ public class AdminController {
     public ResponseEntity<String> doPostDeleteUser(HttpServletRequest httpServletRequest,
                                                    @RequestParam("userId") String userId) throws Exception {
         log.info("调用deleteUser(controller)");
-
+        TPAdminButton tpAdminButton =
+                new TPAdminButton(null, Long.parseLong(userId));
+        TRAdminButton trAdminButton = adminService.deleteUserByUserId(tpAdminButton);
+        SaveRecordDto<TPAdminButton, TRAdminButton> saveRecordDto =
+                new SaveRecordDto<>(tpAdminButton, trAdminButton, RecordTypeEnum.DELETEUSER.getDesc(), (long) httpServletRequest.getSession().getAttribute("userId"));
+        recordService.saveRecordButton(saveRecordDto);
 
         return new ResponseEntity<>("User delete successfully", HttpStatus.OK);
     }
 
     @PostMapping(value = "/restore-user")
     @EntranceLog
-    public ResponseEntity<String> doPostRestoreUser(@RequestParam("userId") String userId) {
+    public ResponseEntity<String> doPostRestoreUser(HttpServletRequest httpServletRequest,
+                                                    @RequestParam("userId") String userId) throws Exception {
         log.info("调用restoreUser(controller)");
+        TPAdminButton tpAdminButton =
+                new TPAdminButton(BusinessStatusEnum.ACTIVE.getStatus(), Long.parseLong(userId));
+        TRAdminButton trAdminButton = adminService.modStatusByUserId(tpAdminButton);
+        SaveRecordDto<TPAdminButton, TRAdminButton> saveRecordDto =
+                new SaveRecordDto<>(tpAdminButton, trAdminButton, RecordTypeEnum.RESTOREUSER.getDesc(), (long) httpServletRequest.getSession().getAttribute("userId"));
+        recordService.saveRecordButton(saveRecordDto);
+
         return new ResponseEntity<>("User restore successfully", HttpStatus.OK);
     }
 }

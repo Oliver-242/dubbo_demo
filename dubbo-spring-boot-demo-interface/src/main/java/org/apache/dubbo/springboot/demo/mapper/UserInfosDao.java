@@ -20,7 +20,11 @@ public interface UserInfosDao {
 
     UserInfos queryAllByPhoneNumber(@Param("phonenumber") String phoneNumber);
 
+    UserInfos queryAllByUserId(@Param("userId") long userId);
+
     int deleteUserByUserId(@Param("userId") long userId);
 
     int modStatusByUserId(@Param("status") String status, @Param("userId") long userId);
+
+    int updateNickname(@Param("nickname") String nickname, @Param("userId") long userId);
 }

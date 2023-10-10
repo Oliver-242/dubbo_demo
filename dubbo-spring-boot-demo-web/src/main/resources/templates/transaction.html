@@ -50,96 +50,237 @@
             margin-bottom: 20px;
         }
 
+        .sub-container {
+            display: flex;
+            flex-direction: column; /* 垂直排列 */
+            align-items: center; /* 垂直居中 */
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
         .content-container {
+            display: flex;
+            flex-direction: row; /* 垂直排列 */
+            align-items: center; /* 垂直居中 */
+            width: 100%;
+        }
+
+        .sub-content-container {
             display: flex;
             flex-direction: column; /* 垂直排列 */
             align-items: center; /* 垂直居中 */
             width: 100%;
         }
 
+        .user-info-container {
+            display: flex;
+            flex-direction: column; /* 垂直排列 */
+            align-items: center; /* 垂直居中 */
+            width: 60%; /* 调整用户信息部分的宽度 */
+        }
+
     </style>
 </head>
+
 <body>
 <div class="content-container">
-    <div class="container">
-        <label for="functionSelect">选择功能：</label>
-        <select id="functionSelect">
-            <option value="transfer" th:selected="${function == 'transfer'}">转账</option>
-            <option value="query" th:selected="${function == 'query'}">查询</option>
-            <option value="withdraw" th:selected="${function == 'withdraw'}">提款</option>
-            <option value="deposit" th:selected="${function == 'deposit'}">存款</option>
-        </select>
+    <div class="sub-content-container">
+        <div class="user-info-container">
+            <div class="container">
+                <h3>User Information</h3>
+                <div class="sub-container">
+                    <p>
+                        <strong>Nickname:</strong>
+                        <span id="nickname" th:text="${nickname}"></span>
+                        <button id="editNickname" class="edit-button"><i class="fas fa-pencil-alt"></i></button>
+                    </p>
+                    <p><strong>Phone:</strong> <span th:text="${phonenumber}"></span></p>
+                    <p><strong>Deposit Cards:</strong></p>
+                    <ul>
+                        <li th:each="card : ${depositCards}" th:text="${card}"></li>
+                    </ul>
+                    <p><strong>Credit Cards:</strong></p>
+                    <ul>
+                        <li th:each="card : ${creditCards}" th:text="${card}"></li>
+                    </ul>
+                </div>
+                <form action="/logout" method="post">
+                    <button class="btn btn-danger" type="submit">Logout</button>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <div class="container" id="content">
+    <div class="sub-content-container">
+        <div class="container">
+            <label for="functionSelect">选择功能：</label>
+            <select id="functionSelect">
+                <option value="transfer" th:selected="${function == 'transfer'}">转账</option>
+                <option value="query" th:selected="${function == 'query'}">查询</option>
+                <option value="withdraw" th:selected="${function == 'withdraw'}">提款</option>
+                <option value="deposit" th:selected="${function == 'deposit'}">存款</option>
+            </select>
+        </div>
 
-        <h2 th:switch="${function}">
-            <span th:case="'transfer'">转账</span>
-            <span th:case="'query'">查询</span>
-            <span th:case="'withdraw'">提款</span>
-            <span th:case="'deposit'">存款</span>
-        </h2>
-        <form th:switch="${function}" th:case="'transfer'" action="/transfer" method="post">
-            <div class="form-group">
-                <label for="sender">转账卡</label>
-                <input type="text" id="sender" name="cardid1" required="" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="receiver">收款卡</label>
-                <input type="text" id="receiver" name="cardid2" required="" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="money">金额</label>
-                <input type="text" name="money" id="money" required="" class="form-control">
-            </div>
-            <div class="form-group">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">确认转账</button>
-            </div>
-        </form>
-        <form th:switch="${function}" th:case="'query'" action="/query" method="post">
-            <div class="form-group">
-                <label for="cardid1">卡号</label>
-                <input type="text" id="cardid1" name="cardid" required="" class="form-control">
-            </div>
-            <div class="form-group">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">查询</button>
-            </div>
-        </form>
-        <form th:switch="${function}" th:case="'deposit'" action="/deposit" method="post">
-            <div class="form-group">
-                <label for="cardid2">卡号</label>
-                <input type="text" id="cardid2" name="cardid" required="" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="money1">金额</label>
-                <input type="text" name="money" id="money1" required="" class="form-control">
-            </div>
-            <div class="form-group">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">确认存款</button>
-            </div>
-        </form>
-        <form th:switch="${function}" th:case="'withdraw'" action="/withdraw" method="post">
-            <div class="form-group">
-                <label for="cardid3">卡号</label>
-                <input type="text" id="cardid3" name="cardid" required="" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="money2">金额</label>
-                <input type="text" name="money" id="money2" required="" class="form-control">
-            </div>
-            <div class="form-group">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">确认提款</button>
-            </div>
-        </form>
-    </div>
+        <div class="container" id="content">
 
-    <div class="container result-message">
-        <p th:text="${result}" th:if="${not #strings.isEmpty(result)}" class="result-message"/>
+            <h2 th:switch="${function}">
+                <span th:case="'transfer'">转账</span>
+                <span th:case="'query'">查询</span>
+                <span th:case="'withdraw'">提款</span>
+                <span th:case="'deposit'">存款</span>
+            </h2>
+            <form th:switch="${function}" th:case="'transfer'" action="/transfer" method="post">
+                <div class="form-group">
+                    <label for="sender">转账卡</label>
+                    <input type="text" id="sender" name="cardid1" required="" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="receiver">收款卡</label>
+                    <input type="text" id="receiver" name="cardid2" required="" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="money">金额</label>
+                    <input type="text" name="money" id="money" required="" class="form-control">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">确认转账</button>
+                </div>
+            </form>
+            <form th:switch="${function}" th:case="'query'" action="/query" method="post">
+                <div class="form-group">
+                    <label for="cardid1">卡号</label>
+                    <input type="text" id="cardid1" name="cardid" required="" class="form-control">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">查询</button>
+                </div>
+            </form>
+            <form th:switch="${function}" th:case="'deposit'" action="/deposit" method="post">
+                <div class="form-group">
+                    <label for="cardid2">卡号</label>
+                    <input type="text" id="cardid2" name="cardid" required="" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="money1">金额</label>
+                    <input type="text" name="money" id="money1" required="" class="form-control">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">确认存款</button>
+                </div>
+            </form>
+            <form th:switch="${function}" th:case="'withdraw'" action="/withdraw" method="post">
+                <div class="form-group">
+                    <label for="cardid3">卡号</label>
+                    <input type="text" id="cardid3" name="cardid" required="" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="money2">金额</label>
+                    <input type="text" name="money" id="money2" required="" class="form-control">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">确认提款</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="container result-message">
+            <p th:text="${result}" th:if="${not #strings.isEmpty(result)}" class="result-message"/>
+        </div>
     </div>
 
 </div>
 
 <script>
+    const nicknameElement = document.getElementById('nickname');
+    const editNicknameButton = document.getElementById('editNickname');
+
+    // 创建输入框、√和×按钮
+    const inputElement = document.createElement('input');
+    const saveButton = document.createElement('button');
+    saveButton.innerHTML = '√';
+    const cancelButton = document.createElement('button');
+    cancelButton.innerHTML = '×';
+
+    // 编辑按钮点击事件处理函数
+    function handleEditClick() {
+        // 获取当前昵称的文本
+        const currentNickname = nicknameElement.textContent;
+
+        // 隐藏编辑按钮
+        editNicknameButton.style.display = 'none';
+        inputElement.style.display = 'inline';
+        saveButton.style.display = 'inline';
+        cancelButton.style.display = 'inline';
+
+        // 设置输入框的初始值为当前昵称
+        inputElement.value = currentNickname;
+
+        // 替换昵称元素为输入框
+        nicknameElement.replaceWith(inputElement);
+
+        // 添加√和×按钮
+        inputElement.insertAdjacentElement('afterend', saveButton);
+        inputElement.insertAdjacentElement('afterend', cancelButton);
+
+        // 点击√按钮保存更改
+        saveButton.addEventListener('click', handleSaveClick);
+
+        // 点击×按钮取消更改
+        cancelButton.addEventListener('click', handleCancelClick);
+    }
+
+    // √按钮点击事件处理函数
+    function handleSaveClick() {
+        // 获取输入框中的新昵称
+        const newNickname = inputElement.value;
+
+        fetch('/saveNickname', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ newNickname }),
+        })
+            .then(response => {
+                if (response.ok) {
+                    // 昵称保存成功，可以执行其他操作，例如更新页面上的昵称显示
+                    nicknameElement.textContent = newNickname;
+                    nicknameElement.style.display = 'inline';
+                    editNicknameButton.style.display = 'inline';
+                    inputElement.style.display = 'none';
+                    saveButton.style.display = 'none';
+                    cancelButton.style.display = 'none';
+                    saveButton.removeEventListener('click', handleSaveClick);
+                    cancelButton.removeEventListener('click', handleCancelClick);
+                } else {
+                    // 处理保存失败的情况
+                    console.error('保存昵称失败');
+                }
+            })
+            .catch(error => {
+                console.error('发生错误', error);
+            });
+    }
+
+    // ×按钮点击事件处理函数
+    function handleCancelClick() {
+        // 显示编辑按钮，隐藏输入框和按钮
+        editNicknameButton.style.display = 'inline';
+        inputElement.style.display = 'none';
+        saveButton.style.display = 'none';
+        cancelButton.style.display = 'none';
+        saveButton.removeEventListener('click', handleSaveClick);
+        cancelButton.removeEventListener('click', handleCancelClick);
+    }
+
+    // 添加编辑按钮点击事件监听器
+    editNicknameButton.addEventListener('click', handleEditClick);
+
     var functionSelect = document.getElementById('functionSelect');
 
     // 获取当前页面加载时所选的功能
@@ -202,7 +343,7 @@
                 break;
             case 'deposit':
                 contentDiv.innerHTML = `
-                    <h2>提款</h2>
+                    <h2>存款</h2>
                     <form action="/deposit" method="post">
                         <div class="form-group">
                             <label for="cardid2">卡号</label>
@@ -220,7 +361,7 @@
                 break;
             case 'withdraw':
                 contentDiv.innerHTML = `
-                    <h2>存款</h2>
+                    <h2>提款</h2>
                     <form action="/withdraw" method="post">
                         <div class="form-group">
                             <label for="cardid3">卡号</label>
