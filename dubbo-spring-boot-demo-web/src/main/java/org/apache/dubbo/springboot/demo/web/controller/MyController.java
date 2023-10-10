@@ -16,11 +16,11 @@ import org.apache.dubbo.springboot.demo.model.TReturn;
 import org.apache.dubbo.springboot.demo.provider.RecordService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -181,5 +181,20 @@ public class MyController {
         model.addAttribute("result", tReturn.getReturnString());
         model.addAttribute("function", RecordTypeEnum.REPAY.getDesc());
         return "transaction";
+    }
+
+    @PostMapping("/saveNickname")
+    @ResponseBody
+    @EntranceLog
+    public ResponseEntity<String> saveNickname(HttpServletRequest httpServletRequest, @RequestBody String newNickname) {
+        try {
+            HttpSession httpSession = httpServletRequest.getSession(false);
+            long userId = (long) httpSession.getAttribute("userId");
+            userInfosDao.updateNickname(newNickname, userId);
+            return ResponseEntity.ok("昵称保存成功：" + newNickname);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("保存昵称失败：" + ex.getMessage());
+        }
     }
 }

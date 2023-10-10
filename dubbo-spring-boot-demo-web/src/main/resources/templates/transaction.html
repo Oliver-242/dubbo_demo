@@ -96,7 +96,6 @@
                     <p>
                         <strong>Nickname:</strong>
                         <span id="nickname" th:text="${nickname}"></span>
-<!--                        <button id="editNickname">Edit</button>-->
                         <button id="editNickname" class="edit-button"><i class="fas fa-pencil-alt"></i></button>
                     </p>
                     <p><strong>Phone:</strong> <span th:text="${phonenumber}"></span></p>
@@ -211,14 +210,12 @@
     function handleEditClick() {
         // 获取当前昵称的文本
         const currentNickname = nicknameElement.textContent;
-        // const inputElement = document.createElement('input');
-        // const saveButton = document.createElement('button');
-        // saveButton.innerHTML = '√';
-        // const cancelButton = document.createElement('button');
-        // cancelButton.innerHTML = '×';
 
         // 隐藏编辑按钮
         editNicknameButton.style.display = 'none';
+        inputElement.style.display = 'inline';
+        saveButton.style.display = 'inline';
+        cancelButton.style.display = 'inline';
 
         // 设置输入框的初始值为当前昵称
         inputElement.value = currentNickname;
@@ -242,23 +239,39 @@
         // 获取输入框中的新昵称
         const newNickname = inputElement.value;
 
-        // 将新昵称更新到页面中
-        nicknameElement.textContent = newNickname;
-
-        // 显示编辑按钮，隐藏输入框和按钮
-        editNicknameButton.style.display = 'inline';
-        inputElement.remove();
-        saveButton.style.display = 'none';
-        cancelButton.style.display = 'none';
-        saveButton.removeEventListener('click', handleSaveClick);
-        cancelButton.removeEventListener('click', handleCancelClick);
+        fetch('/saveNickname', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ newNickname }),
+        })
+            .then(response => {
+                if (response.ok) {
+                    // 昵称保存成功，可以执行其他操作，例如更新页面上的昵称显示
+                    nicknameElement.textContent = newNickname;
+                    nicknameElement.style.display = 'inline';
+                    editNicknameButton.style.display = 'inline';
+                    inputElement.style.display = 'none';
+                    saveButton.style.display = 'none';
+                    cancelButton.style.display = 'none';
+                    saveButton.removeEventListener('click', handleSaveClick);
+                    cancelButton.removeEventListener('click', handleCancelClick);
+                } else {
+                    // 处理保存失败的情况
+                    console.error('保存昵称失败');
+                }
+            })
+            .catch(error => {
+                console.error('发生错误', error);
+            });
     }
 
     // ×按钮点击事件处理函数
     function handleCancelClick() {
         // 显示编辑按钮，隐藏输入框和按钮
         editNicknameButton.style.display = 'inline';
-        inputElement.remove();
+        inputElement.style.display = 'none';
         saveButton.style.display = 'none';
         cancelButton.style.display = 'none';
         saveButton.removeEventListener('click', handleSaveClick);

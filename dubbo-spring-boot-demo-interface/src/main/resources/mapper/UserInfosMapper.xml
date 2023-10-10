@@ -58,4 +58,10 @@
         where userid=#{userId}
     </update>
 
+    <update id="updateNickname">
+        update userinfos
+        set nickname=#{nickname}
+        where userid=#{userId}
+    </update>
+
 </mapper>
