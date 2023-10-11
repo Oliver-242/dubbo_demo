@@ -47,7 +47,7 @@ public class PageAccessInterceptor implements HandlerInterceptor {
     private boolean isAdminUser(HttpServletRequest request) {
         try {
             String userRole = (String) request.getSession(false).getAttribute("userType");
-            return UserTypeEnum.ADMIN.name().equals(userRole);
+            return UserTypeEnum.ADMIN.getUserType().equals(userRole);
         } catch(NullPointerException ex) {
             return false;
         }

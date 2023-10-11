@@ -184,9 +184,9 @@
                     <td th:text="${info.depositCardNum}"></td>
                     <td th:text="${info.identification}"></td>
                     <td th:text="${info.status}"></td>
-                    <td><button class="action-button" data-action="freeze" data-userid="${info.userId}">冻结</button></td>
-                    <td><button class="action-button" data-action="delete" data-userid="${info.userId}">删除</button></td>
-                    <td><button class="action-button" data-action="restore" data-userid="${info.userId}">恢复</button></td>
+                    <td><button class="action-button" data-action="freeze" th:attr="data-userid=${info.userId}">冻结</button></td>
+                    <td><button class="action-button" data-action="delete" th:attr="data-userid=${info.userId}">删除</button></td>
+                    <td><button class="action-button" data-action="restore" th:attr="data-userid=${info.userId}">恢复</button></td>
                 </tr>
                 </tbody>
             </table>

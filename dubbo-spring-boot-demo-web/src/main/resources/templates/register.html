@@ -5,16 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- 引入 Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             display: flex;
             justify-content: center; /* 在水平方向上居中 */
             align-items: center; /* 在垂直方向上居中 */
-            height: 100vh; /* 让 body 占据整个视口高度 */
-            margin: 0; /* 去除默认的外边距 */
-            padding: 0; /* 去除默认的内边距 */
+            height: 100vh;
         }
 
         .container {
@@ -77,55 +74,53 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
     </form>
     <p th:text="${result}" th:if="${not #strings.isEmpty(result)}" class="result-message"></p>
+</div>
 
-    <!-- 引入 Font Awesome 的 JavaScript 库 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
-    <script>
-        var passwordInput = document.getElementById('password');
-        var confirmPasswordInput = document.getElementById('confirmPassword');
-        var phonenumberInput = document.getElementById('phonenumber');
+<script>
+    var passwordInput = document.getElementById('password');
+    var confirmPasswordInput = document.getElementById('confirmPassword');
+    var phonenumberInput = document.getElementById('phonenumber');
 
-        function validateForm() {
-            var password = passwordInput.value;
-            var confirmPassword = confirmPasswordInput.value;
-            var phonenumber = phonenumberInput.value;
-            var passwordError = document.getElementById('passwordError');
-            var phonenumberError = document.getElementById('phonenumberError');
+    function validateForm() {
+        var password = passwordInput.value;
+        var confirmPassword = confirmPasswordInput.value;
+        var phonenumber = phonenumberInput.value;
+        var passwordError = document.getElementById('passwordError');
+        var phonenumberError = document.getElementById('phonenumberError');
 
-            if (password !== confirmPassword) {
-                passwordError.textContent = 'Passwords do not match.';
+        if (password !== confirmPassword) {
+            passwordError.textContent = 'Passwords do not match.';
+            passwordError.style.display = 'block';
+            return false; // 阻止表单提交
+        } else {
+            passwordError.style.display = 'none';
+            var passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{1,16}$/; // 密码格式正则表达式
+            var phonenumberRegex = /1[0-9]{10}/;
+            if (!phonenumberRegex.test(phonenumber)) {
+                phonenumberError.textContent = 'Phone number must contain only numbers and begin with 1 and be 11 characters long.';
+                phonenumberError.style.display = 'block';
+                return false;
+            } else {
+                phonenumberError.textContent = '';
+            }
+            if (!passwordRegex.test(password)) {
+                passwordError.textContent = 'Password must contain only letters and numbers and be 1 to 16 characters long.';
                 passwordError.style.display = 'block';
                 return false; // 阻止表单提交
-            } else {
-                passwordError.style.display = 'none';
-                var passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{1,16}$/; // 密码格式正则表达式
-                var phonenumberRegex = /1[0-9]{10}/;
-                if (!phonenumberRegex.test(phonenumber)) {
-                    phonenumberError.textContent = 'Phone number must contain only numbers and begin with 1 and be 11 characters long.';
-                    phonenumberError.style.display = 'block';
-                    return false;
-                } else {
-                    phonenumberError.textContent = '';
-                }
-                if (!passwordRegex.test(password)) {
-                    passwordError.textContent = 'Password must contain only letters and numbers and be 1 to 16 characters long.';
-                    passwordError.style.display = 'block';
-                    return false; // 阻止表单提交
-                }
-                return true; // 允许表单提交
             }
+            return true; // 允许表单提交
         }
+    }
 
-        function showPassword(inputId) {
-            var input = document.getElementById(inputId);
-            input.type = 'text';
-        }
+    function showPassword(inputId) {
+        var input = document.getElementById(inputId);
+        input.type = 'text';
+    }
 
-        function hidePassword(inputId) {
-            var input = document.getElementById(inputId);
-            input.type = 'password';
-        }
-    </script>
-</div>
+    function hidePassword(inputId) {
+        var input = document.getElementById(inputId);
+        input.type = 'password';
+    }
+</script>
 </body>
 </html>

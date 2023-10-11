@@ -79,7 +79,9 @@ public class LoginController {
     }
 
     @PostMapping(value = "/logout")
-    public String doPostLogout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
+    public String doPostLogout(HttpServletRequest httpServletRequest,
+                               HttpServletResponse httpServletResponse) throws IOException {
+        log.info("调用logout(controller)");
         HttpSession httpSession = httpServletRequest.getSession(false);
         if(httpSession == null) {
             log.error("未获取到session！");

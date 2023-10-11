@@ -221,6 +221,7 @@
         inputElement.value = currentNickname;
 
         // 替换昵称元素为输入框
+        // nicknameElement.style.display = 'none';
         nicknameElement.replaceWith(inputElement);
 
         // 添加√和×按钮
@@ -237,22 +238,23 @@
     // √按钮点击事件处理函数
     function handleSaveClick() {
         // 获取输入框中的新昵称
-        const newNickname = inputElement.value;
-
+        const nickname = inputElement.value;
+        if(nickname !== nicknameElement.textContent) {
         fetch('/saveNickname', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ newNickname }),
+            body: JSON.stringify({ nickname }),
         })
             .then(response => {
                 if (response.ok) {
                     // 昵称保存成功，可以执行其他操作，例如更新页面上的昵称显示
-                    nicknameElement.textContent = newNickname;
+                    nicknameElement.textContent = nickname;
                     nicknameElement.style.display = 'inline';
                     editNicknameButton.style.display = 'inline';
-                    inputElement.style.display = 'none';
+                    // inputElement.style.display = 'none';
+                    inputElement.replaceWith(nicknameElement);
                     saveButton.style.display = 'none';
                     cancelButton.style.display = 'none';
                     saveButton.removeEventListener('click', handleSaveClick);
@@ -265,13 +267,24 @@
             .catch(error => {
                 console.error('发生错误', error);
             });
+        } else {
+            nicknameElement.style.display = 'inline';
+            editNicknameButton.style.display = 'inline';
+            inputElement.replaceWith(nicknameElement);
+            saveButton.style.display = 'none';
+            cancelButton.style.display = 'none';
+            saveButton.removeEventListener('click', handleSaveClick);
+            cancelButton.removeEventListener('click', handleCancelClick);
+        }
     }
 
     // ×按钮点击事件处理函数
     function handleCancelClick() {
         // 显示编辑按钮，隐藏输入框和按钮
+        nicknameElement.style.display = 'inline';
         editNicknameButton.style.display = 'inline';
-        inputElement.style.display = 'none';
+        // inputElement.style.display = 'none';
+        inputElement.replaceWith(nicknameElement);
         saveButton.style.display = 'none';
         cancelButton.style.display = 'none';
         saveButton.removeEventListener('click', handleSaveClick);

@@ -9,6 +9,7 @@ import org.apache.dubbo.springboot.demo.model.dto.SaveRecordDto;
 import org.apache.dubbo.springboot.demo.model.entity.CreditCards;
 import org.apache.dubbo.springboot.demo.model.entity.DepositCards;
 import org.apache.dubbo.springboot.demo.model.entity.UserInfos;
+import org.apache.dubbo.springboot.demo.model.vo.NewNickname;
 import org.apache.dubbo.springboot.demo.provider.AdminService;
 import org.apache.dubbo.springboot.demo.provider.DemoService;
 import org.apache.dubbo.springboot.demo.model.TParam;
@@ -186,11 +187,11 @@ public class MyController {
     @PostMapping("/saveNickname")
     @ResponseBody
     @EntranceLog
-    public ResponseEntity<String> saveNickname(HttpServletRequest httpServletRequest, @RequestBody String newNickname) {
+    public ResponseEntity<String> saveNickname(HttpServletRequest httpServletRequest, @RequestBody NewNickname newNickname) {
         try {
             HttpSession httpSession = httpServletRequest.getSession(false);
             long userId = (long) httpSession.getAttribute("userId");
-            userInfosDao.updateNickname(newNickname, userId);
+            userInfosDao.updateNickname(newNickname.getNickname(), userId);
             return ResponseEntity.ok("昵称保存成功：" + newNickname);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
