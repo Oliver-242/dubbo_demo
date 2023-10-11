@@ -43,14 +43,13 @@ public class AuthenticationFilter implements Filter {
                 String userType = (String) httpSession.getAttribute("userType");
                 if(Objects.equals(userType, UserTypeEnum.USER.getUserType())) {
                     httpServletResponse.sendRedirect("/dogettransfer");
-                    return;
                 } else {
-                    httpServletResponse.sendRedirect("/home");
-                    return;
+                    httpServletResponse.sendRedirect("/admin/home");
                 }
             }
+        } else {
+            chain.doFilter(request, response);
         }
-        chain.doFilter(request, response);
     }
 
     @Override
